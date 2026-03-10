@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+import '../values/app_colors.dart';
 
 enum QuestionOptionState { normal, selected, correct, incorrect }
 
@@ -20,11 +20,11 @@ class QuestionOptionCard extends StatelessWidget {
     Color getBackgroundColor() {
       switch (state) {
         case QuestionOptionState.selected:
-          return AppColors.lightBlue;
+          return AppColors.blue40;
         case QuestionOptionState.correct:
           return AppColors.lightGreen;
         case QuestionOptionState.incorrect:
-          return AppColors.lightRed;
+          return AppColors.redD2;
         case QuestionOptionState.normal:
           return AppColors.white;
       }
@@ -35,9 +35,9 @@ class QuestionOptionCard extends StatelessWidget {
         case QuestionOptionState.selected:
           return AppColors.primaryBlue;
         case QuestionOptionState.correct:
-          return AppColors.success;
+          return AppColors.green19;
         case QuestionOptionState.incorrect:
-          return AppColors.error;
+          return AppColors.red;
         case QuestionOptionState.normal:
           return Colors.grey.shade300;
       }
@@ -61,11 +61,11 @@ class QuestionOptionCard extends StatelessWidget {
         case QuestionOptionState.selected:
           return AppColors.primaryBlue;
         case QuestionOptionState.correct:
-          return AppColors.success;
+          return AppColors.green19;
         case QuestionOptionState.incorrect:
-          return AppColors.error;
+          return AppColors.red;
         case QuestionOptionState.normal:
-          return AppColors.gray;
+          return AppColors.gray53;
       }
     }
 

@@ -1,31 +1,32 @@
 import 'dart:io';
 
+import '../values/app_strings.dart';
 
 class Validations {
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return "validations.password_required";
+      return AppStrings.passwordRequired;
     }
 
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return "validations.set_password_1_condition_error";
+      return AppStrings.setPassword1ConditionError;
     }
 
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return "validations.set_password_2_condition_error";
+      return AppStrings.setPassword2ConditionError;
     }
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return "validations.set_password_3_condition_error";
+      return AppStrings.setPassword3ConditionError;
     }
 
     if (!value.contains(
       RegExp(r'[!@#\$%\^&\*\(\)_\-\+=\[\]\{\};:\,<>\./\\|~`]'),
     )) {
-      return "validations.set_password_4_condition_error";
+      return AppStrings.setPassword4ConditionError;
     }
 
     if (value.length < 6 || value.length > 30) {
-      return "validations.set_password_5_condition_error";
+      return AppStrings.setPassword5ConditionError;
     }
 
     return null;
@@ -33,32 +34,32 @@ class Validations {
 
   static String? validatePasswordVerification(String? value, String? password) {
     if (value == null || value.isEmpty) {
-      return "validations.confirm_password";
+      return AppStrings.confirmPassword;
     } else if (value != password) {
-      return "validations.confirm_password_invalid";
+      return AppStrings.confirmPasswordInvalid;
     }
     return null;
   }
 
   static String? validateLoginPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return "validations.password_required";
+      return AppStrings.passwordRequired;
     }
     return null;
   }
 
   static String? validatePhoneNumber(String? value, int phoneLength) {
     if (value == null || value.isEmpty) {
-      return "validations.phone_required";
+      return AppStrings.phoneRequired;
     } else if (value.length < phoneLength) {
-      return "validations.phone_invalid";
+      return AppStrings.phoneInvalid;
     }
     return null;
   }
 
   static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return "validations.name_required";
+      return AppStrings.nameRequired;
     } else {
       return null;
     }
@@ -66,10 +67,10 @@ class Validations {
 
   static String? validatePin(String? value, int length) {
     if (value == null || value.isEmpty) {
-      return "validations.pin_required";
+      return AppStrings.pinRequired;
     }
     if (value.length != length) {
-      return "validations.pin_invalid";
+      return AppStrings.pinInvalid;
     } else {
       return null;
     }
@@ -77,7 +78,7 @@ class Validations {
 
   static String? validateUserImage(File? value) {
     if (value == null) {
-      return "validations.profile_image";
+      return AppStrings.profileImage;
     } else {
       return null;
     }
@@ -85,12 +86,12 @@ class Validations {
 
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return "validations.email_required";
+      return AppStrings.emailRequired;
     }
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if (!emailRegex.hasMatch(value)) {
-      return "validations.email_invalid";
+      return AppStrings.emailInvalid;
     }
 
     return null;
@@ -98,7 +99,7 @@ class Validations {
 
   static String? validateUserName(String? value) {
     if (value == null || value.isEmpty) {
-      return "validations.username_required";
+      return AppStrings.usernameRequired;
     }
 
     return null;
