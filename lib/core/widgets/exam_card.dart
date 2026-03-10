@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+import '../values/app_colors.dart';
 
 class ExamCard extends StatelessWidget {
   final String title;
@@ -41,7 +41,7 @@ class ExamCard extends StatelessWidget {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: AppColors.lightBlue,
+                  color: AppColors.blue40,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ClipRRect(
@@ -71,7 +71,7 @@ class ExamCard extends StatelessWidget {
                           level,
                           style: const TextStyle(
                             fontSize: 14,
-                            color: AppColors.gray,
+                            color: AppColors.gray53,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -90,7 +90,7 @@ class ExamCard extends StatelessWidget {
                       '$questionCount Question',
                       style: const TextStyle(
                         fontSize: 14,
-                        color: AppColors.gray,
+                        color: AppColors.gray53,
                       ),
                     ),
                   ],

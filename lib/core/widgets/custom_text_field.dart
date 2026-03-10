@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+import '../values/app_colors.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -55,17 +55,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
           validator: widget.validator,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: const TextStyle(color: AppColors.placeHolder),
+            hintStyle: const TextStyle(color: AppColors.grayA6),
             filled: true,
             fillColor: AppColors.white,
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.gray, width: 0.5),
+              borderSide: const BorderSide(color: AppColors.gray53, width: 0.5),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.gray, width: 0.5),
+              borderSide: const BorderSide(color: AppColors.gray53, width: 0.5),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -73,13 +73,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+              borderSide: const BorderSide(color: AppColors.red, width: 1.5),
             ),
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: Icon(
                       _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                      color: AppColors.gray,
+                      color: AppColors.gray53,
                     ),
                     onPressed: () {
                       setState(() {
