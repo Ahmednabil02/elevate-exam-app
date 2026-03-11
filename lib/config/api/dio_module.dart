@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:exam_app/core/constants/app_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -18,8 +19,8 @@ abstract class DioModule {
     final dio = Dio(
       BaseOptions(
         baseUrl: EndPoints.baseUrl,
-        sendTimeout: Duration(seconds: 45),
-        connectTimeout: Duration(seconds: 45),
+        sendTimeout: Duration(seconds: AppConstants.timeout),
+        connectTimeout: Duration(seconds: AppConstants.timeout),
       ),
     );
     dio.interceptors.add(AppInterceptors(dio: dio, fss: secureStorage()));
