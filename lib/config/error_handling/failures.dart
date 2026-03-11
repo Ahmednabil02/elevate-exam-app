@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:exam_app/core/values/app_strings.dart';
 
 sealed class Failures implements Exception {
