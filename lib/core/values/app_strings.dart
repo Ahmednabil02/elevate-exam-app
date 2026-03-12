@@ -71,4 +71,9 @@ class AppStrings {
   static const String emailRequired = 'Please enter your email';
   static const String emailInvalid = 'Please enter a valid email address';
   static const String usernameRequired = 'Please enter your username';
+
+  // Resend Timer
+  static const String didntReceiveCode = "Didn't receive code?";
+  static const String resend = 'Resend';
+  static const String resendIn = 'Resend in';
 }
