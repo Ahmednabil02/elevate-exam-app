@@ -1,10 +1,9 @@
-import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
-import 'package:exam_app/config/error_handling/failures.dart';
+ import 'package:equatable/equatable.dart';
+import 'package:exam_app/config/base_response/result.dart';
 
 
 abstract class UseCase<T, Params> {
-  Future<Either<Failures, T>> call(Params params);
+  Future<Result<T>> call(Params params);
 }
 
 class NoParams extends Equatable {
