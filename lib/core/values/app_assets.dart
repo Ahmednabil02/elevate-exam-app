@@ -8,6 +8,7 @@ class AppAssets {
   static const String carbonResultDraft =
       "assets/icons/carbon_result_draft.svg";
   static const String category = "assets/icons/category.svg";
+  static const String star = "assets/icons/star.svg";
   static const String check = "assets/icons/check.svg";
   static const String delete = "assets/icons/delete.svg";
   static const String diamond = "assets/icons/diamond.svg";

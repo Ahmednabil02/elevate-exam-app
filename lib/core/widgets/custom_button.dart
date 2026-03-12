@@ -1,68 +1,71 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../values/app_colors.dart';
+import '../values/app_font_style.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
-  final bool isSecondary;
   final bool isLoading;
+  final bool isEnabled;
+  final Color? backgroundColor;
+  final Color? textColor;
   final double? width;
+  final double height;
 
   const CustomButton({
     super.key,
     required this.text,
-    required this.onPressed,
-    this.isSecondary = false,
+    this.onPressed,
     this.isLoading = false,
+    this.isEnabled = true,
+    this.backgroundColor,
+    this.textColor,
     this.width,
+    this.height = 48,
   });
 
   @override
   Widget build(BuildContext context) {
-    final child = isLoading
-        ? SizedBox(
-            width: 22.r,
-            height: 22.r,
-            child: CircularProgressIndicator(
-              strokeWidth: 2.5,
-              color: isSecondary ? AppColors.primaryBlue : AppColors.white,
-            ),
-          )
-        : Text(
-            text,
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
-            ),
-          );
+    final enabled = isEnabled && !isLoading && onPressed != null;
 
     return SizedBox(
       width: width ?? double.infinity,
-      height: 50.h,
-      child: isSecondary
-          ? OutlinedButton(
-              onPressed: onPressed,
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.primaryBlue,
-                side: const BorderSide(color: AppColors.primaryBlue, width: 1.5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
+      height: height,
+      child: ElevatedButton(
+        onPressed: enabled ? onPressed : null,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: enabled
+              ? (backgroundColor ?? AppColors.primaryBlue)
+              : AppColors.gray30,
+          foregroundColor: textColor ?? AppColors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+          elevation: 0,
+        ),
+        child: isLoading
+            ? const _LoadingIndicator()
+            : Text(
+                text,
+                style: AppFontStyle.medium18(
+                  context,
+                ).copyWith(color: textColor ?? AppColors.white),
               ),
-              child: child,
-            )
-          : ElevatedButton(
-              onPressed: onPressed,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryBlue,
-                foregroundColor: AppColors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
-              ),
-              child: child,
-            ),
+      ),
+    );
+  }
+}
+
+class _LoadingIndicator extends StatelessWidget {
+  const _LoadingIndicator();
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      width: 24,
+      height: 24,
+      child: CupertinoActivityIndicator(color: AppColors.white),
     );
   }
 }

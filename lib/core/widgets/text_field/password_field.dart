@@ -1,5 +1,7 @@
 import 'package:exam_app/core/values/app_assets.dart';
+import 'package:exam_app/core/values/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../validations/validations.dart';
 import '../../values/app_strings.dart';
@@ -39,23 +41,26 @@ class PasswordField extends StatelessWidget {
       enabled: enabled,
       obscureText: obscureText,
       keyboardType: TextInputType.visiblePassword,
+      obscuringCharacter: '★',
       textInputAction: textInputAction ?? TextInputAction.done,
       inputFormatters: AppInputFormatters.strongPassword,
       validator: validator ?? Validations.validateLoginPassword,
       onFieldSubmitted: onFieldSubmitted,
       autofillHints: const [AutofillHints.password],
+      style: obscureText?const TextStyle(letterSpacing: 2, color: AppColors.darkGray):null,
       decoration: InputDecoration(
         labelText: labelText ?? AppStrings.password,
-        suffixIcon:suffixIcon?? InkWell(
-          onTap: toggleVisibility,
-          child: Image.asset(
-            obscureText
-                ? AppAssets.visibilityOff
-                : AppAssets.visibilityOn,
-            width: 24,
-            height: 24,
-          ),
-        ),
+        suffixIcon:
+            suffixIcon ??
+            InkWell(
+              onTap: toggleVisibility,
+              child: SvgPicture.asset(
+                obscureText ? AppAssets.visibilityOff : AppAssets.visibilityOn,
+                width: 24,
+                height: 24,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
       ),
     );
   }

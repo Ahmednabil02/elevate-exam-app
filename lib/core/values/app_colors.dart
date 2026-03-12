@@ -27,6 +27,7 @@ abstract class AppColors {
   static const Color blue80 = Color(0xFF011B4E);
   static const Color blue90 = Color(0xFF011234);
   static const Color blue100 = Color(0xFF000B1F);
+  static const Color blueF7 = Color(0xFFDFE7F7);
 
 // Black Shades (Middle Column)
   static const Color gray10 = Color(0xFFCFCFCF);

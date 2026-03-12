@@ -26,6 +26,7 @@ class CustomToast {
     toastification.show(
       context: context,
       type: _getToastificationType(),
+      primaryColor: _getPrimaryColor().withValues(alpha: .8),
       style: style,
       title: title != null
           ? Text(
@@ -41,7 +42,7 @@ class CustomToast {
       ),
       alignment: Alignment.topCenter,
       autoCloseDuration: duration,
-      backgroundColor: _getBackgroundColor(),
+      backgroundColor: AppColors.white,
       foregroundColor: AppColors.white,
       borderRadius: BorderRadius.circular(8),
       boxShadow: const [
@@ -70,17 +71,16 @@ class CustomToast {
         return ToastificationType.info;
     }
   }
-
-  Color _getBackgroundColor() {
+  Color _getPrimaryColor() {
     switch (type) {
       case ToastType.success:
-        return AppColors.green;
+        return AppColors.green19;
       case ToastType.error:
-        return AppColors.red;
+        return AppColors.red10;
       case ToastType.warning:
         return AppColors.warning;
       case ToastType.info:
-        return AppColors.primaryBlue;
+        return AppColors.blue50;
     }
   }
 
