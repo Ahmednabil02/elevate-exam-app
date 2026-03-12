@@ -53,12 +53,9 @@ class OtpInputField extends StatelessWidget {
         context,
       ).copyWith(color: AppColors.black),
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: hasError ? AppColors.red : AppColors.gray30,
-          width: 1,
-        ),
+        color: AppColors.blueF7,
+        borderRadius: BorderRadius.circular(10),
+
       ),
     );
   }
@@ -66,6 +63,8 @@ class OtpInputField extends StatelessWidget {
   PinTheme _focusedPinTheme(BuildContext context) {
     return _defaultPinTheme(context).copyWith(
       decoration: _defaultPinTheme(context).decoration?.copyWith(
+        color: AppColors.white,
+
         border: Border.all(
           color: hasError ? AppColors.red : AppColors.primaryBlue,
           width: 2,
@@ -76,7 +75,9 @@ class OtpInputField extends StatelessWidget {
 
   PinTheme _submittedPinTheme(BuildContext context) {
     return _defaultPinTheme(context).copyWith(
+
       decoration: _defaultPinTheme(context).decoration?.copyWith(
+        color: AppColors.white,
         border: Border.all(
           color: hasError ? AppColors.red : AppColors.primaryBlue,
           width: 1,
@@ -88,6 +89,7 @@ class OtpInputField extends StatelessWidget {
   PinTheme _errorPinTheme(BuildContext context) {
     return _defaultPinTheme(context).copyWith(
       decoration: _defaultPinTheme(context).decoration?.copyWith(
+        color: AppColors.white,
         border: Border.all(color: AppColors.red, width: 1),
       ),
     );

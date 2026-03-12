@@ -43,5 +43,17 @@ abstract class DioModule {
   CancelToken cancelToken() => CancelToken();
 
   @lazySingleton
-  InternetConnection internetConnection() => InternetConnection();
+  InternetConnection internetConnection() => InternetConnection.createInstance(
+    customCheckOptions: [
+      InternetCheckOption(
+        uri: Uri.parse('https://www.google.com'),
+        timeout: const Duration(seconds: 3),
+      ),
+      InternetCheckOption(
+        uri: Uri.parse('https://www.cloudflare.com'),
+        timeout: const Duration(seconds: 3),
+      ),
+    ],
+    useDefaultOptions: false,
+  );
 }

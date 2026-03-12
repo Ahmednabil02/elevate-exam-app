@@ -76,4 +76,23 @@ class AppStrings {
   static const String didntReceiveCode = "Didn't receive code?";
   static const String resend = 'Resend';
   static const String resendIn = 'Resend in';
+
+  // Forget Password
+  static const String forgetPassword = 'Forget password';
+  static const String emailVerification = 'Email verification';
+  static const String resetPassword = 'Reset password';
+  static const String enterEmailAssociated =
+      'Please enter your email associated to your account';
+  static const String enterYourEmail = 'Enter you email';
+  static const String enterCodeSentToEmail =
+      'Please enter your code that send to your email address';
+  static const String invalidCode = 'Invalid code';
+  static const String passwordMustContain =
+      'Password must not be empty and must contain 6 characters with upper case letter and one number at least';
+  static const String newPassword = 'New password';
+  static const String enterYouPassword = 'Enter you password';
+  static const String confirmPasswordLabel = 'Confirm password';
+  static const String confirmPasswordPlaceholder = 'Confirm password';
+  static const String continueText = 'Continue';
+  static const String thisEmailIsNotValid = 'This Email is not valid';
 }
