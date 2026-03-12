@@ -31,7 +31,8 @@ class AppAssets {
   static const String tulip = "assets/icons/tulip.svg";
   static const String tune = "assets/icons/tune.svg";
   static const String visibilityOff = "assets/icons/visibility_off.svg";
-  
+  static const String visibilityOn = "assets/icons/visibility_on.svg";
+
   static const String colorPalette = "assets/images/color_palette.png";
   static const String draftingTools = "assets/images/drafting_tools.png";
   static const String image1 = "assets/images/image_1.png";
