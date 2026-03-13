@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:exam_app/core/values/app_colors.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
@@ -33,7 +31,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       AppStrings.enterEmailAssociated,
       AppStrings.enterCodeSentToEmail,
       AppStrings.passwordMustContain,
-     ];
+    ];
     super.initState();
   }
 
@@ -43,8 +41,6 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       buildWhen: (previous, current) =>
           previous.currentScreen != current.currentScreen,
       builder: (context, state) {
-
-
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
           child: Column(

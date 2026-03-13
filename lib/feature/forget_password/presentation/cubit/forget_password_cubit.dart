@@ -95,7 +95,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
           state.copyWith(
             resetPasswordState: BaseState.success(result),
             clearEmail: true,
-
           ),
         );
       case Error():

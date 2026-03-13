@@ -1,4 +1,5 @@
 part of 'forget_password_cubit.dart';
+
 sealed class ForgetPasswordEvents {
   const ForgetPasswordEvents();
 }

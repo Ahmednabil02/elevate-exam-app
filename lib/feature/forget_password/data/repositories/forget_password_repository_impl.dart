@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:exam_app/config/base_response/result.dart';
 import 'package:exam_app/feature/forget_password/domain/entity/forget_password_params.dart';
 import 'package:injectable/injectable.dart';
@@ -20,7 +18,7 @@ class ForgetPasswordRepositoryImpl implements ForgetPasswordRepository {
     final response = await remoteDataSource.sendForgetPasswordCode(params);
     switch (response) {
       case Success():
-         return Success(data: response.data);
+        return Success(data: response.data);
       case Error():
         return Error(exception: response.exception);
     }
