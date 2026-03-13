@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../config/base_state/state_types.dart';
 import '../../../../core/values/app_colors.dart';
-import '../../../../core/values/app_font_style.dart';
 import '../../../../core/values/app_strings.dart';
 import '../../../../core/widgets/custom_toast.dart';
 import '../../../../core/widgets/resend_timer_widget.dart';
