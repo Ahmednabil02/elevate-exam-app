@@ -12,14 +12,26 @@ import '../../../../core/widgets/text_field/otp_input_field.dart';
 import '../../domain/entity/forget_password_params.dart';
 import '../cubit/forget_password_cubit.dart';
 
-class OtpStep extends StatelessWidget {
+class OtpStep extends StatefulWidget {
   const OtpStep({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<ForgetPasswordCubit>();
-    final otpController = TextEditingController();
+  State<OtpStep> createState() => _OtpStepState();
+}
 
+class _OtpStepState extends State<OtpStep> {
+  late final ForgetPasswordCubit cubit;
+  late final TextEditingController otpController;
+
+  @override
+  void initState() {
+    cubit = context.read<ForgetPasswordCubit>();
+    otpController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocConsumer<ForgetPasswordCubit, ForgetPasswordStates>(
       listenWhen: (previous, current) =>
           previous.verifyOtpState != current.verifyOtpState,
@@ -54,7 +66,7 @@ class OtpStep extends StatelessWidget {
               ),
               if (state.verifyOtpState.state == BaseStateType.error) ...[
                 const SizedBox(height: 8),
-                const _ErrorMessage(),
+                const ErrorMessage(),
               ],
               const SizedBox(height: 24),
               ResendTimerWidget(
@@ -73,25 +85,6 @@ class OtpStep extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _ErrorMessage extends StatelessWidget {
-  const _ErrorMessage();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        const Icon(Icons.error_outline, color: AppColors.red, size: 16),
-        const SizedBox(width: 4),
-        Text(
-          AppStrings.invalidCode,
-          style: AppFontStyle.regular12(context).copyWith(color: AppColors.red),
-        ),
-      ],
     );
   }
 }
