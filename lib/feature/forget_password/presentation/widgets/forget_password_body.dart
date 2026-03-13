@@ -1,6 +1,5 @@
-import 'package:exam_app/core/values/app_colors.dart';
-import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
+import 'package:exam_app/feature/forget_password/presentation/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,9 +44,8 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
           padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
           child: Column(
             children: [
-              _Title(titles[state.currentScreen]),
-              _Subtitle(subTitles[state.currentScreen]),
-              SizedBox(height: 32),
+              Header(title: titles[state.currentScreen],subtitle: subTitles[state.currentScreen],),
+               SizedBox(height: 32),
               Expanded(
                 child: IndexedStack(
                   index: state.currentScreen,
@@ -62,34 +60,3 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
   }
 }
 
-class _Title extends StatelessWidget {
-  final String title;
-
-  const _Title(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: AppFontStyle.semiBold18(context).copyWith(color: AppColors.black),
-      textAlign: TextAlign.center,
-    );
-  }
-}
-
-class _Subtitle extends StatelessWidget {
-  final String subtitle;
-
-  const _Subtitle(this.subtitle);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      subtitle,
-      style: AppFontStyle.regular14(
-        context,
-      ).copyWith(color: AppColors.darkGray),
-      textAlign: TextAlign.center,
-    );
-  }
-}

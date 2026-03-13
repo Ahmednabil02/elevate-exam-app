@@ -10,16 +10,33 @@ import '../../../../core/widgets/custom_toast.dart';
 import '../../../../core/widgets/text_field/password_field.dart';
 import '../cubit/forget_password_cubit.dart';
 
-class ResetPasswordStep extends StatelessWidget {
+class ResetPasswordStep extends StatefulWidget {
   const ResetPasswordStep({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<ForgetPasswordCubit>();
-    final newPasswordController = TextEditingController();
-    final confirmPasswordController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
+  State<ResetPasswordStep> createState() => _ResetPasswordStepState();
+}
 
+class _ResetPasswordStepState extends State<ResetPasswordStep> {
+  late final ForgetPasswordCubit cubit;
+
+  late final TextEditingController newPasswordController;
+
+  late final TextEditingController confirmPasswordController;
+
+  late final GlobalKey<FormState> formKey;
+
+  @override
+  void initState() {
+    cubit = context.read<ForgetPasswordCubit>();
+    newPasswordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    formKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
         key: formKey,
