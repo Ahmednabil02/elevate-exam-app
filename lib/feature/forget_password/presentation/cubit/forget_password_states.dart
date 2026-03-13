@@ -1,4 +1,5 @@
 part of 'forget_password_cubit.dart';
+
 class ForgetPasswordStates extends Equatable {
   final int currentScreen;
   final BaseState<void> sendOtpToEmailState;
@@ -15,8 +16,8 @@ class ForgetPasswordStates extends Equatable {
     this.resetPasswordState = const BaseState.initial(),
     this.newPasswordVisible = false,
     this.confirmPasswordVisible = false,
-    this.email ,
-   });
+    this.email,
+  });
 
   @override
   List<Object?> get props => [
@@ -27,7 +28,7 @@ class ForgetPasswordStates extends Equatable {
     newPasswordVisible,
     email,
     confirmPasswordVisible,
-   ];
+  ];
 
   ForgetPasswordStates copyWith({
     int? currentScreen,
@@ -38,7 +39,7 @@ class ForgetPasswordStates extends Equatable {
     BaseState? verifyOtpState,
     BaseState? resetPasswordState,
     String? email,
-    bool clearEmail=false,
+    bool clearEmail = false,
   }) {
     return ForgetPasswordStates(
       currentScreen: currentScreen ?? this.currentScreen,
@@ -48,7 +49,7 @@ class ForgetPasswordStates extends Equatable {
       newPasswordVisible: newPasswordVisible ?? this.newPasswordVisible,
       confirmPasswordVisible:
           confirmPasswordVisible ?? this.confirmPasswordVisible,
-      email:clearEmail?null: email ?? this.email,
-     );
+      email: clearEmail ? null : email ?? this.email,
+    );
   }
 }

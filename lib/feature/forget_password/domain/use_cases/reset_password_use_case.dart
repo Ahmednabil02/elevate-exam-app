@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import '../repositories/forget_password_repository.dart';
 
 @injectable
-class ResetPasswordUseCase  extends UseCase<void, ForgetPasswordParams> {
+class ResetPasswordUseCase extends UseCase<void, ForgetPasswordParams> {
   final ForgetPasswordRepository repository;
 
   const ResetPasswordUseCase(this.repository);
