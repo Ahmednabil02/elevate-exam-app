@@ -1,3 +1,4 @@
+import 'package:exam_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import '../../values/app_colors.dart';
@@ -109,3 +110,23 @@ class _Cursor extends StatelessWidget {
     );
   }
 }
+
+class ErrorMessage extends StatelessWidget {
+  const ErrorMessage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const Icon(Icons.error_outline, color: AppColors.red, size: 16),
+        const SizedBox(width: 4),
+        Text(
+          AppStrings.invalidCode,
+          style: AppFontStyle.regular12(context).copyWith(color: AppColors.red),
+        ),
+      ],
+    );
+  }
+}
+
