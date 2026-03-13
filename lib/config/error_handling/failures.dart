@@ -5,6 +5,9 @@ sealed class Failures implements Exception {
   final String errorMessage;
 
   const Failures({required this.errorMessage});
+
+  @override
+  String toString() => errorMessage;
 }
 
 class ServerFailure extends Failures {
