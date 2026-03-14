@@ -1,6 +1,7 @@
 import 'package:exam_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+
 import '../../values/app_colors.dart';
 import '../../values/app_font_style.dart';
 
@@ -56,7 +57,6 @@ class OtpInputField extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.blueF7,
         borderRadius: BorderRadius.circular(10),
-
       ),
     );
   }
@@ -76,7 +76,6 @@ class OtpInputField extends StatelessWidget {
 
   PinTheme _submittedPinTheme(BuildContext context) {
     return _defaultPinTheme(context).copyWith(
-
       decoration: _defaultPinTheme(context).decoration?.copyWith(
         color: AppColors.white,
         border: Border.all(
@@ -129,4 +128,3 @@ class ErrorMessage extends StatelessWidget {
     );
   }
 }
-
