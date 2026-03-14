@@ -29,11 +29,11 @@ class _ForgetPasswordApiClient implements ForgetPasswordApiClient {
     final _options = _setStreamType<void>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-            _dio.options,
-            '/auth/forgotPassword',
-            queryParameters: queryParameters,
-            data: _data,
-          )
+        _dio.options,
+        '/auth/forgotPassword',
+        queryParameters: queryParameters,
+        data: _data,
+      )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     await _dio.fetch<void>(_options);
@@ -49,11 +49,11 @@ class _ForgetPasswordApiClient implements ForgetPasswordApiClient {
     final _options = _setStreamType<void>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-            _dio.options,
-            '/auth/verifyResetCode',
-            queryParameters: queryParameters,
-            data: _data,
-          )
+        _dio.options,
+        '/auth/verifyResetCode',
+        queryParameters: queryParameters,
+        data: _data,
+      )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     await _dio.fetch<void>(_options);
@@ -69,11 +69,11 @@ class _ForgetPasswordApiClient implements ForgetPasswordApiClient {
     final _options = _setStreamType<dynamic>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
-            _dio.options,
-            '/auth/resetPassword',
-            queryParameters: queryParameters,
-            data: _data,
-          )
+        _dio.options,
+        '/auth/resetPassword',
+        queryParameters: queryParameters,
+        data: _data,
+      )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch(_options);
@@ -95,7 +95,9 @@ class _ForgetPasswordApiClient implements ForgetPasswordApiClient {
   }
 
   String _combineBaseUrls(String dioBaseUrl, String? baseUrl) {
-    if (baseUrl == null || baseUrl.trim().isEmpty) {
+    if (baseUrl == null || baseUrl
+        .trim()
+        .isEmpty) {
       return dioBaseUrl;
     }
 

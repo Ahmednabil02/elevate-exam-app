@@ -40,23 +40,22 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       buildWhen: (previous, current) =>
           previous.currentScreen != current.currentScreen,
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
-          child: Column(
-            children: [
-              Header(title: titles[state.currentScreen],subtitle: subTitles[state.currentScreen],),
-               SizedBox(height: 32),
-              Expanded(
-                child: IndexedStack(
-                  index: state.currentScreen,
-                  children: const [EmailStep(), OtpStep(), ResetPasswordStep()],
-                ),
+        return Column(
+          children: [
+            Header(
+              title: titles[state.currentScreen],
+              subtitle: subTitles[state.currentScreen],
+            ),
+            SizedBox(height: 32),
+            Expanded(
+              child: IndexedStack(
+                index: state.currentScreen,
+                children: const [EmailStep(), OtpStep(), ResetPasswordStep()],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
   }
 }
-

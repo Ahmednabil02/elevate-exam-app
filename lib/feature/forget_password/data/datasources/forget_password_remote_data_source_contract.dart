@@ -3,6 +3,8 @@ import 'package:exam_app/feature/forget_password/domain/entity/forget_password_p
 
 abstract class ForgetPasswordRemoteDataSourceContract {
   Future<Result<void>> sendForgetPasswordCode(ForgetPasswordParams params);
+
   Future<Result<void>> verifyForgetPasswordCode(ForgetPasswordParams params);
+
   Future<Result<void>> resetPassword(ForgetPasswordParams params);
 }

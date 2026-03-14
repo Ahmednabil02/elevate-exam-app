@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:exam_app/config/base_response/result.dart';
 import 'package:exam_app/config/base_state/base_state.dart';
 import 'package:exam_app/feature/forget_password/domain/entity/forget_password_params.dart';
@@ -6,10 +7,9 @@ import 'package:exam_app/feature/forget_password/domain/use_cases/reset_password
 import 'package:exam_app/feature/forget_password/domain/use_cases/verify_reset_code_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:equatable/equatable.dart';
 
-part 'forget_password_states.dart';
 part 'forget_password_events.dart';
+part 'forget_password_states.dart';
 
 @injectable
 class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
