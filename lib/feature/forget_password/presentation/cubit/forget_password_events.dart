@@ -6,6 +6,7 @@ sealed class ForgetPasswordEvents {
 
 class SendOtpToEmailEvent extends ForgetPasswordEvents {
   final ForgetPasswordParams params;
+
   const SendOtpToEmailEvent({required this.params});
 }
 
@@ -22,5 +23,7 @@ class TogglePasswordEvent extends ForgetPasswordEvents {
 }
 
 class ResetPasswordEvent extends ForgetPasswordEvents {
-  String? password;
+  final String? password;
+
+  const ResetPasswordEvent({this.password});
 }

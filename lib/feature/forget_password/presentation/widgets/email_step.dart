@@ -1,12 +1,10 @@
-import 'dart:developer';
-
+import 'package:exam_app/config/helper/extensions/base_state/show_error_massage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/validations/validations.dart';
 import '../../../../core/values/app_strings.dart';
 import '../../../../core/widgets/custom_button.dart';
-import '../../../../core/widgets/custom_toast.dart';
 import '../../../../core/widgets/text_field/email_field.dart';
 import '../../domain/entity/forget_password_params.dart';
 import '../cubit/forget_password_cubit.dart';
@@ -32,6 +30,23 @@ class _EmailStepState extends State<EmailStep> {
   }
 
   @override
+  void dispose() {
+    emailController.dispose();
+    formKey.currentState?.dispose();
+    super.dispose();
+  }
+
+  void _onSubmit() {
+    if (formKey.currentState?.validate() ?? false) {
+      cubit.doIntent(
+        SendOtpToEmailEvent(
+          params: ForgetPasswordParams(email: emailController.text.trim()),
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
@@ -42,54 +57,38 @@ class _EmailStepState extends State<EmailStep> {
               controller: emailController,
               validator: Validations.validateEmail,
               textInputAction: TextInputAction.done,
-              onFieldSubmitted: (_) {
-                if (formKey.currentState?.validate() ?? false) {
-                  cubit.doIntent(
-                    SendOtpToEmailEvent(
-                      params: ForgetPasswordParams(email: emailController.text),
-                    ),
-                  );
-                }
-              },
+              onFieldSubmitted: (_) => _onSubmit(),
             ),
             const SizedBox(height: 48),
-            BlocConsumer<ForgetPasswordCubit, ForgetPasswordStates>(
-              listenWhen: (previous, current) =>
-                  previous.sendOtpToEmailState != current.sendOtpToEmailState,
-              listener: (context, state) {
-                if (state.sendOtpToEmailState.isError) {
-                  CustomToast.showError(
-                    context: context,
-                    message:
-                        state.sendOtpToEmailState.exception?.toString() ??
-                        AppStrings.somethingWentWrong,
-                  );
-                }
-              },
-              buildWhen: (previous, current) =>
-                  previous.sendOtpToEmailState != current.sendOtpToEmailState,
-              builder: (context, state) {
-                return CustomButton(
-                  text: AppStrings.continueText,
-                  isLoading: state.sendOtpToEmailState.isLoading,
-                  onPressed: () {
-                    if (formKey.currentState?.validate() ?? false) {
-                      log("Submitting email: ${emailController.text}");
-                      cubit.doIntent(
-                        SendOtpToEmailEvent(
-                          params: ForgetPasswordParams(
-                            email: emailController.text,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                );
-              },
-            ),
+            _SubmitButton(onSubmit: () => _onSubmit()),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SubmitButton extends StatelessWidget {
+  final void Function() onSubmit;
+
+  const _SubmitButton({required this.onSubmit});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<ForgetPasswordCubit, ForgetPasswordStates>(
+      listenWhen: (previous, current) =>
+          previous.sendOtpToEmailState != current.sendOtpToEmailState,
+      listener: (context, state) =>
+          context.showErrorMessage(state.sendOtpToEmailState),
+      buildWhen: (previous, current) =>
+          previous.sendOtpToEmailState != current.sendOtpToEmailState,
+      builder: (context, state) {
+        return CustomButton(
+          text: AppStrings.continueText,
+          isLoading: state.sendOtpToEmailState.isLoading,
+          onPressed: onSubmit,
+        );
+      },
     );
   }
 }
