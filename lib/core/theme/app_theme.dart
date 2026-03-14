@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../values/app_colors.dart';
 import '../values/app_font_style.dart';
 
@@ -31,7 +32,9 @@ class AppTheme {
           foregroundColor: AppColors.white,
           disabledBackgroundColor: AppColors.gray30,
           disabledForegroundColor: AppColors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
           minimumSize: const Size(double.infinity, 48),
           elevation: 0,
           textStyle: TextStyle(

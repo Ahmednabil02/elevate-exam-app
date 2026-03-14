@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:exam_app/config/uses_cases/pagination_params.dart';
-import 'state_types.dart';
+
 import 'state_handlers.dart';
 import 'state_mixins.dart';
- 
+import 'state_types.dart';
+
 class PaginationState<T> extends Equatable
     with PaginationTransitions<T>
     implements PaginationStateHandler<T> {
@@ -32,14 +33,23 @@ class PaginationState<T> extends Equatable
       query = const PaginationParams();
 
   bool get isInitial => state == PaginationStateType.initial;
+
   bool get isLoading => state == PaginationStateType.loading;
+
   bool get isLoadingMore => state == PaginationStateType.loadingMore;
+
   bool get isSuccess => state == PaginationStateType.success;
+
   bool get isError => state == PaginationStateType.error;
+
   bool get isErrorMore => state == PaginationStateType.errorMore;
+
   bool get isEmpty => data.isEmpty;
+
   bool get isNotEmpty => data.isNotEmpty;
+
   int get itemCount => data.length;
+
   bool get canLoadMore => hasMore && isNotEmpty;
 
   @override

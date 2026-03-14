@@ -22,10 +22,7 @@ class _ScaleTransitionAnimationState extends State<ScaleTransitionAnimation>
 
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
     _animation = CurvedAnimation(
       parent: _controller,
       curve: Curves.fastOutSlowIn,
@@ -42,9 +39,6 @@ class _ScaleTransitionAnimationState extends State<ScaleTransitionAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: _animation,
-      child: widget.child,
-    );
+    return ScaleTransition(scale: _animation, child: widget.child);
   }
 }

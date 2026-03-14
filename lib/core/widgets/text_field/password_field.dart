@@ -47,7 +47,9 @@ class PasswordField extends StatelessWidget {
       validator: validator ?? Validations.validateLoginPassword,
       onFieldSubmitted: onFieldSubmitted,
       autofillHints: const [AutofillHints.password],
-      style: obscureText?const TextStyle(letterSpacing: 2, color: AppColors.darkGray):null,
+      style: obscureText
+          ? const TextStyle(letterSpacing: 2, color: AppColors.darkGray)
+          : null,
       decoration: InputDecoration(
         labelText: labelText ?? AppStrings.password,
         suffixIcon:

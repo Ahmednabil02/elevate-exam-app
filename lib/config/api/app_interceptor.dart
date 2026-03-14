@@ -16,9 +16,9 @@ class AppInterceptors extends Interceptor {
 
   @override
   void onRequest(
-      RequestOptions options,
-      RequestInterceptorHandler handler,
-      ) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     options.cancelToken = getIt<CancelToken>();
     String? authToken = await fss.read(key: Apikeys.accessToken);
     if (authToken != null && authToken.isNotEmpty) {
@@ -39,7 +39,7 @@ class AppInterceptors extends Interceptor {
     debugPrint("err.response?.statusCode ${err.response?.statusCode}");
     if (err.response?.statusCode == StatusCode.expiredToken) {
       //todo clear user data
-     }
+    }
     super.onError(err, handler);
   }
 }

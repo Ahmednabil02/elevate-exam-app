@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
 import '../values/app_assets.dart';
 import '../values/app_colors.dart';
 import '../values/app_font_style.dart';
@@ -33,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final shouldShowBack = showBackButton && canPop;
 
     return Container(
-      color: backgroundColor ,
+      color: backgroundColor,
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
       child: AppBar(
         backgroundColor: Colors.transparent,
@@ -72,8 +73,7 @@ class _BackButton extends StatelessWidget {
         width: 20,
         height: 20,
         fit: BoxFit.scaleDown,
-       ),
- 
+      ),
     );
   }
 }

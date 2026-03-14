@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
+
 import '../values/app_colors.dart';
 import '../values/app_font_style.dart';
 
@@ -71,6 +72,7 @@ class CustomToast {
         return ToastificationType.info;
     }
   }
+
   Color _getPrimaryColor() {
     switch (type) {
       case ToastType.success:

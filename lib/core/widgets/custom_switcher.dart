@@ -1,8 +1,10 @@
 import 'package:exam_app/core/values/app_colors.dart';
 import 'package:flutter/cupertino.dart';
+
 class CustomSwitcher extends StatelessWidget {
   final bool value;
   final void Function(bool)? onChanged;
+
   const CustomSwitcher({super.key, required this.value, this.onChanged});
 
   @override
