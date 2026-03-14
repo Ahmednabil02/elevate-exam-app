@@ -1,21 +1,29 @@
+import 'package:exam_app/config/dependency_injection/di.dart';
 import 'package:exam_app/core/routes/routes.dart';
+import 'package:exam_app/features/home/presentation/pages/home_page.dart';
+import 'package:exam_app/features/login/presentation/cubit/login_cubit.dart';
+import 'package:exam_app/features/login/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
-
-
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.home,
+    initialLocation: Routes.login,
     routes: [
+      GoRoute(
+        path: Routes.login,
+        builder: (BuildContext context, GoRouterState state) {
+          return BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child: const LoginPage(),
+          );
+        },
+      ),
       GoRoute(
         path: Routes.home,
         builder: (BuildContext context, GoRouterState state) {
-          return const Scaffold(
-            body: Center(
-              child: Text('Core & Config Baseline Ready'),
-            ),
-          );
+          return const HomePage();
         },
       ),
     ],
