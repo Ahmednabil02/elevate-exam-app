@@ -1,4 +1,4 @@
- import 'filter_param.dart';
+import 'filter_param.dart';
 import 'params.dart';
 
 class PaginationParams extends Params {

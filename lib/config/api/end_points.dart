@@ -1,5 +1,6 @@
 class EndPoints {
   static const String baseUrl = "https://exam.elevateegy.com/api/v1";
+
   // static const String baseImageUrl = "https://exam.elevateegy.com/images/";
 
   // Forget Password
@@ -7,6 +8,7 @@ class EndPoints {
   static const String verifyEmailCode = "/auth/verifyResetCode";
   static const String resetPassword = "/auth/resetPassword";
   static const String signupEndpoint = "/auth/signup";
+
   // added login endpoint
   static const String login = "/auth/signin";
 

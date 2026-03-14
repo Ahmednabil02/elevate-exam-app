@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../values/app_colors.dart';
 
 enum QuestionOptionState { normal, selected, correct, incorrect }
@@ -81,11 +82,7 @@ class QuestionOptionCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(
-              getIcon(),
-              color: getIconColor(),
-              size: 24,
-            ),
+            Icon(getIcon(), color: getIconColor(), size: 24),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
