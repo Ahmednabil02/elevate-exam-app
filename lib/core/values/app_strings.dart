@@ -1,5 +1,6 @@
 class AppStrings {
   AppStrings._();
+
   static const String appName = 'Online Exam';
 
   // Auth
@@ -95,4 +96,5 @@ class AppStrings {
   static const String confirmPasswordPlaceholder = 'Confirm password';
   static const String continueText = 'Continue';
   static const String thisEmailIsNotValid = 'This Email is not valid';
+  static const String passwordResetSuccessfully = 'Password reset successfully';
 }

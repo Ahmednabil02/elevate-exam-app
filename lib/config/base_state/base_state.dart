@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'state_types.dart';
+
 import 'state_handlers.dart';
+import 'state_types.dart';
 
 class BaseState<T> extends Equatable implements StateHandler<T> {
   final BaseStateType state;
@@ -35,8 +36,11 @@ class BaseState<T> extends Equatable implements StateHandler<T> {
       data = null;
 
   bool get isInitial => state == BaseStateType.initial;
+
   bool get isLoading => state == BaseStateType.loading;
+
   bool get isSuccess => state == BaseStateType.success;
+
   bool get isError => state == BaseStateType.error;
 
   @override
