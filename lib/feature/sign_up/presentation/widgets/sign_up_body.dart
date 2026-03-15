@@ -162,7 +162,7 @@ class _SubmitButton extends StatelessWidget {
       listener: (context, state) {
         context.showErrorMessage(state.signUpState);
         if (state.signUpState.isSuccess) {
-          context.go(Routes.home);
+          context.go(Routes.login);
         }
       },
       buildWhen: (prev, curr) => prev.signUpState != curr.signUpState,
