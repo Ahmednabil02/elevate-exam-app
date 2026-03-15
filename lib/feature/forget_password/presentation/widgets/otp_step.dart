@@ -43,7 +43,7 @@ class _OtpStepState extends State<OtpStep> {
         return state.verifyOtpState.handleBuilderState() ??
             _OtpBody(
               otpController: otpController,
-              email: state.email!,
+              email: state.email??'',
               isError: state.verifyOtpState.isError,
             );
       },

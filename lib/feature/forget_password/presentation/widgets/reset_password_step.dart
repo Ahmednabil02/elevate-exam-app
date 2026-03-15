@@ -68,7 +68,7 @@ class _ResetPasswordStepState extends State<ResetPasswordStep> {
             const SizedBox(height: 24),
             _ConfirmNewPassword(
               confirmPasswordController: confirmPasswordController,
-              newPassword: newPasswordController.text,
+              newPassword: newPasswordController,
               onSubmit: (_) => _onSubmit(),
               toggleVisibility: () => _toggleVisibility(true),
             ),
@@ -95,7 +95,7 @@ class _SubmitButton extends StatelessWidget {
         context.showSuccessMessage(
           state: state.resetPasswordState,
           massage: AppStrings.passwordResetSuccessfully,
-          onSuccess: () => context.go(Routes.home),
+          onSuccess: () => context.go(Routes.login),
         );
         context.showErrorMessage(state.resetPasswordState);
       },
@@ -112,7 +112,7 @@ class _SubmitButton extends StatelessWidget {
 
 class _ConfirmNewPassword extends StatelessWidget {
   final TextEditingController confirmPasswordController;
-  final String newPassword;
+  final TextEditingController newPassword;
   final void Function(String)? onSubmit;
   final void Function()? toggleVisibility;
 
@@ -133,7 +133,7 @@ class _ConfirmNewPassword extends StatelessWidget {
           controller: confirmPasswordController,
           labelText: AppStrings.confirmPasswordLabel,
           validator: (value) =>
-              Validations.validatePasswordVerification(value, newPassword),
+              Validations.validatePasswordVerification(value, newPassword.text),
           textInputAction: TextInputAction.done,
           obscureText: !state.confirmPasswordVisible,
           toggleVisibility: toggleVisibility,
