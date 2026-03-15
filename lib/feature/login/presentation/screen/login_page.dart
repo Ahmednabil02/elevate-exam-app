@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
       initial: () {},
       loading: () {},
       success: (data) {
-        context.pushReplacementNamed(Routes.home);
+        context.go(Routes.home);
       },
       error: (exception) {
         ScaffoldMessenger.of(context).showSnackBar(
