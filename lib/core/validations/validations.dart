@@ -102,6 +102,31 @@ class Validations {
       return AppStrings.usernameRequired;
     }
 
+    final usernameRegex = RegExp(r'^[a-zA-Z0-9._]+$');
+    if (!usernameRegex.hasMatch(value)) {
+      return AppStrings.usernameInvalid;
+    }
+
+    if (value.length < 3) {
+      return 'Username must be at least 3 characters';
+    }
+
+    return null;
+  }
+
+  static String? validateEgyptianPhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return AppStrings.phoneRequired;
+    }
+
+    if (value.length != 11) {
+      return AppStrings.egyptianPhoneInvalid;
+    }
+
+    if (!value.startsWith('01')) {
+      return AppStrings.egyptianPhoneInvalid;
+    }
+
     return null;
   }
 }

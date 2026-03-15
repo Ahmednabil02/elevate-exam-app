@@ -72,6 +72,12 @@ class AppStrings {
   static const String emailRequired = 'Please enter your email';
   static const String emailInvalid = 'Please enter a valid email address';
   static const String usernameRequired = 'Please enter your username';
+  static const String usernameInvalid =
+      'Username can only contain letters, numbers, dots and underscores';
+  static const String username = 'Username';
+  static const String phoneNumber = 'Phone number';
+  static const String egyptianPhoneInvalid =
+      'Phone must start with 01 and be 11 digits';
 
   // Resend Timer
   static const String didntReceiveCode = "Didn't receive code?";
