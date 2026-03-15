@@ -118,7 +118,7 @@ class _TimerText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '${AppStrings.resendIn} $time',
-      style: AppFontStyle.regular14(context).copyWith(color: AppColors.grayA6),
+      style: AppFontStyle.regular14(context).copyWith(color: AppColors.silver),
     );
   }
 }
