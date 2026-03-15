@@ -5,5 +5,4 @@ class Routes {
   static const String home = "/home";
   static const String forgetPassword = "/forget-password";
   static const String changePassword = "/change-password";
-
 }
