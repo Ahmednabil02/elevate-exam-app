@@ -115,7 +115,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildForgetPassword() => Align(
         alignment: Alignment.centerRight,
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            context.push(Routes.forgetPassword);
+          },
           child: Text(
             "Forget password",
             style: AppFontStyle.regular16(context).copyWith(
@@ -141,7 +143,9 @@ class _LoginPageState extends State<LoginPage> {
               style: AppFontStyle.regular16(context).copyWith(color: AppColors.black),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(Routes.register);
+              },
               child: Text(
                 "Sign up",
                 style: AppFontStyle.medium16(context).copyWith(
