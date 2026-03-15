@@ -65,9 +65,6 @@ extension GetItInjectableX on _i174.GetIt {
         fss: gh<_i558.FlutterSecureStorage>(),
       ),
     );
-    gh.factory<_i906.SignupCubit>(
-      () => _i906.SignupCubit(signupUserCase: gh<InvalidType>()),
-    );
     gh.factory<_i716.SignupRemoteDataSourceContract>(
       () => _i1011.SignUpRemoteDataSourceImpl(
         homeApiClient: gh<_i103.SignUpApiClient>(),
@@ -81,6 +78,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i280.SignUpUserUseCase>(
       () => _i280.SignUpUserUseCase(repo: gh<_i919.SignUpRepositoryContract>()),
+    );
+    gh.factory<_i906.SignUpCubit>(
+      () => _i906.SignUpCubit(signUpUserUseCase: gh<_i280.SignUpUserUseCase>()),
     );
     return this;
   }
