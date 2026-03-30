@@ -50,6 +50,9 @@ abstract class AppColors {
   static const Color lightPink = Color(0xFFEBCCCC);
   static const Color mediumGray = Color(0xFFAAAAAA);
   static const Color warning = Color(0xFFFFA500);
+
+  // Shadows
+  static const Color shadowColor = Color(0x2A292940);
 }
 
 // class AppColors {

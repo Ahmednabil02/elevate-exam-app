@@ -30,12 +30,11 @@ class PaginationParams extends Params {
   PaginationParams copyWith({
     int? page,
     int? limit,
-    List<FilterParam>? filterList,
   }) {
     return PaginationParams(
       page: page ?? this.page,
       limit: limit ?? this.limit,
-      filterList: filterList ?? this.filterList,
+      filterList: filterList ,
     );
   }
 
