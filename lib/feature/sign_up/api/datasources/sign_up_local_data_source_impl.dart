@@ -5,16 +5,16 @@ import 'package:exam_app/feature/sign_up/data/datasources/sign_up_local_data_sou
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: SignupLocalDataSourceContract)
-class SignupLocalDataSourceImpl implements SignupLocalDataSourceContract {
+@Injectable(as: UserLocalDataSourceContract)
+class UserLocalDataSourceImpl implements UserLocalDataSourceContract {
   final FlutterSecureStorage fss;
 
-  SignupLocalDataSourceImpl({required this.fss});
+  UserLocalDataSourceImpl({required this.fss});
 
   @override
   Future<void> saveUserToken(String token) async {
     try {
-      fss.write(key: Apikeys.accessToken, value: token);
+      fss.write(key: APIkeys.accessToken, value: token);
     } catch (e) {
       log("the ex is :$e ");
     }
