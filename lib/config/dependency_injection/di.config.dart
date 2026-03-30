@@ -100,10 +100,9 @@ extension GetItInjectableX on _i174.GetIt {
         fss: gh<_i558.FlutterSecureStorage>(),
       ),
     );
-    gh.factory<_i623.SignupLocalDataSourceContract>(
-      () => _i448.SignupLocalDataSourceImpl(
-        fss: gh<_i558.FlutterSecureStorage>(),
-      ),
+    gh.factory<_i623.UserLocalDataSourceContract>(
+      () =>
+          _i448.UserLocalDataSourceImpl(fss: gh<_i558.FlutterSecureStorage>()),
     );
     gh.factory<_i170.ForgetPasswordRepository>(
       () => _i876.ForgetPasswordRepositoryImpl(
@@ -128,7 +127,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i374.LoginRepository>(
       () => _i197.LoginRepositoryImpl(
         remoteDataSource: gh<_i385.LoginRemoteDataSourceContract>(),
+        localDataSource: gh<_i623.UserLocalDataSourceContract>(),
       ),
+    );
+    gh.factory<_i919.SignUpRepositoryContract>(
+      () => _i337.SignUpRepositoryImpl(
+        remoteDataSource: gh<_i716.SignupRemoteDataSourceContract>(),
+        localDataSource: gh<_i623.UserLocalDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i280.SignUpUserUseCase>(
+      () => _i280.SignUpUserUseCase(repo: gh<_i919.SignUpRepositoryContract>()),
     );
     gh.factory<_i33.ResetPasswordUseCase>(
       () => _i33.ResetPasswordUseCase(gh<_i170.ForgetPasswordRepository>()),
@@ -136,11 +145,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i998.VerifyOtpUseCase>(
       () => _i998.VerifyOtpUseCase(gh<_i170.ForgetPasswordRepository>()),
     );
-    gh.factory<_i919.SignUpRepositoryContract>(
-      () => _i337.SignUpRepositoryImpl(
-        remoteDataSource: gh<_i716.SignupRemoteDataSourceContract>(),
-        localDataSource: gh<_i623.SignupLocalDataSourceContract>(),
-      ),
+    gh.factory<_i906.SignUpCubit>(
+      () => _i906.SignUpCubit(signUpUserUseCase: gh<_i280.SignUpUserUseCase>()),
     );
     gh.factory<_i46.LoginUseCase>(
       () => _i46.LoginUseCase(repository: gh<_i374.LoginRepository>()),
@@ -152,14 +158,8 @@ extension GetItInjectableX on _i174.GetIt {
         resetPasswordUseCase: gh<_i33.ResetPasswordUseCase>(),
       ),
     );
-    gh.factory<_i280.SignUpUserUseCase>(
-      () => _i280.SignUpUserUseCase(repo: gh<_i919.SignUpRepositoryContract>()),
-    );
     gh.factory<_i453.LoginCubit>(
       () => _i453.LoginCubit(loginUseCase: gh<_i46.LoginUseCase>()),
-    );
-    gh.factory<_i906.SignUpCubit>(
-      () => _i906.SignUpCubit(signUpUserUseCase: gh<_i280.SignUpUserUseCase>()),
     );
     return this;
   }
