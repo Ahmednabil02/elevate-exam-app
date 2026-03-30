@@ -49,7 +49,7 @@ class ForgetPasswordRemoteDataSourceImpl
         response as Map<String, dynamic>,
       );
 
-      await fss.write(key: Apikeys.accessToken, value: resetResponse.token);
+      await fss.write(key: APIkeys.accessToken, value: resetResponse.token);
 
       log("Token saved successfully: ${resetResponse.token}");
     });
