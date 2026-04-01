@@ -2,9 +2,9 @@ import 'package:exam_app/config/uses_cases/filter_param.dart';
 import 'package:exam_app/config/uses_cases/pagination_params.dart';
 
 class ExamParms extends PaginationParams {
-  final String subjectId;
+  final String? subjectId;
 
-  const ExamParms({required this.subjectId, super.page, super.limit});
+  const ExamParms({ this.subjectId, super.page, super.limit});
 
   @override
   List<FilterParam> get filterList => [

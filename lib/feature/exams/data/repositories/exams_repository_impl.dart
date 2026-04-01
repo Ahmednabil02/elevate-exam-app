@@ -18,7 +18,7 @@ class ExamsRepositoryImpl implements ExamsRepository {
   }) async {
     final result = await examsRemoteDataSourceContract.getExams(params: params);
     return result.when(
-      success: (data) => Success(data: data?.toEntity()),
+      success: (data) => Success(data: data?.toExamEntity()),
       error: (exception) => Error(exception: exception),
     );
   }
