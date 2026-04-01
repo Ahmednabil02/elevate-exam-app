@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:exam_app/config/base_response/entity/base_pagination_entity.dart';
+import 'package:exam_app/config/base_response/entity/meta_entity.dart';
 import 'package:exam_app/config/uses_cases/pagination_params.dart';
 
 import 'state_handlers.dart';
@@ -10,27 +12,27 @@ class PaginationState<T> extends Equatable
     implements PaginationStateHandler<T> {
   final PaginationStateType state;
   final List<T> data;
+  final MetaEntity? meta;
   final Exception? exception;
-  final bool hasMore;
   final PaginationParams query;
 
   const PaginationState({
     required this.state,
     required this.data,
+    this.meta,
     this.exception,
-    this.hasMore = true,
     required this.query,
   });
 
   @override
-  List<Object?> get props => [state, data, exception, hasMore, query];
+  List<Object?> get props => [state, data, meta, exception, query];
 
   const PaginationState.initial()
-    : state = PaginationStateType.initial,
-      data = const [],
-      exception = null,
-      hasMore = true,
-      query = const PaginationParams();
+      : state = PaginationStateType.initial,
+        data = const [],
+        meta = null,
+        exception = null,
+        query = const PaginationParams();
 
   bool get isInitial => state == PaginationStateType.initial;
 
@@ -50,57 +52,76 @@ class PaginationState<T> extends Equatable
 
   int get itemCount => data.length;
 
-  bool get canLoadMore => hasMore && isNotEmpty;
+  bool get hasMore => meta?.hasNextPage ?? true;
+
+  bool get canLoadMore => hasMore && isNotEmpty && !isLoadingMore;
+
+  int get currentPage => meta?.currentPage ?? query.page ?? 1;
+
+  int get totalPages => meta?.numberOfPages ?? 1;
+
+  int get totalItems => meta?.totalItems ?? 0;
 
   @override
   PaginationState<T> toLoading({PaginationParams? query}) => PaginationState(
-    state: PaginationStateType.loading,
-    data: const [],
-    hasMore: true,
-    query: query ?? this.query.copyWith(page: 1),
-  );
+        state: PaginationStateType.loading,
+        data: const [],
+        meta: null,
+        query: query ?? this.query.copyWith(page: 1),
+      );
 
   @override
   PaginationState<T> toLoadingMore() => PaginationState(
-    state: PaginationStateType.loadingMore,
-    data: data,
-    hasMore: hasMore,
-    query: query.copyWith(page: (query.page ?? 1) + 1),
-  );
+        state: PaginationStateType.loadingMore,
+        data: data,
+        meta: meta,
+        query: query.copyWith(page: currentPage + 1),
+      );
 
   @override
-  PaginationState<T> toSuccess(List<T> newData, {bool? hasMore}) =>
+  PaginationState<T> toSuccess(
+    List<T> newData, {
+    MetaEntity? meta,
+  }) =>
       PaginationState(
         state: PaginationStateType.success,
         data: query.page == 1 ? newData : [...data, ...newData],
-        hasMore: hasMore ?? newData.isNotEmpty,
+        meta: meta ?? this.meta,
+        query: query,
+      );
+
+  PaginationState<T> toSuccessFromEntity(BasePaginationEntity<T> entity) =>
+      PaginationState(
+        state: PaginationStateType.success,
+        data: query.page == 1 ? entity.data : [...data, ...entity.data],
+        meta: entity.meta,
         query: query,
       );
 
   @override
   PaginationState<T> toError(Exception e) => PaginationState(
-    state: PaginationStateType.error,
-    data: const [],
-    exception: e,
-    hasMore: false,
-    query: query.copyWith(page: 1),
-  );
+        state: PaginationStateType.error,
+        data: const [],
+        meta: null,
+        exception: e,
+        query: query.copyWith(page: 1),
+      );
 
   @override
   PaginationState<T> toErrorMore(Exception e) => PaginationState(
-    state: PaginationStateType.errorMore,
-    data: data,
-    exception: e,
-    hasMore: hasMore,
-    query: query,
-  );
+        state: PaginationStateType.errorMore,
+        data: data,
+        meta: meta,
+        exception: e,
+        query: query,
+      );
 
   @override
   R when<R>({
     required R Function() initial,
     required R Function() loading,
     required R Function(List<T> data) loadingMore,
-    required R Function(List<T> data, bool hasMore) success,
+    required R Function(List<T> data, MetaEntity? meta) success,
     required R Function(Exception exception) error,
     required R Function(List<T> data, Exception exception) errorMore,
   }) {
@@ -108,7 +129,7 @@ class PaginationState<T> extends Equatable
       PaginationStateType.initial => initial(),
       PaginationStateType.loading => loading(),
       PaginationStateType.loadingMore => loadingMore(data),
-      PaginationStateType.success => success(data, hasMore),
+      PaginationStateType.success => success(data, meta),
       PaginationStateType.error => error(exception!),
       PaginationStateType.errorMore => errorMore(data, exception!),
     };
@@ -116,5 +137,5 @@ class PaginationState<T> extends Equatable
 
   @override
   String toString() =>
-      'PaginationState($state, items: $itemCount, hasMore: $hasMore, page: ${query.page}${exception != null ? ', error: $exception' : ''})';
+      'PaginationState($state, items: $itemCount, page: $currentPage/$totalPages, hasMore: $hasMore${exception != null ? ', error: $exception' : ''})';
 }

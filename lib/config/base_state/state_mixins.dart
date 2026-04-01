@@ -1,3 +1,4 @@
+import 'package:exam_app/config/base_response/entity/meta_entity.dart';
 import 'package:exam_app/config/base_state/base_state.dart';
 import 'package:exam_app/config/uses_cases/pagination_params.dart';
 
@@ -18,11 +19,11 @@ mixin PaginationTransitions<T> {
 
   PaginationState<T> toLoadingMore();
 
-  PaginationState<T> toSuccess(List<T> data, {bool? hasMore});
+  PaginationState<T> toSuccess(List<T> data, {MetaEntity? meta});
 
   PaginationState<T> toError(Exception e);
 
   PaginationState<T> toErrorMore(Exception e);
 
-  PaginationState<T> toInitial() => PaginationState.initial();
+  PaginationState<T> toInitial() => const PaginationState.initial();
 }

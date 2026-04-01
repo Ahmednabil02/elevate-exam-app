@@ -14,7 +14,15 @@ class MetaDto {
   @JsonKey(name: 'limit')
   final int? limit;
 
-  const MetaDto({this.currentPage, this.numberOfPages, this.limit});
+  @JsonKey(name: 'total')
+  final int? total;
+
+  const MetaDto({
+    this.currentPage,
+    this.numberOfPages,
+    this.limit,
+    this.total,
+  });
 
   factory MetaDto.fromJson(Map<String, dynamic> json) =>
       _$MetaDtoFromJson(json);
@@ -22,8 +30,9 @@ class MetaDto {
   Map<String, dynamic> toJson() => _$MetaDtoToJson(this);
 
   MetaEntity toEntity() => MetaEntity(
-    currentPage: currentPage,
-    numberOfPages: numberOfPages,
-    limit: limit,
-  );
+        currentPage: currentPage ?? 1,
+        numberOfPages: numberOfPages ?? 1,
+        limit: limit ?? 20,
+        total: total,
+      );
 }
