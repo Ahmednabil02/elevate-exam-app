@@ -103,4 +103,19 @@ class AppStrings {
   static const String continueText = 'Continue';
   static const String thisEmailIsNotValid = 'This Email is not valid';
   static const String passwordResetSuccessfully = 'Password reset successfully';
+
+  // Sign Up
+  static const String firstName = 'First name';
+  static const String lastName = 'Last name';
+  static const String enterUserName = 'Enter you user name';
+  static const String enterFirstName = 'Enter first name';
+  static const String enterLastName = 'Enter last name';
+  static const String enterPassword = 'Enter password';
+  static const String enterPhoneNumber = 'Enter phone number';
+  static const String firstNameRequired = 'Please enter your first name';
+  static const String lastNameRequired = 'Please enter your last name';
+  static const String confirmPasswordRequired = 'Please confirm your password';
+  static const String passwordsDoNotMatch = 'Passwords don\'t match';
+  static const String signUpSuccess = 'Account created successfully';
+  static const String alreadyHaveAccount = 'Already have an account?';
 }

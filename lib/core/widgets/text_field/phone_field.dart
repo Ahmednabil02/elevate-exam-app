@@ -34,6 +34,7 @@ class PhoneField extends StatelessWidget {
       validator: validator ?? Validations.validateEgyptianPhone,
       onFieldSubmitted: onFieldSubmitted,
       autofillHints: const [AutofillHints.telephoneNumber],
+      maxLength: 11,
       decoration: InputDecoration(
         labelText: AppStrings.phoneNumber,
         prefixText: '+20 ',

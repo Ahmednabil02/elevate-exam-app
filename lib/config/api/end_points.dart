@@ -21,7 +21,7 @@ class EndPoints {
   static const String changePassword = "/auth/changePassword";
 }
 
-class Apikeys {
+class APIkeys {
   static const String accessToken = 'accessToken';
   static const String refreshToken = 'refreshToken';
   static const String userId = 'userId';
