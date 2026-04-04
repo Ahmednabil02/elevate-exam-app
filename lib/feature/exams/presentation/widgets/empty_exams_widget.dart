@@ -14,21 +14,27 @@ class EmptyExamsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 200.h,
-          width: 100.w,
-          child: Image.asset(AppAssets.profit, fit: BoxFit.contain),
-        ),
+        _buildImage(),
         SizedBox(height: 20.h),
-        Text(
-          AppStrings.noDataFound,
-          style: AppFontStyle.regular20(
-            context,
-          ).copyWith(color: AppColors.gray30),
-          textAlign: TextAlign.center,
-          maxLines: 2,
-        ),
+        _buildText(context),
       ],
+    );
+  }
+
+  Widget _buildImage() {
+    return SizedBox(
+      height: 200.h,
+      width: 100.w,
+      child: Image.asset(AppAssets.profit, fit: BoxFit.contain),
+    );
+  }
+
+  Widget _buildText(BuildContext context) {
+    return Text(
+      AppStrings.noDataFound,
+      style: AppFontStyle.regular20(context).copyWith(color: AppColors.gray30),
+      textAlign: TextAlign.center,
+      maxLines: 2,
     );
   }
 }

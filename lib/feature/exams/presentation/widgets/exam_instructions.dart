@@ -35,25 +35,29 @@ class InstructionItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 6.w,
-            height: 6.h,
-            margin: EdgeInsetsDirectional.only(top: 8.h, end: 8.w),
-            decoration: const BoxDecoration(
-              color: AppColors.black,
-              shape: BoxShape.circle,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              text,
-              style: AppFontStyle.regular14(
-                context,
-              ).copyWith(color: AppColors.gray53),
-            ),
-          ),
+          _buildBullet(),
+          Expanded(child: _buildText(context)),
         ],
       ),
+    );
+  }
+
+  Widget _buildBullet() {
+    return Container(
+      width: 6.w,
+      height: 6.h,
+      margin: EdgeInsetsDirectional.only(top: 8.h, end: 8.w),
+      decoration: const BoxDecoration(
+        color: AppColors.black,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+
+  Widget _buildText(BuildContext context) {
+    return Text(
+      text,
+      style: AppFontStyle.regular14(context).copyWith(color: AppColors.gray53),
     );
   }
 }

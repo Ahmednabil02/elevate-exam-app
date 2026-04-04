@@ -11,10 +11,10 @@ class ExamsBody extends StatefulWidget {
   const ExamsBody({super.key});
 
   @override
-  State<ExamsBody> createState() => _ExamsBodyState();
+  State<ExamsBody> createState() => ExamsBodyState();
 }
 
-class _ExamsBodyState extends State<ExamsBody> {
+class ExamsBodyState extends State<ExamsBody> {
   bool _isLoadingMore = false;
 
   bool _onScrollNotification(ScrollNotification notification) {
@@ -52,27 +52,26 @@ class _ExamsBodyState extends State<ExamsBody> {
       buildWhen: (previous, current) =>
           previous.examsState.data != current.examsState.data ||
           previous.examsState.state != current.examsState.state,
-      builder: (context, state) {
-        return NotificationListener<ScrollNotification>(
-          onNotification: _onScrollNotification,
-          child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                sliver: PaginationSliverList<ExamEntity>(
-                  state: state.examsState,
-                  itemBuilder: (context, exam, index) => ExamCard(exam: exam),
-                  loadingWidget: const ExamsSliverShimmer(),
-                  loadingMoreWidget: const ExamCardShimmer(),
-                ),
-              ),
-            ],
+      builder: (context, state) => _buildScrollView(state),
+    );
+  }
+
+  Widget _buildScrollView(ExamsStates state) {
+    return NotificationListener<ScrollNotification>(
+      onNotification: _onScrollNotification,
+      child: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            sliver: PaginationSliverList<ExamEntity>(
+              state: state.examsState,
+              itemBuilder: (context, exam, index) => ExamCard(exam: exam),
+              loadingWidget: const ExamsSliverShimmer(),
+              loadingMoreWidget: const ExamCardShimmer(),
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
