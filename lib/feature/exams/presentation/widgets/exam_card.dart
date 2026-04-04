@@ -19,7 +19,7 @@ class ExamCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.push(Routes.examDetails, extra: {"exam": exam}),
       child: Container(
-        decoration: _buildDecoration(),
+        decoration: ExamCardDecoration(),
         margin: EdgeInsets.only(bottom: 16.h),
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         child: Row(
@@ -32,22 +32,23 @@ class ExamCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  BoxDecoration _buildDecoration() {
-    return BoxDecoration(
-      borderRadius: BorderRadius.circular(10.r),
-      shape: BoxShape.rectangle,
-      color: AppColors.white,
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.shadowColor.withValues(alpha: 0.25),
-          spreadRadius: 0,
-          blurRadius: 8,
-          offset: Offset.zero,
-        ),
-      ],
-    );
-  }
+class ExamCardDecoration extends BoxDecoration {
+  ExamCardDecoration()
+    : super(
+        borderRadius: BorderRadius.circular(10.r),
+        shape: BoxShape.rectangle,
+        color: AppColors.white,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadowColor.withValues(alpha: 0.25),
+            spreadRadius: 0,
+            blurRadius: 8,
+            offset: Offset.zero,
+          ),
+        ],
+      );
 }
 
 class ExamIcon extends StatelessWidget {

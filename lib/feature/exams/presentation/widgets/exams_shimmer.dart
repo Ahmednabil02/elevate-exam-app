@@ -134,8 +134,11 @@ class ShimmerBoxState extends State<ShimmerBox>
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     )..repeat();
+    _animation = _createAnimation();
+  }
 
-    _animation = Tween<double>(
+  Animation<double> _createAnimation() {
+    return Tween<double>(
       begin: -1,
       end: 2,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
@@ -151,21 +154,46 @@ class ShimmerBoxState extends State<ShimmerBox>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
-      builder: (context, child) => Container(
+      builder: (context, child) => ShimmerContainer(
         width: widget.width,
         height: widget.height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [AppColors.gray10, AppColors.lightGray, AppColors.gray10],
-            stops: [
-              _animation.value - 0.3,
-              _animation.value,
-              _animation.value + 0.3,
-            ].map((e) => e.clamp(0.0, 1.0)).toList(),
-          ),
+        borderRadius: widget.borderRadius,
+        animationValue: _animation.value,
+      ),
+    );
+  }
+}
+
+class ShimmerContainer extends StatelessWidget {
+  final double width;
+  final double height;
+  final double borderRadius;
+  final double animationValue;
+
+  const ShimmerContainer({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.borderRadius,
+    required this.animationValue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [AppColors.gray10, AppColors.lightGray, AppColors.gray10],
+          stops: [
+            animationValue - 0.3,
+            animationValue,
+            animationValue + 0.3,
+          ].map((e) => e.clamp(0.0, 1.0)).toList(),
         ),
       ),
     );

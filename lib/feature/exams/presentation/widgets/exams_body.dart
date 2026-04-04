@@ -18,32 +18,32 @@ class ExamsBodyState extends State<ExamsBody> {
   bool _isLoadingMore = false;
 
   bool _onScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollUpdateNotification) {
-      final examsCubit = context.read<ExamsCubit>();
-      final examsState = examsCubit.state.examsState;
+    if (notification is! ScrollUpdateNotification) return false;
 
-      final maxScroll = notification.metrics.maxScrollExtent;
-      final currentScroll = notification.metrics.pixels;
-      final threshold = maxScroll - 200;
+    final examsCubit = context.read<ExamsCubit>();
+    final examsState = examsCubit.state.examsState;
+    final threshold = notification.metrics.maxScrollExtent - 200;
 
-      if (currentScroll >= threshold &&
-          examsState.canLoadMore &&
-          !_isLoadingMore) {
-        _isLoadingMore = true;
-
-        final currentParams = examsState.query as ExamParms;
-        final nextPage = examsState.currentPage + 1;
-
-        examsCubit.doIntent(
-          LoadMoreExamsEvent(params: currentParams.copyWith(page: nextPage)),
-        );
-
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted) _isLoadingMore = false;
-        });
-      }
+    if (notification.metrics.pixels >= threshold &&
+        examsState.canLoadMore &&
+        !_isLoadingMore) {
+      _loadMoreExams(examsCubit, examsState);
     }
     return false;
+  }
+
+  void _loadMoreExams(ExamsCubit cubit, dynamic examsState) {
+    _isLoadingMore = true;
+    final currentParams = examsState.query as ExamParms;
+    final nextPage = examsState.currentPage + 1;
+
+    cubit.doIntent(
+      LoadMoreExamsEvent(params: currentParams.copyWith(page: nextPage)),
+    );
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) _isLoadingMore = false;
+    });
   }
 
   @override
@@ -52,13 +52,28 @@ class ExamsBodyState extends State<ExamsBody> {
       buildWhen: (previous, current) =>
           previous.examsState.data != current.examsState.data ||
           previous.examsState.state != current.examsState.state,
-      builder: (context, state) => _buildScrollView(state),
+      builder: (context, state) => ExamsScrollView(
+        state: state,
+        onScrollNotification: _onScrollNotification,
+      ),
     );
   }
+}
 
-  Widget _buildScrollView(ExamsStates state) {
+class ExamsScrollView extends StatelessWidget {
+  final ExamsStates state;
+  final bool Function(ScrollNotification) onScrollNotification;
+
+  const ExamsScrollView({
+    super.key,
+    required this.state,
+    required this.onScrollNotification,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      onNotification: _onScrollNotification,
+      onNotification: onScrollNotification,
       child: CustomScrollView(
         slivers: [
           SliverPadding(
