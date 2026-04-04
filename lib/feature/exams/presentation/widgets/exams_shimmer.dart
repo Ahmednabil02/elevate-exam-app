@@ -42,17 +42,17 @@ class ExamCardShimmer extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _ShimmerBox(width: 60.w, height: 71.h),
+          ShimmerBox(width: 60.w, height: 71.h),
           SizedBox(width: 8.w),
-          Expanded(child: _ExamDetails()),
+          Expanded(child: ExamDetailsShimmer()),
         ],
       ),
     );
   }
 }
 
-class _ExamDetails extends StatelessWidget {
-  const _ExamDetails();
+class ExamDetailsShimmer extends StatelessWidget {
+  const ExamDetailsShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,22 +66,18 @@ class _ExamDetails extends StatelessWidget {
           spacing: 16.h,
           children: [
             Flexible(
-              child: _ShimmerBox(
-                width: 108.w,
-                height: 16.h,
-                borderRadius: 16.r,
-              ),
+              child: ShimmerBox(width: 108.w, height: 16.h, borderRadius: 16.r),
             ),
-            _ShimmerBox(width: 54.w, height: 12.h, borderRadius: 16.r),
+            ShimmerBox(width: 54.w, height: 12.h, borderRadius: 16.r),
           ],
         ),
-        _ShimmerBox(width: 48.w, height: 12.h, borderRadius: 16.r),
+        ShimmerBox(width: 48.w, height: 12.h, borderRadius: 16.r),
 
         Wrap(
           spacing: 10.w,
           children: [
-            _ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
-            _ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
+            ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
+            ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
           ],
         ),
       ],
@@ -89,22 +85,23 @@ class _ExamDetails extends StatelessWidget {
   }
 }
 
-class _ShimmerBox extends StatefulWidget {
+class ShimmerBox extends StatefulWidget {
   final double width;
   final double height;
   final double borderRadius;
 
-  const _ShimmerBox({
+  const ShimmerBox({
+    super.key,
     required this.width,
     required this.height,
     this.borderRadius = 8,
   });
 
   @override
-  State<_ShimmerBox> createState() => _ShimmerBoxState();
+  State<ShimmerBox> createState() => ShimmerBoxState();
 }
 
-class _ShimmerBoxState extends State<_ShimmerBox>
+class ShimmerBoxState extends State<ShimmerBox>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

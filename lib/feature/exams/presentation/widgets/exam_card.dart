@@ -38,7 +38,7 @@ class ExamCard extends StatelessWidget {
           children: [
             ExamIcon(),
             SizedBox(width: 8.w),
-            Expanded(child: _ExamDetails(exam: exam)),
+            Expanded(child: ExamDetails(exam: exam)),
           ],
         ),
       ),
@@ -61,8 +61,8 @@ class ExamIcon extends StatelessWidget {
   }
 }
 
-class _ExamDetails extends StatelessWidget {
-  const _ExamDetails({required this.exam});
+class ExamDetails extends StatelessWidget {
+  const ExamDetails({super.key, required this.exam});
 
   final ExamEntity exam;
 

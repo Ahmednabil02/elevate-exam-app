@@ -14,19 +14,19 @@ class ExamInstructions extends StatelessWidget {
       children: [
         Text(AppStrings.instructions, style: AppFontStyle.medium18(context)),
         SizedBox(height: 12.h),
-        _InstructionItem(text: AppStrings.instruction),
-        _InstructionItem(text: AppStrings.instruction),
-        _InstructionItem(text: AppStrings.instruction),
-        _InstructionItem(text: AppStrings.instruction),
+        InstructionItem(text: AppStrings.instruction),
+        InstructionItem(text: AppStrings.instruction),
+        InstructionItem(text: AppStrings.instruction),
+        InstructionItem(text: AppStrings.instruction),
       ],
     );
   }
 }
 
-class _InstructionItem extends StatelessWidget {
+class InstructionItem extends StatelessWidget {
   final String text;
 
-  const _InstructionItem({required this.text});
+  const InstructionItem({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

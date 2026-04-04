@@ -23,16 +23,16 @@ class ExamHeader extends StatelessWidget {
             Expanded(child: ExamTitle(exam: exam)),
           ],
         ),
-        _ExamInfo(exam: exam),
+        ExamInfo(exam: exam),
       ],
     );
   }
 }
 
-class _ExamInfo extends StatelessWidget {
+class ExamInfo extends StatelessWidget {
   final ExamEntity exam;
 
-  const _ExamInfo({required this.exam});
+  const ExamInfo({super.key, required this.exam});
 
   @override
   Widget build(BuildContext context) {
