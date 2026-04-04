@@ -17,7 +17,11 @@ class ExamsRepositoryImpl implements ExamsRepository {
     required ExamParms params,
   }) async {
     final result = await examsRemoteDataSourceContract.getExams(params: params);
-    return result.when(
+    return result.makeDummyData(
+      dummyData: BasePaginationEntity.dummyData<ExamEntity>(
+        params: params,
+        allData: ExamEntity.dummyExams,
+      ),
       success: (data) => Success(data: data?.toExamEntity()),
       error: (exception) => Error(exception: exception),
     );

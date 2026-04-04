@@ -1,14 +1,15 @@
 import 'package:exam_app/core/values/app_assets.dart';
 import 'package:exam_app/core/values/app_colors.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
+import 'package:exam_app/core/values/app_strings.dart';
 import 'package:exam_app/feature/exams/domain/entities/exam_entity.dart';
 import 'package:exam_app/feature/exams/presentation/widgets/row_span.dart';
 import 'package:exam_app/feature/exams/presentation/widgets/start_exam_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExamRow extends StatelessWidget {
-  const ExamRow({super.key, required this.exam, });
+class ExamCard extends StatelessWidget {
+  const ExamCard({super.key, required this.exam});
   final ExamEntity exam;
 
   void _showBottomSheet(BuildContext context) {
@@ -18,7 +19,7 @@ class ExamRow extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
-      builder: (context) => StartExamBottomSheet(exam: exam,),
+      builder: (context) => StartExamBottomSheet(exam: exam),
     );
   }
 
@@ -28,13 +29,13 @@ class ExamRow extends StatelessWidget {
       onTap: () => _showBottomSheet(context),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(10.r),
           shape: BoxShape.rectangle,
           color: AppColors.white,
           boxShadow: [
             BoxShadow(
-              color: AppColors.shadowColor,
-              spreadRadius: 2,
+              color: AppColors.shadowColor.withValues(alpha: 0.25),
+              spreadRadius: 0,
               blurRadius: 8,
               offset: Offset.zero,
             ),
@@ -59,7 +60,7 @@ class _ExamThumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 60.w,
-      height: 71.h,
+      height: 72.h,
       child: Image.asset(AppAssets.profit, fit: BoxFit.cover),
     );
   }
@@ -85,15 +86,15 @@ class _ExamDetails extends StatelessWidget {
               ),
             ),
             Text(
-              "${exam.duration} min",
+              "${exam.duration} ${AppStrings.minutes}",
               style: AppFontStyle.regular13(
                 context,
-              ).copyWith(color: AppColors.blue40),
+              ).copyWith(color: AppColors.primaryBlue),
             ),
           ],
         ),
         Text(
-          "${exam.numberOfQuestions} Questions",
+          "${exam.numberOfQuestions} ${AppStrings.questions}",
           style: AppFontStyle.regular13(
             context,
           ).copyWith(color: AppColors.gray53),
@@ -102,8 +103,8 @@ class _ExamDetails extends StatelessWidget {
         Wrap(
           spacing: 10.w,
           children: [
-            RowSpan(title: "From: ", spanTitle: "1.00"),
-            RowSpan(title: "To: ", spanTitle: "2.00"),
+            RowSpan(title: AppStrings.fromHour, spanTitle: exam.startTime),
+            RowSpan(title: AppStrings.toHour, spanTitle: exam.endTime),
           ],
         ),
       ],

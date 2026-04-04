@@ -30,12 +30,8 @@ class ExamsCubit extends Cubit<ExamsStates> {
 
   Future<void> _getExams(GetExamsEvent event) async {
     if (state.examsState.isLoading) return;
-final params = ExamParms(subjectId: event.subjectId, page: 1);
-    emit(
-      state.copyWith(
-        examsState: state.examsState.toLoading(query: params),
-      ),
-    );
+    final params = ExamParms(subjectId: event.subjectId, page: 1);
+    emit(state.copyWith(examsState: state.examsState.toLoading(query: params)));
 
     final result = await _getExamsBySubjectUseCase.call(params);
 
@@ -107,9 +103,6 @@ final params = ExamParms(subjectId: event.subjectId, page: 1);
   }
 
   Future<void> refreshExams(String? subjectId) async {
-    ExamParms params = state.examsState.query as ExamParms;
-    params.copyWith(page: 1, subjectId: subjectId);
-
     await doIntent(GetExamsEvent(subjectId: subjectId));
   }
 

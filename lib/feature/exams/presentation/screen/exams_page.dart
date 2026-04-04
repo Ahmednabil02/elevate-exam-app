@@ -6,17 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExamsPage extends StatelessWidget {
-  const ExamsPage({super.key,});
+  const ExamsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "Exams"),
       body: BlocProvider<ExamsCubit>(
-        create: (context) => getIt<ExamsCubit>()
-          ..doIntent(
-            GetExamsEvent(subjectId:null),
-          ),
+        create: (context) =>
+            getIt<ExamsCubit>()..doIntent(GetExamsEvent(subjectId: null)),
         child: SafeArea(child: ExamsBody()),
       ),
     );

@@ -13,13 +13,13 @@ class RowSpan extends StatelessWidget {
         text: title,
         style: AppFontStyle.regular13(
           context,
-        ).copyWith(color: AppColors.gray53),
+        ).copyWith(color: AppColors.blackBase),
         children: [
           TextSpan(
             text: spanTitle,
             style: AppFontStyle.medium13(
               context,
-            ).copyWith(color: AppColors.black),
+            ).copyWith(color: AppColors.blackBase),
           ),
         ],
       ),

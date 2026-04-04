@@ -1,76 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:exam_app/core/values/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExamsShimmer extends StatelessWidget {
+class ExamsSliverShimmer extends StatelessWidget {
   final int itemCount;
 
-  const ExamsShimmer({super.key, this.itemCount = 5});
+  const ExamsSliverShimmer({super.key, this.itemCount = 5});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: itemCount,
-      itemBuilder: (context, index) => const _ExamCardShimmer(),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) => const ExamCardShimmer(),
+        childCount: itemCount,
+      ),
     );
   }
 }
 
-class _ExamCardShimmer extends StatelessWidget {
-  const _ExamCardShimmer();
+class ExamCardShimmer extends StatelessWidget {
+  const ExamCardShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10.r),
+        shape: BoxShape.rectangle,
+        color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: AppColors.shadowColor.withValues(alpha: 0.25),
+            spreadRadius: 0,
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset.zero,
           ),
         ],
       ),
-      child: Column(
+      margin: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              _ShimmerBox(
-                width: 48,
-                height: 48,
-                borderRadius: 24,
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _ShimmerBox(width: 150, height: 16),
-                    const SizedBox(height: 8),
-                    _ShimmerBox(width: 100, height: 14),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          _ShimmerBox(width: double.infinity, height: 14),
-          const SizedBox(height: 8),
-          _ShimmerBox(width: 200, height: 14),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ShimmerBox(width: 80, height: 12),
-              _ShimmerBox(width: 60, height: 12),
-            ],
-          ),
+          _ShimmerBox(width: 60.w, height: 71.h),
+          SizedBox(width: 8.w),
+          Expanded(child: _ExamDetails()),
         ],
       ),
+    );
+  }
+}
+
+class _ExamDetails extends StatelessWidget {
+  const _ExamDetails();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 16.h,
+
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 16.h,
+          children: [
+            Flexible(
+              child: _ShimmerBox(
+                width: 108.w,
+                height: 16.h,
+                borderRadius: 16.r,
+              ),
+            ),
+            _ShimmerBox(width: 54.w, height: 12.h, borderRadius: 16.r),
+          ],
+        ),
+        _ShimmerBox(width: 48.w, height: 12.h, borderRadius: 16.r),
+
+        Wrap(
+          spacing: 10.w,
+          children: [
+            _ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
+            _ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -103,9 +117,10 @@ class _ShimmerBoxState extends State<_ShimmerBox>
       duration: const Duration(milliseconds: 1500),
     )..repeat();
 
-    _animation = Tween<double>(begin: -1, end: 2).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: -1,
+      end: 2,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -127,11 +142,7 @@ class _ShimmerBoxState extends State<_ShimmerBox>
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [
-                Colors.grey[300]!,
-                Colors.grey[200]!,
-                Colors.grey[300]!,
-              ],
+              colors: [Colors.grey[300]!, Colors.grey[200]!, Colors.grey[300]!],
               stops: [
                 _animation.value - 0.3,
                 _animation.value,
