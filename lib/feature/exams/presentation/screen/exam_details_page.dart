@@ -11,7 +11,6 @@ class ExamDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteF9,
       appBar: const CustomAppBar(title: ''),
       body: ExamDetailsBody(exam: exam),
     );
