@@ -24,19 +24,7 @@ class ExamCardShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-        shape: BoxShape.rectangle,
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadowColor.withValues(alpha: 0.25),
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: Offset.zero,
-          ),
-        ],
-      ),
+      decoration: _buildDecoration(),
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
       child: Row(
@@ -49,6 +37,22 @@ class ExamCardShimmer extends StatelessWidget {
       ),
     );
   }
+
+  BoxDecoration _buildDecoration() {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(10.r),
+      shape: BoxShape.rectangle,
+      color: AppColors.white,
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.shadowColor.withValues(alpha: 0.25),
+          spreadRadius: 0,
+          blurRadius: 8,
+          offset: Offset.zero,
+        ),
+      ],
+    );
+  }
 }
 
 class ExamDetailsShimmer extends StatelessWidget {
@@ -59,27 +63,33 @@ class ExamDetailsShimmer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 16.h,
-
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 16.h,
-          children: [
-            Flexible(
-              child: ShimmerBox(width: 108.w, height: 16.h, borderRadius: 16.r),
-            ),
-            ShimmerBox(width: 54.w, height: 12.h, borderRadius: 16.r),
-          ],
-        ),
+        _buildTitleRow(),
         ShimmerBox(width: 48.w, height: 12.h, borderRadius: 16.r),
+        _buildTimeRow(),
+      ],
+    );
+  }
 
-        Wrap(
-          spacing: 10.w,
-          children: [
-            ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
-            ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
-          ],
+  Widget _buildTitleRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      spacing: 16.h,
+      children: [
+        Flexible(
+          child: ShimmerBox(width: 108.w, height: 16.h, borderRadius: 16.r),
         ),
+        ShimmerBox(width: 54.w, height: 12.h, borderRadius: 16.r),
+      ],
+    );
+  }
+
+  Widget _buildTimeRow() {
+    return Wrap(
+      spacing: 10.w,
+      children: [
+        ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
+        ShimmerBox(width: 36.w, height: 12.h, borderRadius: 16.r),
       ],
     );
   }
