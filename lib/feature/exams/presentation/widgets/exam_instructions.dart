@@ -35,14 +35,19 @@ class InstructionItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildBullet(),
-          Expanded(child: _buildText(context)),
+          InstructionBullet(),
+          Expanded(child: InstructionText(text: text)),
         ],
       ),
     );
   }
+}
 
-  Widget _buildBullet() {
+class InstructionBullet extends StatelessWidget {
+  const InstructionBullet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 6.w,
       height: 6.h,
@@ -53,8 +58,15 @@ class InstructionItem extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildText(BuildContext context) {
+class InstructionText extends StatelessWidget {
+  final String text;
+
+  const InstructionText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
     return Text(
       text,
       style: AppFontStyle.regular14(context).copyWith(color: AppColors.gray53),

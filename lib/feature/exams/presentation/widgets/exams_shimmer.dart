@@ -24,7 +24,7 @@ class ExamCardShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _buildDecoration(),
+      decoration: ShimmerDecoration(),
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
       child: Row(
@@ -37,22 +37,23 @@ class ExamCardShimmer extends StatelessWidget {
       ),
     );
   }
+}
 
-  BoxDecoration _buildDecoration() {
-    return BoxDecoration(
-      borderRadius: BorderRadius.circular(10.r),
-      shape: BoxShape.rectangle,
-      color: AppColors.white,
-      boxShadow: [
-        BoxShadow(
-          color: AppColors.shadowColor.withValues(alpha: 0.25),
-          spreadRadius: 0,
-          blurRadius: 8,
-          offset: Offset.zero,
-        ),
-      ],
-    );
-  }
+class ShimmerDecoration extends BoxDecoration {
+  ShimmerDecoration()
+    : super(
+        borderRadius: BorderRadius.circular(10.r),
+        shape: BoxShape.rectangle,
+        color: AppColors.white,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadowColor.withValues(alpha: 0.25),
+            spreadRadius: 0,
+            blurRadius: 8,
+            offset: Offset.zero,
+          ),
+        ],
+      );
 }
 
 class ExamDetailsShimmer extends StatelessWidget {
@@ -64,14 +65,19 @@ class ExamDetailsShimmer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 16.h,
       children: [
-        _buildTitleRow(),
+        ShimmerTitleRow(),
         ShimmerBox(width: 48.w, height: 12.h, borderRadius: 16.r),
-        _buildTimeRow(),
+        ShimmerTimeRow(),
       ],
     );
   }
+}
 
-  Widget _buildTitleRow() {
+class ShimmerTitleRow extends StatelessWidget {
+  const ShimmerTitleRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       spacing: 16.h,
@@ -83,8 +89,13 @@ class ExamDetailsShimmer extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildTimeRow() {
+class ShimmerTimeRow extends StatelessWidget {
+  const ShimmerTimeRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Wrap(
       spacing: 10.w,
       children: [
@@ -140,25 +151,23 @@ class ShimmerBoxState extends State<ShimmerBox>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
-      builder: (context, child) {
-        return Container(
-          width: widget.width,
-          height: widget.height,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Colors.grey[300]!, Colors.grey[200]!, Colors.grey[300]!],
-              stops: [
-                _animation.value - 0.3,
-                _animation.value,
-                _animation.value + 0.3,
-              ].map((e) => e.clamp(0.0, 1.0)).toList(),
-            ),
+      builder: (context, child) => Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [AppColors.gray10, AppColors.lightGray, AppColors.gray10],
+            stops: [
+              _animation.value - 0.3,
+              _animation.value,
+              _animation.value + 0.3,
+            ].map((e) => e.clamp(0.0, 1.0)).toList(),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

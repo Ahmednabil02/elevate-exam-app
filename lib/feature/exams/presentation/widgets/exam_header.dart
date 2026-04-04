@@ -40,13 +40,20 @@ class ExamInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: 4.w,
       children: [
-        _buildSubject(context),
+        ExamSubject(exam: exam),
         ExamQuestions(numberOfQuestions: exam.numberOfQuestions, fontSize: 16),
       ],
     );
   }
+}
 
-  Widget _buildSubject(BuildContext context) {
+class ExamSubject extends StatelessWidget {
+  final ExamEntity exam;
+
+  const ExamSubject({super.key, required this.exam});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsetsDirectional.only(end: 4.w),
       decoration: BoxDecoration(
