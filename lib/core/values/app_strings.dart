@@ -118,4 +118,9 @@ class AppStrings {
   static const String passwordsDoNotMatch = 'Passwords don\'t match';
   static const String signUpSuccess = 'Account created successfully';
   static const String alreadyHaveAccount = 'Already have an account?';
+  // Exam
+  static const String minutes = 'Minutes';
+  static const String questions = 'Questions';
+  static const String fromHour = 'From: ';
+  static const String toHour = "To: ";
 }

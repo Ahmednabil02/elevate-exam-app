@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
+
 sealed class Result<T> {
   const Result();
 
@@ -12,6 +16,19 @@ sealed class Result<T> {
     } else {
       return error(Exception("Unhandled ApiResult case"));
     }
+  }
+
+  Result<E> makeDummyData<E>({
+    E? dummyData,
+    required Result<E> Function(T? data) success,
+    required Result<E> Function(Exception? exception) error,
+  }) {
+    if (kDebugMode && this is Error<T> && dummyData != null) {
+      final errorResult = this as Error<T>;
+      log("Result error: ${errorResult.exception.toString()}");
+      return Success(data: dummyData);
+    }
+    return when(success: success, error: error);
   }
 }
 

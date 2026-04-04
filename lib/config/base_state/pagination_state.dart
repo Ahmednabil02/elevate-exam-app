@@ -28,11 +28,11 @@ class PaginationState<T> extends Equatable
   List<Object?> get props => [state, data, meta, exception, query];
 
   const PaginationState.initial()
-      : state = PaginationStateType.initial,
-        data = const [],
-        meta = null,
-        exception = null,
-        query = const PaginationParams();
+    : state = PaginationStateType.initial,
+      data = const [],
+      meta = null,
+      exception = null,
+      query = const PaginationParams();
 
   bool get isInitial => state == PaginationStateType.initial;
 
@@ -64,57 +64,58 @@ class PaginationState<T> extends Equatable
 
   @override
   PaginationState<T> toLoading({PaginationParams? query}) => PaginationState(
-        state: PaginationStateType.loading,
-        data: const [],
-        meta: null,
-        query: query ?? this.query.copyWith(page: 1),
-      );
+    state: PaginationStateType.loading,
+    data: const [],
+    meta: null,
+    query: query ?? this.query.copyWith(page: 1),
+  );
 
   @override
   PaginationState<T> toLoadingMore() => PaginationState(
-        state: PaginationStateType.loadingMore,
-        data: data,
-        meta: meta,
-        query: query.copyWith(page: currentPage + 1),
-      );
+    state: PaginationStateType.loadingMore,
+    data: data,
+    meta: meta,
+    query: query.copyWith(page: currentPage + 1),
+  );
 
   @override
-  PaginationState<T> toSuccess(
-    List<T> newData, {
-    MetaEntity? meta,
-  }) =>
-      PaginationState(
-        state: PaginationStateType.success,
-        data: query.page == 1 ? newData : [...data, ...newData],
-        meta: meta ?? this.meta,
-        query: query,
-      );
+  PaginationState<T> toSuccess(List<T> newData, {MetaEntity? meta}) {
+    final currentPage = query.page ?? 1;
+    return PaginationState(
+      state: PaginationStateType.success,
+      data: currentPage == 1 ? newData : [...data, ...newData],
+      meta: meta ?? this.meta,
+      query: query,
+    );
+  }
 
-  PaginationState<T> toSuccessFromEntity(BasePaginationEntity<T> entity) =>
-      PaginationState(
-        state: PaginationStateType.success,
-        data: query.page == 1 ? entity.data : [...data, ...entity.data],
-        meta: entity.meta,
-        query: query,
-      );
+  PaginationState<T> toSuccessFromEntity(BasePaginationEntity<T> entity) {
+    final currentPage = query.page ?? 1;
+    return PaginationState(
+      state: PaginationStateType.success,
+      data: currentPage == 1 ? entity.data : [...data, ...entity.data],
+      meta: entity.meta,
+      query: query,
+    );
+  }
 
   @override
   PaginationState<T> toError(Exception e) => PaginationState(
-        state: PaginationStateType.error,
-        data: const [],
-        meta: null,
-        exception: e,
-        query: query.copyWith(page: 1),
-      );
+    state: PaginationStateType.error,
+    data: const [],
+    meta: null,
+    exception: e,
+    query: query.copyWith(page: 1),
+  );
 
   @override
   PaginationState<T> toErrorMore(Exception e) => PaginationState(
-        state: PaginationStateType.errorMore,
-        data: data,
-        meta: meta,
-        exception: e,
-        query: query,
-      );
+    state: PaginationStateType.errorMore,
+    data: data,
+    meta: meta,
+    exception: e,
+    query: query,
+  );
 
   @override
   R when<R>({
