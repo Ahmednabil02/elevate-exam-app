@@ -1,5 +1,4 @@
 import 'package:exam_app/core/values/app_assets.dart';
-import 'package:exam_app/core/values/app_colors.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,8 @@ class EmptyExamsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +25,7 @@ class EmptyExamsWidget extends StatelessWidget {
           AppStrings.noDataFound,
           style: AppFontStyle.regular20(
             context,
-          ).copyWith(color: AppColors.gray30),
+          ).copyWith(color: theme.textTheme.bodySmall?.color),
           textAlign: TextAlign.center,
           maxLines: 2,
         ),
