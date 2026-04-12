@@ -1,4 +1,3 @@
-import 'package:exam_app/core/values/app_colors.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,8 @@ class _InstructionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h),
       child: Row(
@@ -39,8 +40,8 @@ class _InstructionItem extends StatelessWidget {
             width: 6.w,
             height: 6.h,
             margin: EdgeInsetsDirectional.only(top: 8.h, end: 8.w),
-            decoration: const BoxDecoration(
-              color: AppColors.black,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onSurface,
               shape: BoxShape.circle,
             ),
           ),
@@ -49,7 +50,7 @@ class _InstructionItem extends StatelessWidget {
               text,
               style: AppFontStyle.regular14(
                 context,
-              ).copyWith(color: AppColors.gray53),
+              ).copyWith(color: theme.textTheme.bodySmall?.color),
             ),
           ),
         ],

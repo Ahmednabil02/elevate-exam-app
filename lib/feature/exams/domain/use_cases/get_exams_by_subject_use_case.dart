@@ -6,8 +6,9 @@ import 'package:exam_app/feature/exams/domain/entities/exams_parms.dart';
 import 'package:exam_app/feature/exams/domain/repositories/exams_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
-class GetExamsBySubjectUseCase extends UseCase<BasePaginationEntity<ExamEntity>, ExamParms> {
+@Injectable()
+class GetExamsBySubjectUseCase
+    extends UseCase<BasePaginationEntity<ExamEntity>, ExamParms> {
   final ExamsRepository repository;
 
   GetExamsBySubjectUseCase(this.repository);

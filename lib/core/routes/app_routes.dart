@@ -15,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
-class AppRoutes {
+abstract class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.login,
+    initialLocation: Routes.exams,
     routes: [
       // GoRoute(
       //   path: Routes.login,
@@ -78,6 +78,9 @@ class AppRoutes {
       //   },
       // ),
     ],
+    errorBuilder: (context, state) => Scaffold(
+      body: Center(child: Text('Page not found: ${state.matchedLocation}')),
+    ),
     redirect: (context, state) async {
       final token = await getIt<FlutterSecureStorage>().read(
         key: APIkeys.accessToken,

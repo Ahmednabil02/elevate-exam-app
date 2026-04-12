@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:exam_app/core/values/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExamsShimmer extends StatelessWidget {
@@ -16,35 +15,21 @@ class ExamsShimmer extends StatelessWidget {
   }
 }
 
-class ExamsSliverShimmer extends StatelessWidget {
-  final int itemCount;
-
-  const ExamsSliverShimmer({super.key, this.itemCount = 5});
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) => const ExamCardShimmer(),
-        childCount: itemCount,
-      ),
-    );
-  }
-}
-
 class ExamCardShimmer extends StatelessWidget {
   const ExamCardShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.r),
         shape: BoxShape.rectangle,
-        color: AppColors.white,
+        color: theme.colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: AppColors.shadowColor.withValues(alpha: 0.25),
+            color: theme.shadowColor.withValues(alpha: 0.25),
             spreadRadius: 0,
             blurRadius: 8,
             offset: Offset.zero,

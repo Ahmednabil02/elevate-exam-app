@@ -17,13 +17,9 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
     as _i161;
 
 import '../../feature/exams/api/api_client/exams_api_client.dart' as _i503;
-import '../../feature/exams/api/datasources/exams_local_data_source_impl.dart'
-    as _i814;
-import '../../feature/exams/api/datasources/exams_remote_data_source_impl.dart'
+import '../../feature/exams/api/dataـsources/exams_remote_data_source_impl.dart'
     as _i479;
-import '../../feature/exams/data/datasources/exams_local_data_source_contract.dart'
-    as _i641;
-import '../../feature/exams/data/datasources/exams_remote_data_source_contract.dart'
+import '../../feature/exams/data/dataـsources/exams_remote_data_source_contract.dart'
     as _i494;
 import '../../feature/exams/data/repositories/exams_repository_impl.dart'
     as _i616;
@@ -51,9 +47,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i161.InternetConnection>(
       () => dioModule.internetConnection(),
     );
-    gh.lazySingleton<_i641.ExamsLocalDataSourceContract>(
-      () => _i814.ExamsLocalDataSourceImpl(),
-    );
     gh.lazySingleton<_i503.ExamsApiClient>(
       () => _i503.ExamsApiClient(gh<_i361.Dio>()),
     );
@@ -63,18 +56,18 @@ extension GetItInjectableX on _i174.GetIt {
         fss: gh<_i558.FlutterSecureStorage>(),
       ),
     );
-    gh.lazySingleton<_i494.ExamsRemoteDataSourceContract>(
+    gh.factory<_i494.ExamsRemoteDataSourceContract>(
       () => _i479.ExamsRemoteDataSourceImpl(
         apiClient: gh<_i503.ExamsApiClient>(),
       ),
     );
-    gh.lazySingleton<_i1052.ExamsRepository>(
+    gh.factory<_i1052.ExamsRepository>(
       () => _i616.ExamsRepositoryImpl(
         examsRemoteDataSourceContract:
             gh<_i494.ExamsRemoteDataSourceContract>(),
       ),
     );
-    gh.lazySingleton<_i441.GetExamsBySubjectUseCase>(
+    gh.factory<_i441.GetExamsBySubjectUseCase>(
       () => _i441.GetExamsBySubjectUseCase(gh<_i1052.ExamsRepository>()),
     );
     gh.factory<_i982.ExamsCubit>(
