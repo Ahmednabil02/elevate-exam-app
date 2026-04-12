@@ -2,6 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:exam_app/core/values/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+class ExamsShimmer extends StatelessWidget {
+  final int itemCount;
+
+  const ExamsShimmer({super.key, this.itemCount = 5});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: itemCount,
+      itemBuilder: (context, index) => const ExamCardShimmer(),
+    );
+  }
+}
+
 class ExamsSliverShimmer extends StatelessWidget {
   final int itemCount;
 

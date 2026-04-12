@@ -40,18 +40,22 @@ class _ExamInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: 4.w,
       children: [
-        Container(
-          padding: EdgeInsetsDirectional.only(end: 4.w),
-          decoration: BoxDecoration(
-            border: Border(
-              right: BorderSide(color: AppColors.blueCD, width: 1),
+        Expanded(
+          child: Container(
+            padding: EdgeInsetsDirectional.only(end: 4.w),
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(color: AppColors.blueCD, width: 1),
+              ),
             ),
-          ),
-          child: Text(
-            exam.subject,
-            style: AppFontStyle.medium18(
-              context,
-            ).copyWith(color: AppColors.blackBase),
+            child: Text(
+              exam.subject,
+              style: AppFontStyle.medium18(
+                context,
+              ).copyWith(color: AppColors.blackBase),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
           ),
         ),
         ExamQuestions(numberOfQuestions: exam.numberOfQuestions, fontSize: 16),
