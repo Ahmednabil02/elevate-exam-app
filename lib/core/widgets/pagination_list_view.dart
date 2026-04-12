@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 typedef ItemBuilder<T> =
     Widget Function(BuildContext context, T item, int index);
 typedef LoadMoreCallback = void Function();
+typedef RefreshCallback = Future<void> Function();
 
 class PaginationListView<T> extends StatefulWidget {
   final PaginationState<T> state;
   final ItemBuilder<T> itemBuilder;
   final LoadMoreCallback onLoadMore;
+  final RefreshCallback? onRefresh;
   final Widget? loadingWidget;
   final Widget? loadingMoreWidget;
   final Widget? emptyWidget;
@@ -26,6 +28,7 @@ class PaginationListView<T> extends StatefulWidget {
     required this.state,
     required this.itemBuilder,
     required this.onLoadMore,
+    this.onRefresh,
     this.loadingWidget,
     this.loadingMoreWidget,
     this.emptyWidget,
@@ -92,7 +95,7 @@ class _PaginationListViewState<T> extends State<PaginationListView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.state.when(
+    final content = widget.state.when(
       initial: () => _PaginationLoadingWidget(widget: widget.loadingWidget),
       loading: () => _PaginationLoadingWidget(
         widget: widget.loadingWidget,
@@ -139,6 +142,12 @@ class _PaginationListViewState<T> extends State<PaginationListView<T>> {
         hasMore: widget.state.hasMore,
       ),
     );
+
+    if (widget.onRefresh != null) {
+      return RefreshIndicator(onRefresh: widget.onRefresh!, child: content);
+    }
+
+    return content;
   }
 }
 
@@ -165,7 +174,13 @@ class _PaginationEmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return widget ?? const Center(child: Text('No items found'));
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.7,
+        child: Center(child: widget ?? const Text('No items found')),
+      ),
+    );
   }
 }
 
@@ -177,7 +192,13 @@ class _PaginationErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return widget ?? Center(child: Text('Error: ${exception.toString()}'));
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.7,
+        child: Center(child: widget ?? Text('Error: ${exception.toString()}')),
+      ),
+    );
   }
 }
 
