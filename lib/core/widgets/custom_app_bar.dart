@@ -33,25 +33,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final canPop = context.canPop();
     final shouldShowBack = showBackButton && canPop;
 
-    return Container(
-      color: backgroundColor,
-      padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
-      child: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: centerTitle,
-        automaticallyImplyLeading: false,
-        titleSpacing: shouldShowBack ? 8 : 0,
-        leading: shouldShowBack ? _BackButton(onPressed: onBackPressed) : null,
-        leadingWidth: shouldShowBack ? 40 : 0,
-        title: Text(
-          title,
-          style: AppFontStyle.medium20(
-            context,
-          ).copyWith(color: titleColor ?? AppColors.black),
-        ),
-        actions: actions,
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      centerTitle: centerTitle,
+      automaticallyImplyLeading: false,
+      titleSpacing: shouldShowBack ? 8 : 0,
+      leading: shouldShowBack ? _BackButton(onPressed: onBackPressed) : null,
+      leadingWidth: shouldShowBack ? 40 : 0,
+      title: Text(
+        title,
+        style: AppFontStyle.medium20(
+          context,
+        ).copyWith(color: titleColor ?? AppColors.black),
       ),
+      actions: actions,
     );
   }
 
