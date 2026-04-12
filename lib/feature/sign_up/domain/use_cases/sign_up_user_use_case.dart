@@ -5,7 +5,7 @@ import 'package:exam_app/feature/sign_up/domain/models/user_entity.dart';
 import 'package:exam_app/feature/sign_up/domain/repositories/sign_up_repository_contract.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@LazySingleton()
 class SignUpUserUseCase extends UseCase<UserEntity, SignUpPostEntity> {
   final SignUpRepositoryContract repo;
 
