@@ -1,10 +1,8 @@
 import 'dart:developer';
 
 import 'package:exam_app/config/api/api_executer.dart';
-import 'package:exam_app/config/api/end_points.dart';
 import 'package:exam_app/config/base_response/result.dart';
 import 'package:exam_app/feature/forget_password/domain/entity/forget_password_params.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/datasources/forget_password_remote_data_source_contract.dart';
@@ -15,12 +13,8 @@ import '../models/reset_password_response.dart';
 class ForgetPasswordRemoteDataSourceImpl
     implements ForgetPasswordRemoteDataSourceContract {
   final ForgetPasswordApiClient apiClient;
-  final FlutterSecureStorage fss;
 
-  const ForgetPasswordRemoteDataSourceImpl({
-    required this.apiClient,
-    required this.fss,
-  });
+  const ForgetPasswordRemoteDataSourceImpl({required this.apiClient});
 
   @override
   Future<Result<void>> sendForgetPasswordCode(
@@ -42,16 +36,21 @@ class ForgetPasswordRemoteDataSourceImpl
   }
 
   @override
-  Future<Result<void>> resetPassword(ForgetPasswordParams params) async {
-    return await executeApi<void>(() async {
+  Future<Result<ResetPasswordResponse?>> resetPassword(
+    ForgetPasswordParams params,
+  ) async {
+    return await executeApi<ResetPasswordResponse?>(() async {
       final response = await apiClient.resetPassword(params);
-      final resetResponse = ResetPasswordResponse.fromJson(
-        response as Map<String, dynamic>,
-      );
 
-      await fss.write(key: Apikeys.accessToken, value: resetResponse.token);
+      // Check if response is a Map before casting
+      if (response is Map<String, dynamic>) {
+        final resetResponse = ResetPasswordResponse.fromJson(response);
+        log("Password reset successful, token received");
+        return resetResponse;
+      }
 
-      log("Token saved successfully: ${resetResponse.token}");
+      log("Unexpected response type: ${response.runtimeType}");
+      return null;
     });
   }
 }

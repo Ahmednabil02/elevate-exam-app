@@ -29,7 +29,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
   Future<void> doIntent(ForgetPasswordEvents event) async => switch (event) {
     SendOtpToEmailEvent() => _sendOtpToEmail(event),
     VerifyOtpEvent() => _verifyOtp(event),
-    TogglePasswordEvent() => _togglePassword(event),
     ResetPasswordEvent() => _resetPassword(event),
   };
 
@@ -43,7 +42,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
 
     final result = await _sendOtpToEmailUseCase.call(sendEvent.params);
     switch (result) {
-      case Success():
+      case Success<void>():
         emit(
           state.copyWith(
             sendOtpToEmailState: BaseState.success(result),
@@ -51,8 +50,8 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
             email: sendEvent.params.email,
           ),
         );
-        _animateToPage(state.currentScreen);
-      case Error():
+        _updateCurrentStep(state.currentScreen);
+      case Error<void>():
         emit(
           state.copyWith(
             sendOtpToEmailState: BaseState.error(result.exception),
@@ -67,15 +66,15 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
       ForgetPasswordParams(code: verifyEvent.otp),
     );
     switch (result) {
-      case Success():
+      case Success<void>():
         emit(
           state.copyWith(
             currentScreen: 2,
             verifyOtpState: BaseState.success(result),
           ),
         );
-        _animateToPage(state.currentScreen);
-      case Error():
+        _updateCurrentStep(state.currentScreen);
+      case Error<void>():
         emit(state.copyWith(verifyOtpState: BaseState.error(result.exception)));
     }
   }
@@ -90,31 +89,21 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordStates> {
       ),
     );
     switch (result) {
-      case Success():
+      case Success<void>():
         emit(
           state.copyWith(
             resetPasswordState: BaseState.success(result),
             clearEmail: true,
           ),
         );
-      case Error():
+      case Error<void>():
         emit(
           state.copyWith(resetPasswordState: BaseState.error(result.exception)),
         );
     }
   }
 
-  Future<void> _togglePassword(TogglePasswordEvent isConfirmPassword) async {
-    if (isConfirmPassword.isConfirmPassword) {
-      emit(
-        state.copyWith(confirmPasswordVisible: !state.confirmPasswordVisible),
-      );
-    } else {
-      emit(state.copyWith(newPasswordVisible: !state.newPasswordVisible));
-    }
-  }
-
-  void _animateToPage(int page) {
-    emit(state.copyWith(currentScreen: page));
+  void _updateCurrentStep(int step) {
+    emit(state.copyWith(currentScreen: step));
   }
 }

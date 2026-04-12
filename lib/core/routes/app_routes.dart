@@ -3,9 +3,9 @@ import 'package:exam_app/feature/forget_password/presentation/screen/forget_pass
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class AppRoutes {
+abstract class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.forgetPassword,
+    initialLocation: Routes.home,
     routes: [
       GoRoute(
         path: Routes.home,
@@ -18,7 +18,7 @@ class AppRoutes {
       GoRoute(
         path: Routes.forgetPassword,
         builder: (BuildContext context, GoRouterState state) {
-          return ForgetPasswordPage();
+          return const ForgetPasswordPage();
         },
       ),
     ],

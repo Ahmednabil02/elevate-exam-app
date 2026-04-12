@@ -16,6 +16,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart'
     as _i161;
 
+import '../../core/api/datasources/auth_local_data_source_impl.dart' as _i424;
+import '../../core/data/datasources/auth_local_data_source.dart' as _i836;
 import '../../feature/forget_password/api/api_client/forget_password_api_client.dart'
     as _i130;
 import '../../feature/forget_password/api/datasources/forget_password_remote_data_source_impl.dart'
@@ -53,14 +55,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i161.InternetConnection>(
       () => dioModule.internetConnection(),
     );
-    gh.factory<_i130.ForgetPasswordApiClient>(
+    gh.lazySingleton<_i130.ForgetPasswordApiClient>(
       () => _i130.ForgetPasswordApiClient(gh<_i361.Dio>()),
-    );
-    gh.factory<_i1028.ForgetPasswordRemoteDataSourceContract>(
-      () => _i243.ForgetPasswordRemoteDataSourceImpl(
-        apiClient: gh<_i130.ForgetPasswordApiClient>(),
-        fss: gh<_i558.FlutterSecureStorage>(),
-      ),
     );
     gh.singleton<_i449.AppInterceptors>(
       () => _i449.AppInterceptors(
@@ -68,14 +64,19 @@ extension GetItInjectableX on _i174.GetIt {
         fss: gh<_i558.FlutterSecureStorage>(),
       ),
     );
+    gh.factory<_i1028.ForgetPasswordRemoteDataSourceContract>(
+      () => _i243.ForgetPasswordRemoteDataSourceImpl(
+        apiClient: gh<_i130.ForgetPasswordApiClient>(),
+      ),
+    );
+    gh.lazySingleton<_i836.AuthLocalDataSourceContract>(
+      () =>
+          _i424.AuthLocalDataSourceImpl(fss: gh<_i558.FlutterSecureStorage>()),
+    );
     gh.factory<_i170.ForgetPasswordRepository>(
       () => _i876.ForgetPasswordRepositoryImpl(
         remoteDataSource: gh<_i1028.ForgetPasswordRemoteDataSourceContract>(),
-      ),
-    );
-    gh.factory<_i774.SendOtpToEmailUseCase>(
-      () => _i774.SendOtpToEmailUseCase(
-        repository: gh<_i170.ForgetPasswordRepository>(),
+        localDataSource: gh<_i836.AuthLocalDataSourceContract>(),
       ),
     );
     gh.factory<_i33.ResetPasswordUseCase>(
@@ -83,6 +84,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i998.VerifyOtpUseCase>(
       () => _i998.VerifyOtpUseCase(gh<_i170.ForgetPasswordRepository>()),
+    );
+    gh.factory<_i774.SendOtpToEmailUseCase>(
+      () => _i774.SendOtpToEmailUseCase(
+        repository: gh<_i170.ForgetPasswordRepository>(),
+      ),
     );
     gh.factory<_i604.ForgetPasswordCubit>(
       () => _i604.ForgetPasswordCubit(

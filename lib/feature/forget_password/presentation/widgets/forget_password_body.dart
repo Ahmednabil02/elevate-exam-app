@@ -1,5 +1,5 @@
+import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
-import 'package:exam_app/feature/forget_password/presentation/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +21,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
 
   @override
   void initState() {
+    super.initState();
     titles = [
       AppStrings.forgetPassword,
       AppStrings.emailVerification,
@@ -31,7 +32,6 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       AppStrings.enterCodeSentToEmail,
       AppStrings.passwordMustContain,
     ];
-    super.initState();
   }
 
   @override
@@ -42,20 +42,56 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
       builder: (context, state) {
         return Column(
           children: [
-            Header(
+            _StepHeader(
               title: titles[state.currentScreen],
               subtitle: subTitles[state.currentScreen],
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Expanded(
               child: IndexedStack(
                 index: state.currentScreen,
-                children: const [EmailStep(), OtpStep(), ResetPasswordStep()],
+                children: const [
+                  EmailInputScreen(),
+                  OtpVerificationScreen(),
+                  NewPasswordScreen(),
+                ],
               ),
             ),
           ],
         );
       },
+    );
+  }
+}
+
+class _StepHeader extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const _StepHeader({required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
+    return Column(
+      children: [
+        Text(
+          title,
+          style: AppFontStyle.semiBold18(
+            context,
+          ).copyWith(color: textTheme.titleLarge?.color),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          subtitle,
+          style: AppFontStyle.regular14(
+            context,
+          ).copyWith(color: textTheme.bodyMedium?.color?.withOpacity(0.6)),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

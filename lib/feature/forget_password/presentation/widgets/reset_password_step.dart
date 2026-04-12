@@ -11,36 +11,35 @@ import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/text_field/password_field.dart';
 import '../cubit/forget_password_cubit.dart';
 
-class ResetPasswordStep extends StatefulWidget {
-  const ResetPasswordStep({super.key});
+class NewPasswordScreen extends StatefulWidget {
+  const NewPasswordScreen({super.key});
 
   @override
-  State<ResetPasswordStep> createState() => _ResetPasswordStepState();
+  State<NewPasswordScreen> createState() => _NewPasswordScreenState();
 }
 
-class _ResetPasswordStepState extends State<ResetPasswordStep> {
+class _NewPasswordScreenState extends State<NewPasswordScreen> {
   late final ForgetPasswordCubit cubit;
-
   late final TextEditingController newPasswordController;
-
   late final TextEditingController confirmPasswordController;
-
   late final GlobalKey<FormState> formKey;
+
+  bool _newPasswordVisible = false;
+  bool _confirmPasswordVisible = false;
 
   @override
   void initState() {
+    super.initState();
     cubit = context.read<ForgetPasswordCubit>();
     newPasswordController = TextEditingController();
     confirmPasswordController = TextEditingController();
     formKey = GlobalKey<FormState>();
-    super.initState();
   }
 
   @override
   void dispose() {
     newPasswordController.dispose();
     confirmPasswordController.dispose();
-    formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -50,10 +49,6 @@ class _ResetPasswordStepState extends State<ResetPasswordStep> {
     }
   }
 
-  void _toggleVisibility(bool isConfirmPassword) {
-    cubit.doIntent(TogglePasswordEvent(isConfirmPassword: isConfirmPassword));
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -61,19 +56,37 @@ class _ResetPasswordStepState extends State<ResetPasswordStep> {
         key: formKey,
         child: Column(
           children: [
-            _NewPassword(
-              newPasswordController: newPasswordController,
-              toggleVisibility: () => _toggleVisibility(false),
+            PasswordField(
+              controller: newPasswordController,
+              labelText: AppStrings.newPassword,
+              validator: Validations.validatePassword,
+              textInputAction: TextInputAction.next,
+              obscureText: !_newPasswordVisible,
+              toggleVisibility: () {
+                setState(() {
+                  _newPasswordVisible = !_newPasswordVisible;
+                });
+              },
             ),
             const SizedBox(height: 24),
-            _ConfirmNewPassword(
-              confirmPasswordController: confirmPasswordController,
-              newPassword: newPasswordController,
-              onSubmit: (_) => _onSubmit(),
-              toggleVisibility: () => _toggleVisibility(true),
+            PasswordField(
+              controller: confirmPasswordController,
+              labelText: AppStrings.confirmPasswordLabel,
+              validator: (value) => Validations.validatePasswordVerification(
+                value,
+                newPasswordController.text,
+              ),
+              textInputAction: TextInputAction.done,
+              obscureText: !_confirmPasswordVisible,
+              toggleVisibility: () {
+                setState(() {
+                  _confirmPasswordVisible = !_confirmPasswordVisible;
+                });
+              },
+              onFieldSubmitted: (_) => _onSubmit(),
             ),
             const SizedBox(height: 48),
-            _SubmitButton(onSubmit: () => _onSubmit()),
+            _SubmitButton(onSubmit: _onSubmit),
           ],
         ),
       ),
@@ -85,19 +98,22 @@ class _SubmitButton extends StatelessWidget {
   final void Function() onSubmit;
 
   const _SubmitButton({required this.onSubmit});
-//
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ForgetPasswordCubit, ForgetPasswordStates>(
       listenWhen: (previous, current) =>
           previous.resetPasswordState != current.resetPasswordState,
       listener: (context, state) {
-        context.showSuccessMessage(
-          state: state.resetPasswordState,
-          massage: AppStrings.passwordResetSuccessfully,
-          onSuccess: () => context.go(Routes.login),
-        );
-        context.showErrorMessage(state.resetPasswordState);
+        if (state.resetPasswordState.isSuccess) {
+          context.showSuccessMessage(
+            state: state.resetPasswordState,
+            massage: AppStrings.passwordResetSuccessfully,
+            onSuccess: () => context.go(Routes.login),
+          );
+        } else if (state.resetPasswordState.isError) {
+          context.showErrorMessage(state.resetPasswordState);
+        }
       },
       buildWhen: (previous, current) =>
           previous.resetPasswordState != current.resetPasswordState,
@@ -106,68 +122,6 @@ class _SubmitButton extends StatelessWidget {
         isLoading: state.resetPasswordState.isLoading,
         onPressed: onSubmit,
       ),
-    );
-  }
-}
-
-class _ConfirmNewPassword extends StatelessWidget {
-  final TextEditingController confirmPasswordController;
-  final TextEditingController newPassword;
-  final void Function(String)? onSubmit;
-  final void Function()? toggleVisibility;
-
-  const _ConfirmNewPassword({
-    required this.confirmPasswordController,
-    required this.newPassword,
-    required this.onSubmit,
-    required this.toggleVisibility,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ForgetPasswordCubit, ForgetPasswordStates>(
-      buildWhen: (previous, current) =>
-          previous.confirmPasswordVisible != current.confirmPasswordVisible,
-      builder: (context, state) {
-        return PasswordField(
-          controller: confirmPasswordController,
-          labelText: AppStrings.confirmPasswordLabel,
-          validator: (value) =>
-              Validations.validatePasswordVerification(value, newPassword.text),
-          textInputAction: TextInputAction.done,
-          obscureText: !state.confirmPasswordVisible,
-          toggleVisibility: toggleVisibility,
-          onFieldSubmitted: onSubmit,
-        );
-      },
-    );
-  }
-}
-
-class _NewPassword extends StatelessWidget {
-  final TextEditingController newPasswordController;
-  final void Function()? toggleVisibility;
-
-  const _NewPassword({
-    required this.newPasswordController,
-    required this.toggleVisibility,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ForgetPasswordCubit, ForgetPasswordStates>(
-      buildWhen: (previous, current) =>
-          previous.newPasswordVisible != current.newPasswordVisible,
-      builder: (context, state) {
-        return PasswordField(
-          controller: newPasswordController,
-          labelText: AppStrings.newPassword,
-          validator: Validations.validatePassword,
-          textInputAction: TextInputAction.next,
-          obscureText: !state.newPasswordVisible,
-          toggleVisibility: toggleVisibility,
-        );
-      },
     );
   }
 }

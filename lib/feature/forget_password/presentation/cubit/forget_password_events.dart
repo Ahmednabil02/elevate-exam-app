@@ -16,12 +16,6 @@ class VerifyOtpEvent extends ForgetPasswordEvents {
   const VerifyOtpEvent({required this.otp});
 }
 
-class TogglePasswordEvent extends ForgetPasswordEvents {
-  final bool isConfirmPassword;
-
-  const TogglePasswordEvent({required this.isConfirmPassword});
-}
-
 class ResetPasswordEvent extends ForgetPasswordEvents {
   final String? password;
 

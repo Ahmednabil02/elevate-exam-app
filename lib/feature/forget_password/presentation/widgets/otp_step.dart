@@ -8,20 +8,20 @@ import '../../../../core/widgets/text_field/otp_input_field.dart';
 import '../../domain/entity/forget_password_params.dart';
 import '../cubit/forget_password_cubit.dart';
 
-class OtpStep extends StatefulWidget {
-  const OtpStep({super.key});
+class OtpVerificationScreen extends StatefulWidget {
+  const OtpVerificationScreen({super.key});
 
   @override
-  State<OtpStep> createState() => _OtpStepState();
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
-class _OtpStepState extends State<OtpStep> {
+class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   late final TextEditingController otpController;
 
   @override
   void initState() {
-    otpController = TextEditingController();
     super.initState();
+    otpController = TextEditingController();
   }
 
   @override
@@ -43,7 +43,7 @@ class _OtpStepState extends State<OtpStep> {
         return state.verifyOtpState.handleBuilderState() ??
             _OtpBody(
               otpController: otpController,
-              email: state.email??'',
+              email: state.email ?? '',
               isError: state.verifyOtpState.isError,
             );
       },

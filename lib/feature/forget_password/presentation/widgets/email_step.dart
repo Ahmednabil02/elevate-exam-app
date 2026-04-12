@@ -9,30 +9,29 @@ import '../../../../core/widgets/text_field/email_field.dart';
 import '../../domain/entity/forget_password_params.dart';
 import '../cubit/forget_password_cubit.dart';
 
-class EmailStep extends StatefulWidget {
-  const EmailStep({super.key});
+class EmailInputScreen extends StatefulWidget {
+  const EmailInputScreen({super.key});
 
   @override
-  State<EmailStep> createState() => _EmailStepState();
+  State<EmailInputScreen> createState() => _EmailInputScreenState();
 }
 
-class _EmailStepState extends State<EmailStep> {
+class _EmailInputScreenState extends State<EmailInputScreen> {
   late final ForgetPasswordCubit cubit;
   late final TextEditingController emailController;
   late final GlobalKey<FormState> formKey;
 
   @override
   void initState() {
+    super.initState();
     cubit = context.read<ForgetPasswordCubit>();
     emailController = TextEditingController();
     formKey = GlobalKey<FormState>();
-    super.initState();
   }
 
   @override
   void dispose() {
     emailController.dispose();
-    formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -60,7 +59,7 @@ class _EmailStepState extends State<EmailStep> {
               onFieldSubmitted: (_) => _onSubmit(),
             ),
             const SizedBox(height: 48),
-            _SubmitButton(onSubmit: () => _onSubmit()),
+            _SubmitButton(onSubmit: _onSubmit),
           ],
         ),
       ),
