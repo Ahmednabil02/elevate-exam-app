@@ -7,11 +7,11 @@ part 'sign_up_response.g.dart';
 
 @JsonSerializable()
 class SignUpResponse {
-  String? message;
-  String? token;
-  UserDto? userDto;
+  final String? message;
+  final String? token;
+  final UserDto? userDto;
 
-  SignUpResponse({this.message, this.token, this.userDto});
+  const SignUpResponse({this.message, this.token, this.userDto});
 
   factory SignUpResponse.fromJson(Map<String, dynamic> json) {
     return _$SignUpResponseFromJson(json);

@@ -1,33 +1,40 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../values/app_colors.dart';
 import '../values/app_font_style.dart';
 
-class AuthLink extends StatelessWidget {
+class AuthNavigationLink extends StatelessWidget {
   final String title;
   final String actionTitle;
   final void Function()? action;
 
-  const AuthLink({super.key, required this.title, required this.actionTitle,required this.action});
+  const AuthNavigationLink({
+    super.key,
+    required this.title,
+    required this.actionTitle,
+    required this.action,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Text.rich(
       TextSpan(
         text: title,
         style: AppFontStyle.regular14(
           context,
-        ).copyWith(color: AppColors.darkGray),
+        ).copyWith(color: colorScheme.onSurface.withOpacity(0.6)),
         children: [
           const TextSpan(text: ' '),
           TextSpan(
-            text:actionTitle,
+            text: actionTitle,
             style: AppFontStyle.semiBold14(context).copyWith(
-              color: AppColors.primaryBlue,
+              color: colorScheme.primary,
               decoration: TextDecoration.underline,
             ),
-            recognizer: TapGestureRecognizer()..onTap =action,
+            recognizer: TapGestureRecognizer()..onTap = action,
           ),
         ],
       ),

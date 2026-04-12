@@ -6,12 +6,12 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 part 'sign_up_api_client.g.dart';
 
-@injectable
+@LazySingleton()
 @RestApi(baseUrl: EndPoints.baseUrl)
 abstract class SignUpApiClient {
   @factoryMethod
   factory SignUpApiClient(Dio dio) = _SignUpApiClient;
 
   @POST(EndPoints.signupEndpoint)
-  Future<SignUpResponse> signupUser(@Body() SignUpPostDto signUpModel);
+  Future<SignUpResponse> signupUser(@Body() SignUpRequestDto signUpModel);
 }

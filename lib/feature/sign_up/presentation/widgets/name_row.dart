@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/values/app_strings.dart';
 
-class NameRow extends StatelessWidget {
+class NameRowFormField extends StatelessWidget {
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
 
-  const NameRow({
+  const NameRowFormField({
     super.key,
     required this.firstNameController,
     required this.lastNameController,

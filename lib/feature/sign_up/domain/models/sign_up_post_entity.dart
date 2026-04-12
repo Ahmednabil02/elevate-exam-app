@@ -1,6 +1,3 @@
-
-import 'package:exam_app/feature/sign_up/data/models/sign_up_post_model/sign_up_post_dto.dart';
-
 class SignUpPostEntity {
   final String username;
   final String firstName;
@@ -10,7 +7,7 @@ class SignUpPostEntity {
   final String rePassword;
   final String phone;
 
-  SignUpPostEntity({
+  const SignUpPostEntity({
     required this.username,
     required this.firstName,
     required this.lastName,
@@ -19,16 +16,4 @@ class SignUpPostEntity {
     required this.rePassword,
     required this.phone,
   });
-
-  SignUpPostDto toDto() {
-    return SignUpPostDto(
-      username: username,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      rePassword: rePassword,
-      phone: phone,
-    );
-  }
 }

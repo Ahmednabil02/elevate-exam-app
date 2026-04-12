@@ -84,7 +84,7 @@ class _SignUpBodyState extends State<SignUpBody> {
       key: formKey,
       child: Column(
         children: [
-          _SingUpForm(
+          _SignUpForm(
             usernameController: usernameController,
             firstNameController: firstNameController,
             lastNameController: lastNameController,
@@ -96,10 +96,10 @@ class _SignUpBodyState extends State<SignUpBody> {
           const SizedBox(height: 48),
           _SubmitButton(onSubmit: _onSubmit),
           const SizedBox(height: 16),
-           AuthLink(
-            title:AppStrings.alreadyHaveAccount,
+          AuthNavigationLink(
+            title: AppStrings.alreadyHaveAccount,
             actionTitle: AppStrings.login,
-            action: () =>context.pop(),
+            action: () => context.pop(),
           ),
         ],
       ),
@@ -107,7 +107,7 @@ class _SignUpBodyState extends State<SignUpBody> {
   }
 }
 
-class _SingUpForm extends StatelessWidget {
+class _SignUpForm extends StatelessWidget {
   final TextEditingController usernameController;
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
@@ -116,7 +116,7 @@ class _SingUpForm extends StatelessWidget {
   final TextEditingController rePasswordController;
   final TextEditingController phoneController;
 
-  const _SingUpForm({
+  const _SignUpForm({
     required this.usernameController,
     required this.firstNameController,
     required this.lastNameController,
@@ -132,7 +132,7 @@ class _SingUpForm extends StatelessWidget {
       spacing: 24,
       children: [
         UserNameField(controller: usernameController),
-        NameRow(
+        NameRowFormField(
           firstNameController: firstNameController,
           lastNameController: lastNameController,
         ),

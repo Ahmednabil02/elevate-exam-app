@@ -4,18 +4,18 @@ part 'user_dto.g.dart';
 
 @JsonSerializable()
 class UserDto {
-  String? username;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phone;
-  String? role;
-  bool? isVerified;
+  final String? username;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final String? phone;
+  final String? role;
+  final bool? isVerified;
   @JsonKey(name: '_id')
-  String? id;
-  DateTime? createdAt;
+  final String? id;
+  final DateTime? createdAt;
 
-  UserDto({
+  const UserDto({
     this.username,
     this.firstName,
     this.lastName,

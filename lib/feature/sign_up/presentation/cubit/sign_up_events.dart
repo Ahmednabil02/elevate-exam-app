@@ -9,9 +9,3 @@ class SignUpUserEvent extends SignUpEvents {
 
   const SignUpUserEvent({required this.params});
 }
-
-class TogglePasswordVisibilityEvent extends SignUpEvents {
-  final bool isConfirmPassword;
-
-  const TogglePasswordVisibilityEvent({required this.isConfirmPassword});
-}
