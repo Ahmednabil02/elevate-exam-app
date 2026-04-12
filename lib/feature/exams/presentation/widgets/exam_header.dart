@@ -23,16 +23,16 @@ class ExamHeader extends StatelessWidget {
             Expanded(child: ExamTitle(exam: exam)),
           ],
         ),
-        ExamInfo(exam: exam),
+        _ExamInfo(exam: exam),
       ],
     );
   }
 }
 
-class ExamInfo extends StatelessWidget {
+class _ExamInfo extends StatelessWidget {
   final ExamEntity exam;
 
-  const ExamInfo({super.key, required this.exam});
+  const _ExamInfo({required this.exam});
 
   @override
   Widget build(BuildContext context) {
@@ -40,31 +40,26 @@ class ExamInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       spacing: 4.w,
       children: [
-        ExamSubject(exam: exam),
+        Expanded(
+          child: Container(
+            padding: EdgeInsetsDirectional.only(end: 4.w),
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(color: AppColors.blueCD, width: 1),
+              ),
+            ),
+            child: Text(
+              exam.subject,
+              style: AppFontStyle.medium18(
+                context,
+              ).copyWith(color: AppColors.blackBase),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
+        ),
         ExamQuestions(numberOfQuestions: exam.numberOfQuestions, fontSize: 16),
       ],
-    );
-  }
-}
-
-class ExamSubject extends StatelessWidget {
-  final ExamEntity exam;
-
-  const ExamSubject({super.key, required this.exam});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsetsDirectional.only(end: 4.w),
-      decoration: BoxDecoration(
-        border: Border(right: BorderSide(color: AppColors.blueCD, width: 1)),
-      ),
-      child: Text(
-        exam.subject,
-        style: AppFontStyle.medium18(
-          context,
-        ).copyWith(color: AppColors.blackBase),
-      ),
     );
   }
 }

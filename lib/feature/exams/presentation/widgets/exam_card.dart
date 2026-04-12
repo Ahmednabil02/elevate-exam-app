@@ -19,36 +19,31 @@ class ExamCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.push(Routes.examDetails, extra: {"exam": exam}),
       child: Container(
-        decoration: ExamCardDecoration(),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.r),
+          shape: BoxShape.rectangle,
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadowColor.withValues(alpha: 0.25),
+              spreadRadius: 0,
+              blurRadius: 8,
+              offset: Offset.zero,
+            ),
+          ],
+        ),
         margin: EdgeInsets.only(bottom: 16.h),
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         child: Row(
           children: [
             ExamIcon(),
             SizedBox(width: 8.w),
-            Expanded(child: ExamDetails(exam: exam)),
+            Expanded(child: _ExamDetails(exam: exam)),
           ],
         ),
       ),
     );
   }
-}
-
-class ExamCardDecoration extends BoxDecoration {
-  ExamCardDecoration()
-    : super(
-        borderRadius: BorderRadius.circular(10.r),
-        shape: BoxShape.rectangle,
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadowColor.withValues(alpha: 0.25),
-            spreadRadius: 0,
-            blurRadius: 8,
-            offset: Offset.zero,
-          ),
-        ],
-      );
 }
 
 class ExamIcon extends StatelessWidget {
@@ -66,8 +61,8 @@ class ExamIcon extends StatelessWidget {
   }
 }
 
-class ExamDetails extends StatelessWidget {
-  const ExamDetails({super.key, required this.exam});
+class _ExamDetails extends StatelessWidget {
+  const _ExamDetails({required this.exam});
 
   final ExamEntity exam;
 

@@ -14,37 +14,21 @@ class EmptyExamsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        EmptyExamsImage(),
+        SizedBox(
+          height: 200.h,
+          width: 100.w,
+          child: Image.asset(AppAssets.profit, fit: BoxFit.contain),
+        ),
         SizedBox(height: 20.h),
-        EmptyExamsText(),
+        Text(
+          AppStrings.noDataFound,
+          style: AppFontStyle.regular20(
+            context,
+          ).copyWith(color: AppColors.gray30),
+          textAlign: TextAlign.center,
+          maxLines: 2,
+        ),
       ],
-    );
-  }
-}
-
-class EmptyExamsImage extends StatelessWidget {
-  const EmptyExamsImage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200.h,
-      width: 100.w,
-      child: Image.asset(AppAssets.profit, fit: BoxFit.contain),
-    );
-  }
-}
-
-class EmptyExamsText extends StatelessWidget {
-  const EmptyExamsText({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      AppStrings.noDataFound,
-      style: AppFontStyle.regular20(context).copyWith(color: AppColors.gray30),
-      textAlign: TextAlign.center,
-      maxLines: 2,
     );
   }
 }

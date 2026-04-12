@@ -14,19 +14,19 @@ class ExamInstructions extends StatelessWidget {
       children: [
         Text(AppStrings.instructions, style: AppFontStyle.medium18(context)),
         SizedBox(height: 12.h),
-        InstructionItem(text: AppStrings.instruction),
-        InstructionItem(text: AppStrings.instruction),
-        InstructionItem(text: AppStrings.instruction),
-        InstructionItem(text: AppStrings.instruction),
+        _InstructionItem(text: AppStrings.instruction),
+        _InstructionItem(text: AppStrings.instruction),
+        _InstructionItem(text: AppStrings.instruction),
+        _InstructionItem(text: AppStrings.instruction),
       ],
     );
   }
 }
 
-class InstructionItem extends StatelessWidget {
+class _InstructionItem extends StatelessWidget {
   final String text;
 
-  const InstructionItem({super.key, required this.text});
+  const _InstructionItem({required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -35,41 +35,25 @@ class InstructionItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InstructionBullet(),
-          Expanded(child: InstructionText(text: text)),
+          Container(
+            width: 6.w,
+            height: 6.h,
+            margin: EdgeInsetsDirectional.only(top: 8.h, end: 8.w),
+            decoration: const BoxDecoration(
+              color: AppColors.black,
+              shape: BoxShape.circle,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              text,
+              style: AppFontStyle.regular14(
+                context,
+              ).copyWith(color: AppColors.gray53),
+            ),
+          ),
         ],
       ),
-    );
-  }
-}
-
-class InstructionBullet extends StatelessWidget {
-  const InstructionBullet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 6.w,
-      height: 6.h,
-      margin: EdgeInsetsDirectional.only(top: 8.h, end: 8.w),
-      decoration: const BoxDecoration(
-        color: AppColors.black,
-        shape: BoxShape.circle,
-      ),
-    );
-  }
-}
-
-class InstructionText extends StatelessWidget {
-  final String text;
-
-  const InstructionText({super.key, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: AppFontStyle.regular14(context).copyWith(color: AppColors.gray53),
     );
   }
 }
