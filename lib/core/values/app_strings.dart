@@ -121,6 +121,8 @@ class AppStrings {
   // Exam
   static const String minutes = 'Minutes';
   static const String questions = 'Questions';
+  static const String instructions = 'Instructions';
+  static const String instruction = 'Lorem ipsum dolor sit amet consectetur.';
   static const String fromHour = 'From: ';
   static const String toHour = "To: ";
 }
