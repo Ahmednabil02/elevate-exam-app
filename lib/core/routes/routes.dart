@@ -6,6 +6,5 @@ class Routes {
   static const String changePassword = "/change-password";
   static const String home = "/home";
   static const String exams = "/exams";
-
-
+  static const String profile = "/profile";
 }
