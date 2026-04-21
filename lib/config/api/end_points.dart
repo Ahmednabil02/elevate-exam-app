@@ -19,6 +19,8 @@ class EndPoints {
 
   // Change Password Endpoint
   static const String changePassword = "/auth/changePassword";
+  // Subjects
+  static const String subjects = "/subjects";
 }
 
 class APIkeys {
