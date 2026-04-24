@@ -1,4 +1,4 @@
-class EndPoints {
+abstract class EndPoints {
   static const String baseUrl = "https://exam.elevateegy.com/api/v1";
 
   // static const String baseImageUrl = "https://exam.elevateegy.com/images/";
@@ -19,6 +19,9 @@ class EndPoints {
 
   // Change Password Endpoint
   static const String changePassword = "/auth/changePassword";
+
+  // Exams
+  static const String exams = "/exams";
 }
 
 class APIkeys {
