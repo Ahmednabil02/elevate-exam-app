@@ -12,4 +12,5 @@ class Routes {
   static const String answersView = "/answers";
   static const String subjects = "/subjects";
   static const String main = "/main";
+  static const String profile = "/profile";
 }

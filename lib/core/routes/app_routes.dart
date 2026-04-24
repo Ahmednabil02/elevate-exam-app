@@ -50,7 +50,7 @@ abstract class AppRoutes {
         name: Routes.examDetails,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-              state.extra as Map<String, dynamic>;
+          state.extra as Map<String, dynamic>;
           final ExamEntity exam = extra['exam'];
           return ExamDetailsPage(exam: exam);
         },
@@ -60,7 +60,7 @@ abstract class AppRoutes {
         name: Routes.questions,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-              state.extra as Map<String, dynamic>;
+          state.extra as Map<String, dynamic>;
           final ExamEntity exam = extra['exam'];
           return QuestionPage(exam: exam);
         },
@@ -70,7 +70,7 @@ abstract class AppRoutes {
         name: Routes.answersView,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-              state.extra as Map<String, dynamic>;
+          state.extra as Map<String, dynamic>;
           final String examId = extra['examId'];
           return AnswersPage(examId: examId);
         },
@@ -80,7 +80,7 @@ abstract class AppRoutes {
         name: Routes.examScore,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-              state.extra as Map<String, dynamic>;
+          state.extra as Map<String, dynamic>;
           final String examId = extra['examId'];
           return ExamScorePage(examId: examId);
         },
@@ -98,6 +98,24 @@ abstract class AppRoutes {
         name: Routes.register,
         builder: (BuildContext context, GoRouterState state) {
           return const SignUpPage();
+        },
+      ),
+      GoRoute(
+        path: Routes.profile,
+        builder: (BuildContext context, GoRouterState state) {
+          return BlocProvider(
+            create: (context) => getIt<ProfileCubit>(),
+            child: const EditProfileScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.changePassword,
+        builder: (BuildContext context, GoRouterState state) {
+          return BlocProvider(
+            create: (context) => getIt<ProfileCubit>(),
+            child: const ChangePasswordScreen(),
+          );
         },
       ),
     ],
