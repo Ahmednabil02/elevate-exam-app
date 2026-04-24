@@ -14,7 +14,20 @@ class ExamDatabase extends _$ExamDatabase {
   ExamDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (Migrator m) async {
+      await m.createAll();
+    },
+    onUpgrade: (Migrator m, int from, int to) async {
+      if (from < 2) {
+        // Add end_exam_time column to exam table
+        await m.addColumn(exam, exam.endExamTime);
+      }
+    },
+  );
 
   Future<void> saveAll({
     required String examId,
@@ -25,12 +38,17 @@ class ExamDatabase extends _$ExamDatabase {
   }) {
     return transaction(() async {
       if (preserveStartTime) {
-        // Check if exam exists and preserve its start time
+        // Check if exam exists and preserve its start time and end time
         final existingExam = await getExam(examId);
         final timeToUse = existingExam?.startExamTime ?? startExamTime;
+        final endTimeToUse = existingExam?.endExamTime;
 
         await into(exam).insertOnConflictUpdate(
-          ExamCompanion(examId: Value(examId), startExamTime: Value(timeToUse)),
+          ExamCompanion(
+            examId: Value(examId),
+            startExamTime: Value(timeToUse),
+            endExamTime: Value(endTimeToUse),
+          ),
         );
       } else {
         // Use provided start time (for new exams)
@@ -38,6 +56,7 @@ class ExamDatabase extends _$ExamDatabase {
           ExamCompanion(
             examId: Value(examId),
             startExamTime: Value(startExamTime),
+            endExamTime: const Value(null),
           ),
         );
       }
@@ -58,6 +77,15 @@ class ExamDatabase extends _$ExamDatabase {
           (t) => t.examId.equals(examId) & t.questionId.equals(questionId),
         ))
         .write(QuestionTableCompanion(userAnswer: Value(userAnswer)));
+  }
+
+  Future<int> updateExamEndTime({
+    required String examId,
+    required DateTime endTime,
+  }) {
+    return (update(exam)..where((t) => t.examId.equals(examId))).write(
+      ExamCompanion(endExamTime: Value(endTime)),
+    );
   }
 
   Future<ExamData?> getExam(String examId) {

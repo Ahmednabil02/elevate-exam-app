@@ -13,6 +13,7 @@ class QuestionsResponseDto extends BasePaginationDto<QuestionDto> {
   final List<QuestionDto>? questions;
   final String? examId;
   final DateTime? startExamTime;
+  final DateTime? endExamTime;
 
   const QuestionsResponseDto({
     super.message,
@@ -20,6 +21,7 @@ class QuestionsResponseDto extends BasePaginationDto<QuestionDto> {
     this.questions,
     this.examId,
     this.startExamTime,
+    this.endExamTime,
   }) : super(data: questions);
 
   factory QuestionsResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -41,6 +43,7 @@ class QuestionsResponseDto extends BasePaginationDto<QuestionDto> {
     List<QuestionDto>? questions,
     String? examId,
     DateTime? startExamTime,
+    DateTime? endExamTime,
   }) {
     return QuestionsResponseDto(
       message: message ?? this.message,
@@ -48,6 +51,7 @@ class QuestionsResponseDto extends BasePaginationDto<QuestionDto> {
       questions: questions ?? this.questions,
       examId: examId ?? this.examId,
       startExamTime: startExamTime ?? this.startExamTime,
+      endExamTime: endExamTime ?? this.endExamTime,
     );
   }
 }

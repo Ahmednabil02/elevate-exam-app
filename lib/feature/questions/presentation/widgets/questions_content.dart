@@ -14,12 +14,15 @@ import 'package:go_router/go_router.dart';
 class QuestionsContent extends StatefulWidget {
   const QuestionsContent({
     super.key,
+
     required this.questions,
     required this.currentPage,
+    required this.examId,
   });
 
   final List<QuestionEntity> questions;
   final int currentPage;
+  final String examId;
 
   @override
   State<QuestionsContent> createState() => _QuestionsContentState();
@@ -71,15 +74,7 @@ class _QuestionsContentState extends State<QuestionsContent> {
                 QuestionChanged(currentPage: widget.currentPage - 1),
               ),
               onNext: () => isLastQuestion
-                  ? () {
-                      context.pushReplacement(
-                        Routes.examScore,
-                        extra: {
-                          "questions": widget.questions,
-                          "exam": widget.questions.first.exam,
-                        },
-                      );
-                    }
+                  ? _onSubmit(context)
                   : _cubit.doIntent(
                       QuestionChanged(currentPage: widget.currentPage + 1),
                     ),
@@ -88,5 +83,11 @@ class _QuestionsContentState extends State<QuestionsContent> {
         ),
       ),
     );
+  }
+
+  void _onSubmit(BuildContext context) {
+    final cubit = context.read<QuestionsCubit>();
+    cubit.doIntent(SubmitExamEvent(examId: widget.examId));
+    context.pushReplacement(Routes.examScore, extra: {"examId": widget.examId});
   }
 }

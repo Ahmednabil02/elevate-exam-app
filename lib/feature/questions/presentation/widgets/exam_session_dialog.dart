@@ -137,4 +137,19 @@ class ExamSessionDialog extends StatelessWidget {
       onCancel: onRestart,
     );
   }
+
+  factory ExamSessionDialog.completed({
+    required VoidCallback onViewResults,
+    required VoidCallback onRestart,
+  }) {
+    return ExamSessionDialog(
+      title: AppStrings.examCompletedTitle,
+      message: AppStrings.examCompletedMessage,
+      confirmText: AppStrings.viewResults,
+      cancelText: AppStrings.startNewExam,
+      titleColor: AppColors.green19,
+      onConfirm: onViewResults,
+      onCancel: onRestart,
+    );
+  }
 }

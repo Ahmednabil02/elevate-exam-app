@@ -91,6 +91,17 @@ class QuestionsRepositoryImpl implements QuestionsRepositoryContract {
   }
 
   @override
+  Future<void> saveExamEndTime({
+    required String examId,
+    required DateTime endTime,
+  }) async {
+    await questionsLocalDataSourceContract.saveExamEndTime(
+      examId: examId,
+      endTime: endTime,
+    );
+  }
+
+  @override
   Future<ExamSessionEntity?> checkExamSession({
     required String examId,
     required int examDurationInMinutes,
@@ -99,25 +110,49 @@ class QuestionsRepositoryImpl implements QuestionsRepositoryContract {
       final savedData = await questionsLocalDataSourceContract
           .getSavedQuestions(examId: examId);
 
+      log(
+        '🔍 Repository checkExamSession: savedData.startExamTime = ${savedData.startExamTime}',
+      );
+      log(
+        '🔍 Repository checkExamSession: savedData.endExamTime = ${savedData.endExamTime}',
+      );
+      log(
+        '🔍 Repository checkExamSession: savedData.questions = ${savedData.questions?.length}',
+      );
+
       if (savedData.startExamTime == null || savedData.questions == null) {
+        log('🔍 Repository checkExamSession: No saved data, returning null');
         return null;
       }
 
       final startTime = savedData.startExamTime!;
+      final endExamTime = savedData.endExamTime;
       final now = DateTime.now();
       final endTime = startTime.add(Duration(minutes: examDurationInMinutes));
       final isExpired = now.isAfter(endTime);
+
+      // Check if exam is already completed (has end time)
+      final isCompleted = endExamTime != null;
+      final status = isCompleted
+          ? ExamSessionStatus.completed
+          : (isExpired
+                ? ExamSessionStatus.expired
+                : ExamSessionStatus.inProgress);
+
+      log('🔍 Repository checkExamSession: isCompleted = $isCompleted');
+      log('🔍 Repository checkExamSession: isExpired = $isExpired');
+      log('🔍 Repository checkExamSession: status = $status');
 
       return ExamSessionEntity(
         examId: examId,
         startTime: startTime,
         durationInMinutes: examDurationInMinutes,
         questions: savedData.questions!.map((dto) => dto.toEntity()).toList(),
-        status: isExpired
-            ? ExamSessionStatus.expired
-            : ExamSessionStatus.inProgress,
+        status: status,
+        endExamTime: endExamTime,
       );
     } catch (e) {
+      log('❌ Repository checkExamSession: Error = $e');
       return null;
     }
   }

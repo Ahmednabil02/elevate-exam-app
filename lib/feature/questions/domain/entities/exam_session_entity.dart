@@ -7,6 +7,7 @@ class ExamSessionEntity extends Equatable {
   final int durationInMinutes;
   final List<QuestionEntity> questions;
   final ExamSessionStatus status;
+  final DateTime? endExamTime;
 
   const ExamSessionEntity({
     required this.examId,
@@ -14,6 +15,7 @@ class ExamSessionEntity extends Equatable {
     required this.durationInMinutes,
     required this.questions,
     required this.status,
+    this.endExamTime,
   });
 
   int get remainingMinutes {
@@ -29,6 +31,10 @@ class ExamSessionEntity extends Equatable {
     return now.isAfter(endTime);
   }
 
+  bool get isCompleted {
+    return endExamTime != null;
+  }
+
   DateTime get endTime {
     return startTime.add(Duration(minutes: durationInMinutes));
   }
@@ -39,6 +45,7 @@ class ExamSessionEntity extends Equatable {
     int? durationInMinutes,
     List<QuestionEntity>? questions,
     ExamSessionStatus? status,
+    DateTime? endExamTime,
   }) {
     return ExamSessionEntity(
       examId: examId ?? this.examId,
@@ -46,6 +53,7 @@ class ExamSessionEntity extends Equatable {
       durationInMinutes: durationInMinutes ?? this.durationInMinutes,
       questions: questions ?? this.questions,
       status: status ?? this.status,
+      endExamTime: endExamTime ?? this.endExamTime,
     );
   }
 
@@ -56,6 +64,7 @@ class ExamSessionEntity extends Equatable {
     durationInMinutes,
     questions,
     status,
+    endExamTime,
   ];
 }
 

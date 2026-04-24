@@ -31,6 +31,7 @@ class QuestionsBody extends StatelessWidget {
               : QuestionsContent(
                   questions: questions,
                   currentPage: state.currentPage,
+                  examId: examEntity.id,
                 ),
         );
       },

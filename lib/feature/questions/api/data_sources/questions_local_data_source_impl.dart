@@ -58,6 +58,7 @@ class QuestionsLocalDataSourceImpl implements QuestionsLocalDataSourceContract {
       answersMap: answersMap,
       examId: examId,
       startExamTime: examData.startExamTime,
+      endExamTime: examData.endExamTime,
     );
     return result;
   }
@@ -72,6 +73,14 @@ class QuestionsLocalDataSourceImpl implements QuestionsLocalDataSourceContract {
       questionId: question.id!,
       userAnswer: question.submitAnswer ?? '',
     );
+  }
+
+  @override
+  Future<void> saveExamEndTime({
+    required String examId,
+    required DateTime endTime,
+  }) async {
+    await _db.updateExamEndTime(examId: examId, endTime: endTime);
   }
 
   @override

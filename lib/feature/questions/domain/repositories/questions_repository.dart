@@ -10,6 +10,10 @@ abstract interface class QuestionsRepositoryContract {
   });
   Future<List<QuestionEntity>?> getSavedQuestions({required String examId});
   Future<void> clearSavedQuestions({required String examId});
+  Future<void> saveExamEndTime({
+    required String examId,
+    required DateTime endTime,
+  });
   Future<ExamSessionEntity?> checkExamSession({
     required String examId,
     required int examDurationInMinutes,

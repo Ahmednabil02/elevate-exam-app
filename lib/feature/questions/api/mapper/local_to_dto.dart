@@ -10,6 +10,7 @@ class LocalToDtoMapper {
     required Map<String, List<Answer>> answersMap,
     required String examId,
     required DateTime? startExamTime,
+    required DateTime? endExamTime,
   }) {
     final questions = questionRows.map((questionRow) {
       final answers = answersMap[questionRow.questionId] ?? [];
@@ -20,6 +21,7 @@ class LocalToDtoMapper {
       questions: questions,
       examId: examId,
       startExamTime: startExamTime,
+      endExamTime: endExamTime,
     );
   }
 

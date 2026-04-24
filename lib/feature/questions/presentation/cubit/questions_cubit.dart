@@ -9,8 +9,9 @@ import 'package:exam_app/feature/questions/domain/entities/questions_entity.dart
 import 'package:exam_app/feature/questions/domain/use_cases/check_exam_session_use_case.dart';
 import 'package:exam_app/feature/questions/domain/use_cases/clear_exam_session_use_case.dart';
 import 'package:exam_app/feature/questions/domain/use_cases/get_questions_use_case.dart';
-import 'package:exam_app/feature/questions/domain/use_cases/resume_exam_use_case.dart';
+import 'package:exam_app/feature/questions/domain/use_cases/get_saved_questions_use_case.dart';
 import 'package:exam_app/feature/questions/domain/use_cases/save_answer_use_case.dart';
+import 'package:exam_app/feature/questions/domain/use_cases/save_exam_end_time_use_case.dart';
 import 'package:exam_app/feature/questions/presentation/cubit/questions_events.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,14 +22,16 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   QuestionsCubit({
     required GetQuestionsUseCase questionsUseCase,
     required CheckExamSessionUseCase checkExamSessionUseCase,
-    required ResumeExamUseCase resumeExamUseCase,
+    required GetSavedQuestionsUseCase resumeExamUseCase,
     required ClearExamSessionUseCase clearExamSessionUseCase,
     required SaveAnswerUseCase saveAnswerUseCase,
+    required SaveExamEndTimeUseCase saveExamEndTimeUseCase,
   }) : _getQuestionsUseCase = questionsUseCase,
        _checkExamSessionUseCase = checkExamSessionUseCase,
        _resumeExamUseCase = resumeExamUseCase,
        _clearExamSessionUseCase = clearExamSessionUseCase,
        _saveAnswerUseCase = saveAnswerUseCase,
+       _saveExamEndTimeUseCase = saveExamEndTimeUseCase,
        super(const QuestionsState(currentPage: 0));
 
   Future<void> doIntent(QuestionsEvent event) async => switch (event) {
@@ -44,13 +47,15 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     ),
     ResumeExamEvent() => _resumeExam(event.examId),
     ClearExpiredExamEvent() => _clearExpiredExam(event.examId),
+    SubmitExamEvent() => _submitExam(event.examId),
   };
 
   final GetQuestionsUseCase _getQuestionsUseCase;
   final CheckExamSessionUseCase _checkExamSessionUseCase;
-  final ResumeExamUseCase _resumeExamUseCase;
+  final GetSavedQuestionsUseCase _resumeExamUseCase;
   final ClearExamSessionUseCase _clearExamSessionUseCase;
   final SaveAnswerUseCase _saveAnswerUseCase;
+  final SaveExamEndTimeUseCase _saveExamEndTimeUseCase;
 
   Future<void> _selectAnswer(int index, String answer) async {
     final currentData = List<QuestionEntity>.from(state.data ?? []);
@@ -90,11 +95,27 @@ class QuestionsCubit extends Cubit<QuestionsState> {
       examDurationInMinutes: examDurationInMinutes,
     );
 
+    log('🔍 _checkExamSession: session = $session');
+    log('🔍 _checkExamSession: session.status = ${session?.status}');
+    log('🔍 _checkExamSession: session.endExamTime = ${session?.endExamTime}');
+
     if (session == null) {
+      log('🔍 _checkExamSession: No session, emitting initial state');
       emit(state.copyWith(state: BaseStateType.initial, examSession: null));
+    } else if (session.status == ExamSessionStatus.completed) {
+      log(
+        '🔍 _checkExamSession: Exam completed, emitting initial state with session',
+      );
+      emit(state.copyWith(state: BaseStateType.initial, examSession: session));
     } else if (session.status == ExamSessionStatus.expired) {
+      log(
+        '🔍 _checkExamSession: Exam expired, emitting initial state with session',
+      );
       emit(state.copyWith(state: BaseStateType.initial, examSession: session));
     } else {
+      log(
+        '🔍 _checkExamSession: Exam in progress, emitting initial state with session',
+      );
       emit(state.copyWith(state: BaseStateType.initial, examSession: session));
     }
   }
@@ -160,6 +181,41 @@ class QuestionsCubit extends Cubit<QuestionsState> {
         );
       case Error<List<QuestionEntity>>():
         emit(state.copyWith(state: BaseStateType.error));
+    }
+  }
+
+  Future<void> _submitExam(String examId) async {
+    try {
+      log('📝 Submitting exam: $examId');
+
+      final endTime = DateTime.now();
+      await _saveExamEndTimeUseCase(examId: examId, endTime: endTime);
+
+      emit(
+        const QuestionsState(
+          currentPage: 0,
+          state: BaseStateType.initial,
+          data: null,
+          examSession: null,
+          examStartTime: null,
+          examDurationInMinutes: null,
+        ),
+      );
+
+      log('✅ Exam submitted successfully');
+    } catch (e) {
+      log('❌ Error submitting exam: $e');
+      // Even if there's an error, we still clear the state
+      emit(
+        const QuestionsState(
+          currentPage: 0,
+          state: BaseStateType.initial,
+          data: null,
+          examSession: null,
+          examStartTime: null,
+          examDurationInMinutes: null,
+        ),
+      );
     }
   }
 }

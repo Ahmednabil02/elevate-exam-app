@@ -11,5 +11,10 @@ abstract interface class QuestionsLocalDataSourceContract {
     required QuestionDto question,
   });
 
+  Future<void> saveExamEndTime({
+    required String examId,
+    required DateTime endTime,
+  });
+
   Future<void> clearSavedQuestions({required String examId});
 }

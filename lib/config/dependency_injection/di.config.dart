@@ -16,6 +16,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart'
     as _i161;
 
+import '../../feature/answers/presentation/cubit/answers_cubit.dart' as _i351;
 import '../../feature/exams/api/api_client/exams_api_client.dart' as _i503;
 import '../../feature/exams/api/data%D9%80sources/exams_remote_data_source_impl.dart'
     as _i79;
@@ -84,10 +85,12 @@ import '../../feature/questions/domain/use_cases/clear_exam_session_use_case.dar
     as _i314;
 import '../../feature/questions/domain/use_cases/get_questions_use_case.dart'
     as _i1061;
-import '../../feature/questions/domain/use_cases/resume_exam_use_case.dart'
-    as _i619;
+import '../../feature/questions/domain/use_cases/get_saved_questions_use_case.dart'
+    as _i350;
 import '../../feature/questions/domain/use_cases/save_answer_use_case.dart'
     as _i493;
+import '../../feature/questions/domain/use_cases/save_exam_end_time_use_case.dart'
+    as _i1045;
 import '../../feature/questions/presentation/cubit/questions_cubit.dart'
     as _i816;
 import '../../feature/sign_up/api/api_client/sign_up_api_client.dart' as _i103;
@@ -264,13 +267,18 @@ extension GetItInjectableX on _i174.GetIt {
         repository: gh<_i566.QuestionsRepositoryContract>(),
       ),
     );
-    gh.factory<_i619.ResumeExamUseCase>(
-      () => _i619.ResumeExamUseCase(
+    gh.factory<_i350.GetSavedQuestionsUseCase>(
+      () => _i350.GetSavedQuestionsUseCase(
         repository: gh<_i566.QuestionsRepositoryContract>(),
       ),
     );
     gh.factory<_i493.SaveAnswerUseCase>(
       () => _i493.SaveAnswerUseCase(
+        repository: gh<_i566.QuestionsRepositoryContract>(),
+      ),
+    );
+    gh.factory<_i1045.SaveExamEndTimeUseCase>(
+      () => _i1045.SaveExamEndTimeUseCase(
         repository: gh<_i566.QuestionsRepositoryContract>(),
       ),
     );
@@ -281,17 +289,23 @@ extension GetItInjectableX on _i174.GetIt {
         resetPasswordUseCase: gh<_i33.ResetPasswordUseCase>(),
       ),
     );
-    gh.factory<_i453.LoginCubit>(
-      () => _i453.LoginCubit(loginUseCase: gh<_i46.LoginUseCase>()),
+    gh.factory<_i351.AnswersCubit>(
+      () => _i351.AnswersCubit(
+        getSavedQuestionsUseCase: gh<_i350.GetSavedQuestionsUseCase>(),
+      ),
     );
     gh.factory<_i816.QuestionsCubit>(
       () => _i816.QuestionsCubit(
         questionsUseCase: gh<_i1061.GetQuestionsUseCase>(),
         checkExamSessionUseCase: gh<_i1046.CheckExamSessionUseCase>(),
-        resumeExamUseCase: gh<_i619.ResumeExamUseCase>(),
+        resumeExamUseCase: gh<_i350.GetSavedQuestionsUseCase>(),
         clearExamSessionUseCase: gh<_i314.ClearExamSessionUseCase>(),
         saveAnswerUseCase: gh<_i493.SaveAnswerUseCase>(),
+        saveExamEndTimeUseCase: gh<_i1045.SaveExamEndTimeUseCase>(),
       ),
+    );
+    gh.factory<_i453.LoginCubit>(
+      () => _i453.LoginCubit(loginUseCase: gh<_i46.LoginUseCase>()),
     );
     return this;
   }

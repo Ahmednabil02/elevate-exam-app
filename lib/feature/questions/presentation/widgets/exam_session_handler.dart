@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:exam_app/core/routes/routes.dart';
 import 'package:exam_app/feature/questions/domain/entities/exam_session_entity.dart';
 import 'package:exam_app/feature/questions/presentation/cubit/questions_cubit.dart';
 import 'package:exam_app/feature/questions/presentation/cubit/questions_events.dart';
@@ -23,6 +24,8 @@ mixin ExamSessionHandler<T extends StatefulWidget> on State<T> {
 
     if (session == null) {
       await _startNewExam(examId, examDurationInMinutes, cubit);
+    } else if (session.status == ExamSessionStatus.completed) {
+      await _handleCompletedSession(examId, examDurationInMinutes, cubit);
     } else if (session.status == ExamSessionStatus.expired) {
       await _handleExpiredSession(
         examId,
@@ -38,6 +41,30 @@ mixin ExamSessionHandler<T extends StatefulWidget> on State<T> {
         cubit,
       );
     }
+  }
+
+  Future<void> _handleCompletedSession(
+    String examId,
+    int examDurationInMinutes,
+    QuestionsCubit cubit,
+  ) async {
+    if (!mounted) {
+      return;
+    }
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return ExamSessionDialog.completed(
+          onViewResults: () {
+            _navigateToResults(examId);
+          },
+          onRestart: () =>
+              _clearAndStartNew(examId, examDurationInMinutes, cubit),
+        );
+      },
+    );
   }
 
   Future<void> _handleExpiredSession(
@@ -103,6 +130,13 @@ mixin ExamSessionHandler<T extends StatefulWidget> on State<T> {
   void _navigateBack() {
     if (mounted) {
       context.pop();
+    }
+  }
+
+  void _navigateToResults(String examId) {
+    if (mounted) {
+      context.pop();
+      context.pushReplacement(Routes.examScore, extra: {'examId': examId});
     }
   }
 }

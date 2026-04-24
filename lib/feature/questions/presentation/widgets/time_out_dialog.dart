@@ -51,7 +51,10 @@ class TimeOutDialog extends StatelessWidget {
                 text: AppStrings.viewScore,
                 onPressed: () {
                   context.pop();
-                  context.push(Routes.questions, extra: {"exam": examEntity});
+                  context.push(
+                    Routes.examScore,
+                    extra: {"examId": examEntity.id},
+                  );
                 },
               ),
             ],

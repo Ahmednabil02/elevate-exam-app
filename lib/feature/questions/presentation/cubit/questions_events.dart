@@ -45,3 +45,8 @@ class ClearExpiredExamEvent extends QuestionsEvent {
   ClearExpiredExamEvent({required this.examId});
 }
 
+class SubmitExamEvent extends QuestionsEvent {
+  final String examId;
+
+  SubmitExamEvent({required this.examId});
+}
