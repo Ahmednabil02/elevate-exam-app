@@ -9,3 +9,7 @@ class Routes {
   static const String examDetails = "/exam_details";
   static const String questions = "/questions";
 }
+  static const String subjects = "/subjects";
+  static const String main = "/main";
+}
+
