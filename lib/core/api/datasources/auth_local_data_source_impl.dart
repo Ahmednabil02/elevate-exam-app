@@ -1,0 +1,43 @@
+import 'dart:developer';
+
+import 'package:exam_app/config/api/end_points.dart';
+import 'package:exam_app/core/data/datasources/auth_local_data_source.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:injectable/injectable.dart';
+
+@LazySingleton(as: AuthLocalDataSourceContract)
+class AuthLocalDataSourceImpl implements AuthLocalDataSourceContract {
+  final FlutterSecureStorage fss;
+
+  AuthLocalDataSourceImpl({required this.fss});
+
+  @override
+  Future<void> saveUserToken(String token) async {
+    try {
+      await fss.write(key: Apikeys.accessToken, value: token);
+      log("Token saved successfully");
+    } catch (e) {
+      log("Error saving token: $e");
+    }
+  }
+
+  @override
+  Future<String?> getUserToken() async {
+    try {
+      return await fss.read(key: Apikeys.accessToken);
+    } catch (e) {
+      log("Error reading token: $e");
+      return null;
+    }
+  }
+
+  @override
+  Future<void> deleteUserToken() async {
+    try {
+      await fss.delete(key: Apikeys.accessToken);
+      log("Token deleted successfully");
+    } catch (e) {
+      log("Error deleting token: $e");
+    }
+  }
+}
