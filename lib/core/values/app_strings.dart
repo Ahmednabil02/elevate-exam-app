@@ -17,15 +17,17 @@ class AppStrings {
   static const String startExam = 'Start exam';
   static const String next = 'Next';
   static const String back = 'Back';
+  static const String submit = 'Submit';
   static const String finish = 'Finish';
   static const String viewScore = 'View score';
-  static const String timeOut = 'Time out!';
+  static const String timeOut = 'Time out!!';
 
   // Errors
   static const String somethingWentWrong =
       'Something went wrong, please try again';
   static const String confirm = 'Confirm';
   static const String cancel = 'Cancel';
+  static const String answers = 'answers';
   static const String retry = 'Retry';
   static const String loading = 'Loading...';
   static const String success = 'Success';
@@ -43,6 +45,10 @@ class AppStrings {
   static const String receiveTimeout = 'Receive timeout';
   static const String badCertificate = 'Bad certificate';
   static const String requestCancelled = 'Request cancelled';
+
+  static String questionOf({required int current, required int total}) =>
+      "question $current of $total";
+
   static const String connectionError = 'Connection error';
   static const String unknownError = 'Unknown error occurred';
   static const String apiServerError = 'Server error';
@@ -118,9 +124,44 @@ class AppStrings {
   static const String passwordsDoNotMatch = 'Passwords don\'t match';
   static const String signUpSuccess = 'Account created successfully';
   static const String alreadyHaveAccount = 'Already have an account?';
+
   // Exam
+  static const String exam = 'Exam';
   static const String minutes = 'Minutes';
   static const String questions = 'Questions';
+  static const String instructions = 'Instructions';
+  static const String instruction = 'Lorem ipsum dolor sit amet consectetur.';
   static const String fromHour = 'From: ';
   static const String toHour = "To: ";
+  static const String noSavedExamData = 'No saved exam data found';
+  static const String noSavedQuestionsData = 'No saved questions data found';
+
+  // Exam Session Dialogs
+  static const String examExpiredTitle = 'Time Expired';
+  static const String errorLoadingQuestions = 'Error loading questions';
+  static const String examExpiredMessage =
+      'Your previous exam session has expired';
+  static const String examExpiredSubtitle =
+      'Previous answers will be updated and this result will be considered final';
+  static const String retakeExam = 'ReExam';
+  static const String resumeExamTitle = 'Resume Exam';
+  static const String resumeExamMessage =
+      'You have a saved exam. Would you like to continue?';
+  static const String resumeExam = 'Resume';
+  static const String startNewExam = 'Start New';
+  static const String noQuestion = 'No questions available';
+
+  // Exam Completed
+  static const String examCompletedTitle = 'Exam Completed';
+  static const String examCompletedMessage =
+      'You have already completed this exam. Would you like to view your results?';
+  static const String viewResults = 'View Result';
+
+  // Exam Score
+  static const String examScore = 'Exam score';
+  static const String yourScore = 'Your score';
+  static const String correct = 'Correct';
+  static const String incorrect = 'Incorrect';
+  static const String showResults = 'Show results';
+  static const String startAgain = 'Start again';
 }
