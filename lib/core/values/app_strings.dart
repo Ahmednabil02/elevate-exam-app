@@ -133,35 +133,4 @@ class AppStrings {
   static const String instruction = 'Lorem ipsum dolor sit amet consectetur.';
   static const String fromHour = 'From: ';
   static const String toHour = "To: ";
-  static const String noSavedExamData = 'No saved exam data found';
-  static const String noSavedQuestionsData = 'No saved questions data found';
-
-  // Exam Session Dialogs
-  static const String examExpiredTitle = 'Time Expired';
-  static const String errorLoadingQuestions = 'Error loading questions';
-  static const String examExpiredMessage =
-      'Your previous exam session has expired';
-  static const String examExpiredSubtitle =
-      'Previous answers will be updated and this result will be considered final';
-  static const String retakeExam = 'ReExam';
-  static const String resumeExamTitle = 'Resume Exam';
-  static const String resumeExamMessage =
-      'You have a saved exam. Would you like to continue?';
-  static const String resumeExam = 'Resume';
-  static const String startNewExam = 'Start New';
-  static const String noQuestion = 'No questions available';
-
-  // Exam Completed
-  static const String examCompletedTitle = 'Exam Completed';
-  static const String examCompletedMessage =
-      'You have already completed this exam. Would you like to view your results?';
-  static const String viewResults = 'View Result';
-
-  // Exam Score
-  static const String examScore = 'Exam score';
-  static const String yourScore = 'Your score';
-  static const String correct = 'Correct';
-  static const String incorrect = 'Incorrect';
-  static const String showResults = 'Show results';
-  static const String startAgain = 'Start again';
 }
