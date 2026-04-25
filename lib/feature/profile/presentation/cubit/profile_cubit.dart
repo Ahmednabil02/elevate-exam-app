@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:exam_app/config/base_state/base_state.dart';
@@ -24,7 +25,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   ) : super(const ProfileState());
 
   Future<void> pickImage() async {
-    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+    );
     if (image != null) {
       emit(state.copyWith(pickedImage: File(image.path)));
     }
@@ -34,22 +37,32 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(state.copyWith(profileState: const BaseState.loading()));
     final result = await _getProfileUseCase(const NoParams());
     result.when(
-      success: (data) => emit(state.copyWith(profileState: BaseState.success(data))),
-      error: (exception) => emit(state.copyWith(profileState: BaseState.error(exception))),
+      success: (data) =>
+          emit(state.copyWith(profileState: BaseState.success(data))),
+      error: (exception) =>
+          emit(state.copyWith(profileState: BaseState.error(exception))),
     );
   }
 
   Future<void> updateProfile(ProfileEntity profile) async {
     emit(state.copyWith(updateState: const BaseState.loading()));
     final result = await _updateProfileUseCase(profile);
+    log("Update profile result: ${result.toString()}");
     result.when(
       success: (data) {
-        emit(state.copyWith(
-          updateState: BaseState.success(data),
-          profileState: BaseState.success(data), // Update the main profile state too
-        ));
+        emit(
+          state.copyWith(
+            updateState: BaseState.success(data),
+            profileState: BaseState.success(
+              data,
+            ), // Update the main profile state too
+          ),
+        );
       },
-      error: (exception) => emit(state.copyWith(updateState: BaseState.error(exception))),
+      error: (exception) {
+        log("Update profile error: ${exception.toString()}");
+        return emit(state.copyWith(updateState: BaseState.error(exception)));
+      },
     );
   }
 
@@ -59,14 +72,18 @@ class ProfileCubit extends Cubit<ProfileState> {
     required String confirmPassword,
   }) async {
     emit(state.copyWith(changePasswordState: const BaseState.loading()));
-    final result = await _changePasswordUseCase(ChangePasswordParams(
-      currentPassword: currentPassword,
-      newPassword: newPassword,
-      confirmPassword: confirmPassword,
-    ));
+    final result = await _changePasswordUseCase(
+      ChangePasswordParams(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+      ),
+    );
     result.when(
-      success: (data) => emit(state.copyWith(changePasswordState: BaseState.success(data))),
-      error: (exception) => emit(state.copyWith(changePasswordState: BaseState.error(exception))),
+      success: (data) =>
+          emit(state.copyWith(changePasswordState: BaseState.success(data))),
+      error: (exception) =>
+          emit(state.copyWith(changePasswordState: BaseState.error(exception))),
     );
   }
 }

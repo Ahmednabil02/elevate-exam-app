@@ -75,8 +75,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: cubit,
+    return BlocProvider(
+      create: (context) => cubit,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(

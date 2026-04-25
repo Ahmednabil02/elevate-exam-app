@@ -2,7 +2,7 @@ import 'package:exam_app/core/theme/app_theme.dart';
 import 'package:exam_app/core/values/app_assets.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
-import 'package:exam_app/feature/profile/presentation/screen/profile_screen.dart';
+import 'package:exam_app/feature/profile/presentation/view/profile_screen.dart';
 import 'package:exam_app/feature/result/presentation/screen/result_screen.dart';
 import 'package:exam_app/feature/subject/presentation/screen/subject_screen.dart';
 import 'package:flutter/material.dart';

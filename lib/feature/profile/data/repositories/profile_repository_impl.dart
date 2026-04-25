@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:exam_app/config/base_response/result.dart';
 import 'package:exam_app/core/values/app_assets.dart';
 import 'package:flutter/foundation.dart';
@@ -33,7 +35,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final response = await _apiService.getProfileData();
       debugPrint("Profile data loaded successfully from API");
-      return Success(data: response);
+
+      return Success(data: response.user);
     } catch (e) {
       debugPrint("API call failed, trying to load from token... Error: $e");
       try {
@@ -76,14 +79,18 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
       final response = await _apiService.updateProfile(model);
       return Success(data: response);
-    } catch (e) {
+    } catch (e, s) {
+      log("Error updating profile: $e", stackTrace: s);
       return Error(exception: Exception(e.toString()));
     }
   }
 
   @override
   Future<Result<String>> changePassword(
-      String currentPassword, String newPassword, String confirmPassword) async {
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  ) async {
     try {
       if (kDebugMode) {
         return const Success(data: "Password changed successfully (Mocked)");

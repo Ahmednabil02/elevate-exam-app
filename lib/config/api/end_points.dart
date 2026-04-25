@@ -6,7 +6,7 @@ abstract class EndPoints {
   static const String signupEndpoint = "/auth/signup";
   static const String login = "/auth/signin";
   static const String getProfileData = "/auth/profileData";
-  static const String updateProfile = "/auth/profile";
+  static const String updateProfile = "/auth/editProfile";
   static const String logout = "/auth/logout";
   static const String changePassword = "/auth/changePassword";
 

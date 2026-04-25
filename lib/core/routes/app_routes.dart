@@ -10,6 +10,8 @@ import 'package:exam_app/feature/forget_password/presentation/screen/forget_pass
 import 'package:exam_app/feature/login/presentation/cubit/login_cubit.dart';
 import 'package:exam_app/feature/login/presentation/screen/login_page.dart';
 import 'package:exam_app/feature/main_layout/main_screen.dart';
+import 'package:exam_app/feature/profile/presentation/cubit/profile_cubit.dart';
+import 'package:exam_app/feature/profile/presentation/view/change_password_screen.dart';
 import 'package:exam_app/feature/questions/presentation/screen/question_page.dart';
 import 'package:exam_app/feature/sign_up/presentation/screen/sign_up_page.dart';
 import 'package:exam_app/feature/subject/domain/models/subject_entity.dart';
@@ -37,6 +39,16 @@ abstract class AppRoutes {
         name: Routes.main,
         builder: (BuildContext context, GoRouterState state) {
           return MainScreen();
+        },
+      ),
+      GoRoute(
+        path: Routes.changePassword,
+        name: Routes.changePassword,
+        builder: (BuildContext context, GoRouterState state) {
+          return BlocProvider<ProfileCubit>(
+            create: (context) => getIt<ProfileCubit>(),
+            child: ChangePasswordScreen(),
+          );
         },
       ),
       GoRoute(

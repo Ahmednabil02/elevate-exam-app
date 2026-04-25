@@ -59,6 +59,18 @@ import '../../feature/login/data/repositories/login_repository_impl.dart'
 import '../../feature/login/domain/repositories/login_repository.dart' as _i374;
 import '../../feature/login/domain/use_cases/login_use_case.dart' as _i46;
 import '../../feature/login/presentation/cubit/login_cubit.dart' as _i453;
+import '../../feature/profile/data/api/profile_api_service.dart' as _i1058;
+import '../../feature/profile/data/repositories/profile_repository_impl.dart'
+    as _i1035;
+import '../../feature/profile/domain/repositories/profile_repository.dart'
+    as _i173;
+import '../../feature/profile/domain/use_cases/change_password_use_case.dart'
+    as _i240;
+import '../../feature/profile/domain/use_cases/get_profile_use_case.dart'
+    as _i152;
+import '../../feature/profile/domain/use_cases/update_profile_use_case.dart'
+    as _i639;
+import '../../feature/profile/presentation/cubit/profile_cubit.dart' as _i499;
 import '../../feature/questions/api/api_client/questions_api_client.dart'
     as _i412;
 import '../../feature/questions/api/data_sources/questions_local_data_source_impl.dart'
@@ -153,6 +165,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i769.LoginApiClient>(
       () => _i769.LoginApiClient(gh<_i361.Dio>()),
     );
+    gh.factory<_i1058.ProfileApiService>(
+      () => _i1058.ProfileApiService(gh<_i361.Dio>()),
+    );
     gh.factory<_i389.SubjectApiService>(
       () => _i389.SubjectApiService(gh<_i361.Dio>()),
     );
@@ -187,6 +202,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i550.SignupLocalDataSourceContract>(
       () => _i973.SignupLocalDataSourceImpl(
         fss: gh<_i558.FlutterSecureStorage>(),
+      ),
+    );
+    gh.factory<_i173.ProfileRepository>(
+      () => _i1035.ProfileRepositoryImpl(
+        gh<_i1058.ProfileApiService>(),
+        gh<_i558.FlutterSecureStorage>(),
       ),
     );
     gh.lazySingleton<_i762.SignupRemoteDataSourceContract>(
@@ -226,6 +247,15 @@ extension GetItInjectableX on _i174.GetIt {
         remoteDataSource: gh<_i762.SignupRemoteDataSourceContract>(),
         localDataSource: gh<_i550.SignupLocalDataSourceContract>(),
       ),
+    );
+    gh.factory<_i240.ChangePasswordUseCase>(
+      () => _i240.ChangePasswordUseCase(gh<_i173.ProfileRepository>()),
+    );
+    gh.factory<_i152.GetProfileUseCase>(
+      () => _i152.GetProfileUseCase(gh<_i173.ProfileRepository>()),
+    );
+    gh.factory<_i639.UpdateProfileUseCase>(
+      () => _i639.UpdateProfileUseCase(gh<_i173.ProfileRepository>()),
     );
     gh.factory<_i566.QuestionsRepositoryContract>(
       () => _i181.QuestionsRepositoryImpl(
@@ -273,6 +303,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i906.SignUpCubit>(
       () => _i906.SignUpCubit(signUpUserUseCase: gh<_i682.SignUpUserUseCase>()),
+    );
+    gh.factory<_i499.ProfileCubit>(
+      () => _i499.ProfileCubit(
+        gh<_i152.GetProfileUseCase>(),
+        gh<_i639.UpdateProfileUseCase>(),
+        gh<_i240.ChangePasswordUseCase>(),
+      ),
     );
     gh.factory<_i46.LoginUseCase>(
       () => _i46.LoginUseCase(repository: gh<_i374.LoginRepository>()),

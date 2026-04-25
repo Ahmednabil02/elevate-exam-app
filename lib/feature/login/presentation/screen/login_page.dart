@@ -104,12 +104,12 @@ class _LoginPageState extends State<LoginPage> {
         controller: _passwordController,
         labelText: "Password",
         hintText: "Enter your password",
-        obscureText: !state.passwordVisible,
-        toggleVisibility: () {
-          context.read<LoginCubit>().doIntent(
-            const TogglePasswordVisibilityEvent(),
-          );
-        },
+        // obscureText: !state.passwordVisible,
+        // toggleVisibility: () {
+        //   context.read<LoginCubit>().doIntent(
+        //     const TogglePasswordVisibilityEvent(),
+        //   );
+        // },
       ),
     ],
   );
