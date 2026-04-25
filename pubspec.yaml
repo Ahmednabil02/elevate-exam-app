@@ -57,6 +57,7 @@ dependencies:
   drift: ^2.32.1
   path_provider: ^2.1.5
   path: ^1.9.0
+  flutter_native_splash: ^2.4.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -97,3 +98,13 @@ flutter:
           weight: 600
         - asset: assets/fonts/english/Roboto-Bold.ttf
           weight: 700
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/elevatecheg_logo.png
+  android: true
+  ios: true
+  android_12:
+    image: assets/images/elevatecheg_logo.png
+    color: "#ffffff"
+  fullscreen: true
