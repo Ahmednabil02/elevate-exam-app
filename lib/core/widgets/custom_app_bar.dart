@@ -38,7 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: centerTitle,
       automaticallyImplyLeading: false,
-      titleSpacing: shouldShowBack ? 8 : 0,
+      titleSpacing: shouldShowBack ? 24 : 16,
       leading: shouldShowBack ? _BackButton(onPressed: onBackPressed) : null,
       leadingWidth: shouldShowBack ? 40 : 0,
       title: Text(

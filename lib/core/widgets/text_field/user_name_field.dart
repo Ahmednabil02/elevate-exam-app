@@ -34,7 +34,11 @@ class UserNameField extends StatelessWidget {
       validator: validator ?? Validations.validateUserName,
       onFieldSubmitted: onFieldSubmitted,
       autofillHints: const [AutofillHints.username],
-      decoration: InputDecoration(labelText: AppStrings.username),
+      decoration: InputDecoration(
+        labelText: AppStrings.username,
+        hintText: AppStrings.enterUserName,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+      ),
     );
   }
 }

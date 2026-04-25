@@ -2,14 +2,14 @@ import 'package:exam_app/config/dependency_injection/di.dart';
 import 'package:exam_app/core/routes/routes.dart';
 import 'package:exam_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:exam_app/features/profile/presentation/view/change_password_screen.dart';
-import 'package:exam_app/features/profile/presentation/view/edit_profile_screen.dart';
+import 'package:exam_app/features/profile/presentation/view/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.profile, // Setting profile as initial for test
+    initialLocation: Routes.profile,
     routes: [
       GoRoute(
         path: Routes.home,
@@ -26,7 +26,7 @@ class AppRoutes {
         builder: (BuildContext context, GoRouterState state) {
           return BlocProvider(
             create: (context) => getIt<ProfileCubit>(),
-            child: const EditProfileScreen(),
+            child: const ProfileScreen(),
           );
         },
       ),
