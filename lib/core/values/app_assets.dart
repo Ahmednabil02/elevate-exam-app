@@ -44,4 +44,5 @@ class AppAssets {
   static const String profit = "assets/images/profit.png";
   static const String sandClock1 = "assets/images/sand_clock_1.png";
   static const String defaultProfile = "assets/images/profile.jpg";
+  static const String elevateLogo = "assets/images/elevatecheg_logo.png";
 }

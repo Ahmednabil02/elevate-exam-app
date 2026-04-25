@@ -12,8 +12,10 @@ import 'package:exam_app/feature/login/presentation/screen/login_page.dart';
 import 'package:exam_app/feature/main_layout/main_screen.dart';
 import 'package:exam_app/feature/profile/presentation/cubit/profile_cubit.dart';
 import 'package:exam_app/feature/profile/presentation/view/change_password_screen.dart';
+import 'package:exam_app/feature/profile/presentation/view/profile_screen.dart';
 import 'package:exam_app/feature/questions/presentation/screen/question_page.dart';
 import 'package:exam_app/feature/sign_up/presentation/screen/sign_up_page.dart';
+import 'package:exam_app/feature/splash/presentation/screen/splash_screen.dart';
 import 'package:exam_app/feature/subject/domain/models/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,8 +24,13 @@ import 'package:go_router/go_router.dart';
 
 abstract class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.main,
+    initialLocation: Routes.splash,
     routes: [
+      GoRoute(
+        path: Routes.splash,
+        name: Routes.splash,
+        builder: (context, state) => const SplashScreen(),
+      ),
       GoRoute(
         path: Routes.login,
         name: Routes.login,
@@ -42,12 +49,19 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
+        path: Routes.profile,
+        name: Routes.profile,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ProfileScreen();
+        },
+      ),
+      GoRoute(
         path: Routes.changePassword,
         name: Routes.changePassword,
         builder: (BuildContext context, GoRouterState state) {
           return BlocProvider<ProfileCubit>(
             create: (context) => getIt<ProfileCubit>(),
-            child: ChangePasswordScreen(),
+            child: const ChangePasswordScreen(),
           );
         },
       ),
@@ -102,12 +116,11 @@ abstract class AppRoutes {
           return ExamScorePage(examId: examId);
         },
       ),
-
       GoRoute(
         path: Routes.forgetPassword,
         name: Routes.forgetPassword,
         builder: (BuildContext context, GoRouterState state) {
-          return ForgetPasswordPage();
+          return const ForgetPasswordPage();
         },
       ),
       GoRoute(
@@ -144,7 +157,7 @@ abstract class AppRoutes {
         key: APIkeys.accessToken,
       );
       final isLoggedIn = token != null && token.isNotEmpty;
-
+      
       if (!isLoggedIn) return Routes.login;
       if (state.matchedLocation == Routes.login) return Routes.home;
       return null;
