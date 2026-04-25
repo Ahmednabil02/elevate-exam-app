@@ -10,10 +10,12 @@ MetaDto _$MetaDtoFromJson(Map<String, dynamic> json) => MetaDto(
   currentPage: (json['currentPage'] as num?)?.toInt(),
   numberOfPages: (json['numberOfPages'] as num?)?.toInt(),
   limit: (json['limit'] as num?)?.toInt(),
+  total: (json['total'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$MetaDtoToJson(MetaDto instance) => <String, dynamic>{
   'currentPage': instance.currentPage,
   'numberOfPages': instance.numberOfPages,
   'limit': instance.limit,
+  'total': instance.total,
 };

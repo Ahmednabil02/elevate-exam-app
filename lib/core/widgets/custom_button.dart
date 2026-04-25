@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../values/app_colors.dart';
 import '../values/app_font_style.dart';
 
+enum ButtonVariant { filled, outlined }
+
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -12,7 +14,9 @@ class CustomButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final double? width;
+  final double radius;
   final double height;
+  final ButtonVariant variant;
 
   const CustomButton({
     super.key,
@@ -21,27 +25,81 @@ class CustomButton extends StatelessWidget {
     this.isLoading = false,
     this.isEnabled = true,
     this.backgroundColor,
+    this.radius = 100,
     this.textColor,
     this.width,
     this.height = 48,
+    this.variant = ButtonVariant.filled,
   });
 
   @override
   Widget build(BuildContext context) {
     final enabled = isEnabled && !isLoading && onPressed != null;
 
+    if (variant == ButtonVariant.outlined) {
+      return _OutlinedButton(
+        text: text,
+        onPressed: enabled ? onPressed : null,
+        isLoading: isLoading,
+        width: width,
+        height: height,
+        radius: radius,
+        textColor: textColor,
+        borderColor: backgroundColor,
+      );
+    }
+
+    return _FilledButton(
+      text: text,
+      onPressed: enabled ? onPressed : null,
+      isLoading: isLoading,
+      enabled: enabled,
+      width: width,
+      radius: radius,
+      height: height,
+      backgroundColor: backgroundColor,
+      textColor: textColor,
+    );
+  }
+}
+
+class _FilledButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final bool enabled;
+  final double? width;
+  final double height;
+  final Color? backgroundColor;
+  final double radius;
+  final Color? textColor;
+
+  const _FilledButton({
+    required this.text,
+    required this.onPressed,
+    required this.isLoading,
+    required this.enabled,
+    required this.width,
+    required this.radius,
+    required this.height,
+    this.backgroundColor,
+    this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? double.infinity,
       height: height,
       child: ElevatedButton(
-        onPressed: enabled ? onPressed : null,
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: enabled
               ? (backgroundColor ?? AppColors.primaryBlue)
               : AppColors.gray30,
           foregroundColor: textColor ?? AppColors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(radius),
           ),
           elevation: 0,
         ),
@@ -58,15 +116,65 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-class _LoadingIndicator extends StatelessWidget {
-  const _LoadingIndicator();
+class _OutlinedButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final double? width;
+  final double height;
+  final double radius;
+  final Color? textColor;
+  final Color? borderColor;
+
+  const _OutlinedButton({
+    required this.text,
+    required this.onPressed,
+    required this.isLoading,
+    required this.width,
+    required this.height,
+    required this.radius,
+    this.textColor,
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    final color = textColor ?? AppColors.primaryBlue;
+
+    return SizedBox(
+      width: width ?? double.infinity,
+      height: height,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: color,
+          side: BorderSide(color: borderColor ?? color, width: 2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(radius),
+          ),
+        ),
+        child: isLoading
+            ? _LoadingIndicator(color: color)
+            : Text(
+                text,
+                style: AppFontStyle.medium18(context).copyWith(color: color),
+              ),
+      ),
+    );
+  }
+}
+
+class _LoadingIndicator extends StatelessWidget {
+  final Color? color;
+
+  const _LoadingIndicator({this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
       width: 24,
       height: 24,
-      child: CupertinoActivityIndicator(color: AppColors.white),
+      child: CupertinoActivityIndicator(color: color ?? AppColors.white),
     );
   }
 }

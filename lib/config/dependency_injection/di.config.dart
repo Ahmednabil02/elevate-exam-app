@@ -16,8 +16,103 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart'
     as _i161;
 
+import '../../feature/answers/presentation/cubit/answers_cubit.dart' as _i351;
+import '../../feature/exams/api/api_client/exams_api_client.dart' as _i503;
+import '../../feature/exams/api/data%D9%80sources/exams_remote_data_source_impl.dart'
+    as _i79;
+import '../../feature/exams/api/datasources/exams_local_data_source_impl.dart'
+    as _i814;
+import '../../feature/exams/api/datasources/exams_remote_data_source_impl.dart'
+    as _i479;
+import '../../feature/exams/data/data%D9%80sources/exams_remote_data_source_contract.dart'
+    as _i1045;
+import '../../feature/exams/data/datasources/exams_local_data_source_contract.dart'
+    as _i641;
+import '../../feature/exams/data/datasources/exams_remote_data_source_contract.dart'
+    as _i494;
+import '../../feature/exams/data/repositories/exams_repository_impl.dart'
+    as _i616;
+import '../../feature/exams/domain/repositories/exams_repository.dart'
+    as _i1052;
+import '../../feature/exams/domain/use_cases/get_exams_by_subject_use_case.dart'
+    as _i441;
+import '../../feature/exams/presentation/cubit/exams_cubit.dart' as _i982;
+import '../../feature/forget_password/api/api_client/forget_password_api_client.dart'
+    as _i130;
+import '../../feature/forget_password/api/datasources/forget_password_remote_data_source_impl.dart'
+    as _i243;
+import '../../feature/forget_password/data/datasources/forget_password_remote_data_source_contract.dart'
+    as _i1028;
+import '../../feature/forget_password/data/repositories/forget_password_repository_impl.dart'
+    as _i876;
+import '../../feature/forget_password/domain/repositories/forget_password_repository.dart'
+    as _i170;
+import '../../feature/forget_password/domain/use_cases/forget_password_use_case.dart'
+    as _i774;
+import '../../feature/forget_password/domain/use_cases/reset_password_use_case.dart'
+    as _i33;
+import '../../feature/forget_password/domain/use_cases/verify_reset_code_use_case.dart'
+    as _i998;
+import '../../feature/forget_password/presentation/cubit/forget_password_cubit.dart'
+    as _i604;
+import '../../feature/login/api/api_client/login_api_client.dart' as _i769;
+import '../../feature/login/api/datasources/login_remote_data_source_impl.dart'
+    as _i250;
+import '../../feature/login/data/datasources/login_remote_data_source_contract.dart'
+    as _i385;
+import '../../feature/login/data/repositories/login_repository_impl.dart'
+    as _i197;
+import '../../feature/login/domain/repositories/login_repository.dart' as _i374;
+import '../../feature/login/domain/use_cases/login_use_case.dart' as _i46;
+import '../../feature/login/presentation/cubit/login_cubit.dart' as _i453;
+import '../../feature/questions/api/api_client/questions_api_client.dart'
+    as _i412;
+import '../../feature/questions/api/data_sources/questions_local_data_source_impl.dart'
+    as _i681;
+import '../../feature/questions/api/data_sources/questions_remote_data_source_impl.dart'
+    as _i982;
+import '../../feature/questions/data/data%D9%80sources/questions_local_data_source_contract.dart'
+    as _i253;
+import '../../feature/questions/data/data%D9%80sources/questions_remote_data_source_contract.dart'
+    as _i190;
+import '../../feature/questions/data/repositories/questions_repository_impl.dart'
+    as _i181;
+import '../../feature/questions/domain/repositories/questions_repository.dart'
+    as _i566;
+import '../../feature/questions/domain/use_cases/check_exam_session_use_case.dart'
+    as _i1046;
+import '../../feature/questions/domain/use_cases/clear_exam_session_use_case.dart'
+    as _i314;
+import '../../feature/questions/domain/use_cases/get_questions_use_case.dart'
+    as _i1061;
+import '../../feature/questions/domain/use_cases/get_saved_questions_use_case.dart'
+    as _i350;
+import '../../feature/questions/domain/use_cases/save_answer_use_case.dart'
+    as _i493;
+import '../../feature/questions/domain/use_cases/save_exam_end_time_use_case.dart'
+    as _i1045;
+import '../../feature/questions/presentation/cubit/questions_cubit.dart'
+    as _i816;
+import '../../feature/sign_up/api/api_client/sign_up_api_client.dart' as _i103;
+import '../../feature/sign_up/api/datasources/sign_up_local_data_source_impl.dart'
+    as _i448;
+import '../../feature/sign_up/api/datasources/sign_up_remote_data_source_impl.dart'
+    as _i1011;
+import '../../feature/sign_up/data/datasources/sign_up_local_data_source.dart'
+    as _i623;
+import '../../feature/sign_up/data/datasources/sign_up_remote_data_source.dart'
+    as _i716;
+import '../../feature/sign_up/data/repositories/sign_up_repository_impl.dart'
+    as _i337;
+import '../../feature/sign_up/domain/repositories/sign_up_repository_contract.dart'
+    as _i919;
+import '../../feature/sign_up/domain/usecases/sign_up_user_usecase.dart'
+    as _i280;
+import '../../feature/sign_up/presentation/cubit/sign_up_cubit.dart' as _i906;
 import '../api/app_interceptor.dart' as _i449;
 import '../api/dio_module.dart' as _i784;
+import '../database/database_module.dart' as _i215;
+import '../database/exam_database.dart' as _i387;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -27,6 +122,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
+    final databaseModule = _$DatabaseModule();
     gh.singleton<_i361.Dio>(() => dioModule.dio());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => dioModule.secureStorage(),
@@ -35,14 +131,186 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i161.InternetConnection>(
       () => dioModule.internetConnection(),
     );
+    gh.lazySingleton<_i387.ExamDatabase>(() => databaseModule.database);
+    gh.lazySingleton<_i641.ExamsLocalDataSourceContract>(
+      () => _i814.ExamsLocalDataSourceImpl(),
+    );
+    gh.lazySingleton<_i503.ExamsApiClient>(
+      () => _i503.ExamsApiClient(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i412.QuestionsApiClient>(
+      () => _i412.QuestionsApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i130.ForgetPasswordApiClient>(
+      () => _i130.ForgetPasswordApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i769.LoginApiClient>(
+      () => _i769.LoginApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i103.SignUpApiClient>(
+      () => _i103.SignUpApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i1028.ForgetPasswordRemoteDataSourceContract>(
+      () => _i243.ForgetPasswordRemoteDataSourceImpl(
+        apiClient: gh<_i130.ForgetPasswordApiClient>(),
+        fss: gh<_i558.FlutterSecureStorage>(),
+      ),
+    );
     gh.singleton<_i449.AppInterceptors>(
       () => _i449.AppInterceptors(
         dio: gh<_i361.Dio>(),
         fss: gh<_i558.FlutterSecureStorage>(),
       ),
     );
+    gh.lazySingleton<_i253.QuestionsLocalDataSourceContract>(
+      () => _i681.QuestionsLocalDataSourceImpl(gh<_i387.ExamDatabase>()),
+    );
+    gh.factory<_i623.UserLocalDataSourceContract>(
+      () =>
+          _i448.UserLocalDataSourceImpl(fss: gh<_i558.FlutterSecureStorage>()),
+    );
+    gh.lazySingleton<_i494.ExamsRemoteDataSourceContract>(
+      () => _i479.ExamsRemoteDataSourceImpl(
+        apiClient: gh<_i503.ExamsApiClient>(),
+      ),
+    );
+    gh.factory<_i1045.ExamsRemoteDataSourceContract>(
+      () =>
+          _i79.ExamsRemoteDataSourceImpl(apiClient: gh<_i503.ExamsApiClient>()),
+    );
+    gh.factory<_i170.ForgetPasswordRepository>(
+      () => _i876.ForgetPasswordRepositoryImpl(
+        remoteDataSource: gh<_i1028.ForgetPasswordRemoteDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i385.LoginRemoteDataSourceContract>(
+      () => _i250.LoginRemoteDataSourceImpl(
+        apiClient: gh<_i769.LoginApiClient>(),
+      ),
+    );
+    gh.factory<_i774.SendOtpToEmailUseCase>(
+      () => _i774.SendOtpToEmailUseCase(
+        repository: gh<_i170.ForgetPasswordRepository>(),
+      ),
+    );
+    gh.factory<_i716.SignupRemoteDataSourceContract>(
+      () => _i1011.SignUpRemoteDataSourceImpl(
+        homeApiClient: gh<_i103.SignUpApiClient>(),
+      ),
+    );
+    gh.lazySingleton<_i190.QuestionsRemoteDataSourceContract>(
+      () => _i982.QuestionsRemoteDataSourceImpl(
+        apiClient: gh<_i412.QuestionsApiClient>(),
+      ),
+    );
+    gh.factory<_i374.LoginRepository>(
+      () => _i197.LoginRepositoryImpl(
+        remoteDataSource: gh<_i385.LoginRemoteDataSourceContract>(),
+        localDataSource: gh<_i623.UserLocalDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i566.QuestionsRepositoryContract>(
+      () => _i181.QuestionsRepositoryImpl(
+        questionsRemoteDataSourceContract:
+            gh<_i190.QuestionsRemoteDataSourceContract>(),
+        questionsLocalDataSourceContract:
+            gh<_i253.QuestionsLocalDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i1052.ExamsRepository>(
+      () => _i616.ExamsRepositoryImpl(
+        examsRemoteDataSourceContract:
+            gh<_i1045.ExamsRemoteDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i919.SignUpRepositoryContract>(
+      () => _i337.SignUpRepositoryImpl(
+        remoteDataSource: gh<_i716.SignupRemoteDataSourceContract>(),
+        localDataSource: gh<_i623.UserLocalDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i280.SignUpUserUseCase>(
+      () => _i280.SignUpUserUseCase(repo: gh<_i919.SignUpRepositoryContract>()),
+    );
+    gh.factory<_i441.GetExamsBySubjectUseCase>(
+      () => _i441.GetExamsBySubjectUseCase(gh<_i1052.ExamsRepository>()),
+    );
+    gh.factory<_i1061.GetQuestionsUseCase>(
+      () => _i1061.GetQuestionsUseCase(
+        repo: gh<_i566.QuestionsRepositoryContract>(),
+      ),
+    );
+    gh.factory<_i33.ResetPasswordUseCase>(
+      () => _i33.ResetPasswordUseCase(gh<_i170.ForgetPasswordRepository>()),
+    );
+    gh.factory<_i998.VerifyOtpUseCase>(
+      () => _i998.VerifyOtpUseCase(gh<_i170.ForgetPasswordRepository>()),
+    );
+    gh.factory<_i906.SignUpCubit>(
+      () => _i906.SignUpCubit(signUpUserUseCase: gh<_i280.SignUpUserUseCase>()),
+    );
+    gh.factory<_i46.LoginUseCase>(
+      () => _i46.LoginUseCase(repository: gh<_i374.LoginRepository>()),
+    );
+    gh.factory<_i982.ExamsCubit>(
+      () => _i982.ExamsCubit(
+        getExamsBySubjectUseCase: gh<_i441.GetExamsBySubjectUseCase>(),
+      ),
+    );
+    gh.factory<_i1046.CheckExamSessionUseCase>(
+      () => _i1046.CheckExamSessionUseCase(
+        repository: gh<_i566.QuestionsRepositoryContract>(),
+      ),
+    );
+    gh.factory<_i314.ClearExamSessionUseCase>(
+      () => _i314.ClearExamSessionUseCase(
+        repository: gh<_i566.QuestionsRepositoryContract>(),
+      ),
+    );
+    gh.factory<_i350.GetSavedQuestionsUseCase>(
+      () => _i350.GetSavedQuestionsUseCase(
+        repository: gh<_i566.QuestionsRepositoryContract>(),
+      ),
+    );
+    gh.factory<_i493.SaveAnswerUseCase>(
+      () => _i493.SaveAnswerUseCase(
+        repository: gh<_i566.QuestionsRepositoryContract>(),
+      ),
+    );
+    gh.factory<_i1045.SaveExamEndTimeUseCase>(
+      () => _i1045.SaveExamEndTimeUseCase(
+        repository: gh<_i566.QuestionsRepositoryContract>(),
+      ),
+    );
+    gh.factory<_i604.ForgetPasswordCubit>(
+      () => _i604.ForgetPasswordCubit(
+        sendOtpToEmailUseCase: gh<_i774.SendOtpToEmailUseCase>(),
+        verifyOtpUseCase: gh<_i998.VerifyOtpUseCase>(),
+        resetPasswordUseCase: gh<_i33.ResetPasswordUseCase>(),
+      ),
+    );
+    gh.factory<_i351.AnswersCubit>(
+      () => _i351.AnswersCubit(
+        getSavedQuestionsUseCase: gh<_i350.GetSavedQuestionsUseCase>(),
+      ),
+    );
+    gh.factory<_i816.QuestionsCubit>(
+      () => _i816.QuestionsCubit(
+        questionsUseCase: gh<_i1061.GetQuestionsUseCase>(),
+        checkExamSessionUseCase: gh<_i1046.CheckExamSessionUseCase>(),
+        resumeExamUseCase: gh<_i350.GetSavedQuestionsUseCase>(),
+        clearExamSessionUseCase: gh<_i314.ClearExamSessionUseCase>(),
+        saveAnswerUseCase: gh<_i493.SaveAnswerUseCase>(),
+        saveExamEndTimeUseCase: gh<_i1045.SaveExamEndTimeUseCase>(),
+      ),
+    );
+    gh.factory<_i453.LoginCubit>(
+      () => _i453.LoginCubit(loginUseCase: gh<_i46.LoginUseCase>()),
+    );
     return this;
   }
 }
 
 class _$DioModule extends _i784.DioModule {}
+
+class _$DatabaseModule extends _i215.DatabaseModule {}
