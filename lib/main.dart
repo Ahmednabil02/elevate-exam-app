@@ -2,6 +2,7 @@ import 'package:exam_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 //% flutter pub run build_runner build --delete-conflicting-outputs 2>&1 | head -100
 import 'config/dependency_injection/di.dart';
 import 'core/theme/app_theme.dart';
@@ -11,6 +12,7 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   configureDependencies();
+  // await getIt<FlutterSecureStorage>().deleteAll();
 
   runApp(const MyApp());
 }

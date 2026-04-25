@@ -59,6 +59,20 @@ import '../../feature/login/data/repositories/login_repository_impl.dart'
 import '../../feature/login/domain/repositories/login_repository.dart' as _i374;
 import '../../feature/login/domain/use_cases/login_use_case.dart' as _i46;
 import '../../feature/login/presentation/cubit/login_cubit.dart' as _i453;
+import '../../feature/main_layout/api/api_client/main_layout_api_client.dart'
+    as _i389;
+import '../../feature/main_layout/api/data_sources/main_layout_remote_data_source_impl.dart'
+    as _i1049;
+import '../../feature/main_layout/data/data_sources/main_layout_remote_data_source_contract.dart'
+    as _i781;
+import '../../feature/main_layout/data/repositories/main_layout_repository_impl.dart'
+    as _i751;
+import '../../feature/main_layout/domain/repositories/main_layout_repository.dart'
+    as _i750;
+import '../../feature/main_layout/domain/use_cases/logout_use_case.dart'
+    as _i511;
+import '../../feature/main_layout/presentation/cubit/main_layout_cubit.dart'
+    as _i880;
 import '../../feature/profile/data/api/profile_api_service.dart' as _i1058;
 import '../../feature/profile/data/repositories/profile_repository_impl.dart'
     as _i1035;
@@ -165,6 +179,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i769.LoginApiClient>(
       () => _i769.LoginApiClient(gh<_i361.Dio>()),
     );
+    gh.factory<_i389.MainLayoutApiClient>(
+      () => _i389.MainLayoutApiClient(gh<_i361.Dio>()),
+    );
     gh.factory<_i1058.ProfileApiService>(
       () => _i1058.ProfileApiService(gh<_i361.Dio>()),
     );
@@ -198,6 +215,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1045.ExamsRemoteDataSourceContract>(
       () =>
           _i79.ExamsRemoteDataSourceImpl(apiClient: gh<_i503.ExamsApiClient>()),
+    );
+    gh.factory<_i781.MainLayoutRemoteDataSourceContract>(
+      () => _i1049.MainLayoutRemoteDataSourceImpl(
+        gh<_i389.MainLayoutApiClient>(),
+      ),
     );
     gh.lazySingleton<_i550.SignupLocalDataSourceContract>(
       () => _i973.SignupLocalDataSourceImpl(
@@ -242,6 +264,11 @@ extension GetItInjectableX on _i174.GetIt {
         apiClient: gh<_i412.QuestionsApiClient>(),
       ),
     );
+    gh.factory<_i750.MainLayoutRepository>(
+      () => _i751.MainLayoutRepositoryImpl(
+        remoteDataSource: gh<_i781.MainLayoutRemoteDataSourceContract>(),
+      ),
+    );
     gh.lazySingleton<_i919.SignUpRepositoryContract>(
       () => _i337.SignUpRepositoryImpl(
         remoteDataSource: gh<_i762.SignupRemoteDataSourceContract>(),
@@ -257,6 +284,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i639.UpdateProfileUseCase>(
       () => _i639.UpdateProfileUseCase(gh<_i173.ProfileRepository>()),
     );
+    gh.factory<_i374.LoginRepository>(
+      () => _i197.LoginRepositoryImpl(
+        remoteDataSource: gh<_i385.LoginRemoteDataSourceContract>(),
+        localDataSource: gh<_i550.SignupLocalDataSourceContract>(),
+      ),
+    );
     gh.factory<_i566.QuestionsRepositoryContract>(
       () => _i181.QuestionsRepositoryImpl(
         questionsRemoteDataSourceContract:
@@ -271,11 +304,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i741.SubjectCubit>(
       () =>
           _i741.SubjectCubit(getSubjectsUseCase: gh<_i32.GetSubjectsUseCase>()),
-    );
-    gh.factory<_i374.LoginRepository>(
-      () => _i197.LoginRepositoryImpl(
-        remoteDataSource: gh<_i385.LoginRemoteDataSourceContract>(),
-      ),
     );
     gh.factory<_i604.ForgetPasswordCubit>(
       () => _i604.ForgetPasswordCubit(
@@ -310,6 +338,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i639.UpdateProfileUseCase>(),
         gh<_i240.ChangePasswordUseCase>(),
       ),
+    );
+    gh.factory<_i511.LogoutUseCase>(
+      () => _i511.LogoutUseCase(gh<_i750.MainLayoutRepository>()),
     );
     gh.factory<_i46.LoginUseCase>(
       () => _i46.LoginUseCase(repository: gh<_i374.LoginRepository>()),
@@ -348,6 +379,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i1045.SaveExamEndTimeUseCase(
         repository: gh<_i566.QuestionsRepositoryContract>(),
       ),
+    );
+    gh.factory<_i880.MainLayoutCubit>(
+      () => _i880.MainLayoutCubit(gh<_i511.LogoutUseCase>()),
     );
     gh.factory<_i351.AnswersCubit>(
       () => _i351.AnswersCubit(
