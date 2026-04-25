@@ -1,12 +1,6 @@
-import 'package:exam_app/config/api/end_points.dart';
-import 'package:exam_app/config/dependency_injection/di.dart';
-import 'package:exam_app/core/routes/routes.dart';
 import 'package:exam_app/core/values/app_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,27 +9,29 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    _checkAuth();
-  }
 
-  Future<void> _checkAuth() async {
-    final token = await getIt<FlutterSecureStorage>().read(
-      key: APIkeys.accessToken,
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
     );
 
-    await Future.delayed(const Duration(seconds: 5));
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
 
-    if (!mounted) return;
-    FlutterNativeSplash.remove();
-    if (token != null && token.isNotEmpty) {
-      context.go(Routes.main);
-    } else {
-      context.go(Routes.login);
-    }
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,10 +39,16 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset(
-          AppAssets.elevateLogo,
-          width: 200.w,
-          fit: BoxFit.contain,
+        child: ScaleTransition(
+          scale: _animation,
+          child: FadeTransition(
+            opacity: _animation,
+            child: Image.asset(
+              AppAssets.elevateLogo,
+              width: 200.w,
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ),
     );

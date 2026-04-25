@@ -19,6 +19,7 @@ import 'package:exam_app/feature/splash/presentation/screen/splash_screen.dart';
 import 'package:exam_app/feature/subject/domain/models/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
@@ -130,24 +131,6 @@ abstract class AppRoutes {
           return const SignUpPage();
         },
       ),
-      // GoRoute(
-      //   path: Routes.profile,
-      //   builder: (BuildContext context, GoRouterState state) {
-      //     return BlocProvider(
-      //       create: (context) => getIt<ProfileCubit>(),
-      //       child: const EditProfileScreen(),
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   path: Routes.changePassword,
-      //   builder: (BuildContext context, GoRouterState state) {
-      //     return BlocProvider(
-      //       create: (context) => getIt<ProfileCubit>(),
-      //       child: const ChangePasswordScreen(),
-      //     );
-      //   },
-      // ),
     ],
     errorBuilder: (context, state) => Scaffold(
       body: Center(child: Text('Page not found: ${state.matchedLocation}')),
@@ -158,8 +141,16 @@ abstract class AppRoutes {
       );
       final isLoggedIn = token != null && token.isNotEmpty;
 
-      // Public routes that don't require authentication
+      // Handle Splash Screen Logic
+      if (state.matchedLocation == Routes.splash) {
+        await Future.delayed(const Duration(seconds: 2));
+        FlutterNativeSplash.remove();
+        return isLoggedIn ? Routes.main : Routes.login;
+      }
+
+      // Public routes that don't require authentication (including splash)
       final publicRoutes = [
+        Routes.splash,
         Routes.login,
         Routes.register,
         Routes.forgetPassword,
