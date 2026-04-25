@@ -2,13 +2,15 @@ import 'package:exam_app/core/values/app_assets.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
 import 'package:exam_app/feature/exams/domain/entities/exam_entity.dart';
+import 'package:exam_app/feature/subject/domain/models/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExamHeader extends StatelessWidget {
   final ExamEntity exam;
+  final SubjectEntity subject;
 
-  const ExamHeader({super.key, required this.exam});
+  const ExamHeader({super.key, required this.exam, required this.subject});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class ExamHeader extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                exam.title,
+                subject.name ?? '',
                 style: AppFontStyle.medium16(context),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -37,18 +39,19 @@ class ExamHeader extends StatelessWidget {
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+
           spacing: 4.w,
           children: [
-            Expanded(
+            Flexible(
               child: Container(
-                padding: EdgeInsetsDirectional.only(end: 4.w),
+                padding: EdgeInsetsDirectional.only(end: 6.w),
                 decoration: BoxDecoration(
                   border: Border(
                     right: BorderSide(color: theme.dividerColor, width: 1),
                   ),
                 ),
                 child: Text(
-                  exam.subject,
+                  exam.title,
                   style: AppFontStyle.medium18(context),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

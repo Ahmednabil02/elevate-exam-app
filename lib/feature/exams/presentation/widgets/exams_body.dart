@@ -5,11 +5,13 @@ import 'package:exam_app/feature/exams/presentation/cubit/exams_cubit.dart';
 import 'package:exam_app/feature/exams/presentation/widgets/empty_exams_widget.dart';
 import 'package:exam_app/feature/exams/presentation/widgets/exam_card.dart';
 import 'package:exam_app/feature/exams/presentation/widgets/exams_shimmer.dart';
+import 'package:exam_app/feature/subject/domain/models/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExamsBody extends StatelessWidget {
-  const ExamsBody({super.key});
+  final SubjectEntity subjectEntity;
+  const ExamsBody({super.key, required this.subjectEntity});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,8 @@ class ExamsBody extends StatelessWidget {
         return PaginationListView<ExamEntity>(
           state: state.examsState,
           emptyWidget: EmptyExamsWidget(),
-          itemBuilder: (context, exam, index) => ExamCard(exam: exam),
+          itemBuilder: (context, exam, index) =>
+              ExamCard(exam: exam, subjectEntity: subjectEntity),
           onLoadMore: () {
             final examsCubit = context.read<ExamsCubit>();
             final examsState = examsCubit.state.examsState;

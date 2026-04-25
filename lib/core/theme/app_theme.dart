@@ -7,6 +7,7 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
+
       primaryColor: AppColors.primaryBlue,
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryBlue,
@@ -26,6 +27,7 @@ class AppTheme {
           fontWeight: FontWeightHelper.medium,
         ),
       ),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryBlue,

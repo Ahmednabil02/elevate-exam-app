@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app/config/api/end_points.dart';
+import 'package:exam_app/feature/subject/domain/models/subject_parm.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../data/models/subject_model.dart';
@@ -12,5 +13,5 @@ abstract class SubjectApiService {
   factory SubjectApiService(Dio dio) = _SubjectApiService;
 
   @GET(EndPoints.subjects)
-  Future<SubjectsResponseModel> getSubjects();
+  Future<SubjectsResponseModel> getSubjects(@Queries() SubjectParm params);
 }

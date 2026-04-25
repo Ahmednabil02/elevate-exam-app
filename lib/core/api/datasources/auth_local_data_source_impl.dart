@@ -14,7 +14,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSourceContract {
   @override
   Future<void> saveUserToken(String token) async {
     try {
-      await fss.write(key: Apikeys.accessToken, value: token);
+      await fss.write(key: APIkeys.accessToken, value: token);
       log("Token saved successfully");
     } catch (e) {
       log("Error saving token: $e");
@@ -24,7 +24,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSourceContract {
   @override
   Future<String?> getUserToken() async {
     try {
-      return await fss.read(key: Apikeys.accessToken);
+      return await fss.read(key: APIkeys.accessToken);
     } catch (e) {
       log("Error reading token: $e");
       return null;
@@ -34,7 +34,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSourceContract {
   @override
   Future<void> deleteUserToken() async {
     try {
-      await fss.delete(key: Apikeys.accessToken);
+      await fss.delete(key: APIkeys.accessToken);
       log("Token deleted successfully");
     } catch (e) {
       log("Error deleting token: $e");

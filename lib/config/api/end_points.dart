@@ -19,6 +19,13 @@ abstract class EndPoints {
 
   // Change Password Endpoint
   static const String changePassword = "/auth/changePassword";
+
+  // Exams
+  static const String exams = "/exams";
+  static const String subjects = "/subjects";
+
+  // Questions
+  static const String questions = "/questions";
 }
 
 class APIkeys {

@@ -3,21 +3,26 @@ import 'package:exam_app/core/values/app_assets.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
 import 'package:exam_app/feature/exams/domain/entities/exam_entity.dart';
+import 'package:exam_app/feature/subject/domain/models/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ExamCard extends StatelessWidget {
-  const ExamCard({super.key, required this.exam});
+  const ExamCard({super.key, required this.exam, required this.subjectEntity});
 
   final ExamEntity exam;
+  final SubjectEntity subjectEntity;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return GestureDetector(
-      onTap: () => context.push(Routes.examDetails, extra: {"exam": exam}),
+      onTap: () => context.push(
+        Routes.examDetails,
+        extra: {"exam": exam, "subject": subjectEntity},
+      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),

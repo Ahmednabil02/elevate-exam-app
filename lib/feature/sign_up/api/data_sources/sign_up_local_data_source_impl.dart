@@ -14,7 +14,7 @@ class SignupLocalDataSourceImpl implements SignupLocalDataSourceContract {
   @override
   Future<void> saveUserToken(String token) async {
     try {
-      fss.write(key: Apikeys.accessToken, value: token);
+      fss.write(key: APIkeys.accessToken, value: token);
     } catch (e) {
       log("the ex is :$e ");
     }

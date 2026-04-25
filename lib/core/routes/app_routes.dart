@@ -7,11 +7,12 @@ import 'package:exam_app/feature/exams/domain/entities/exam_entity.dart';
 import 'package:exam_app/feature/exams/presentation/screen/exam_details_page.dart';
 import 'package:exam_app/feature/exams/presentation/screen/exams_page.dart';
 import 'package:exam_app/feature/forget_password/presentation/screen/forget_password_page.dart';
-import 'package:exam_app/feature/home/presentation/screen/home_page.dart';
 import 'package:exam_app/feature/login/presentation/cubit/login_cubit.dart';
 import 'package:exam_app/feature/login/presentation/screen/login_page.dart';
+import 'package:exam_app/feature/main_layout/main_screen.dart';
 import 'package:exam_app/feature/questions/presentation/screen/question_page.dart';
 import 'package:exam_app/feature/sign_up/presentation/screen/sign_up_page.dart';
+import 'package:exam_app/feature/subject/domain/models/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -19,7 +20,7 @@ import 'package:go_router/go_router.dart';
 
 abstract class AppRoutes {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.exams,
+    initialLocation: Routes.main,
     routes: [
       GoRoute(
         path: Routes.login,
@@ -32,17 +33,20 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
-        path: Routes.home,
-        name: Routes.home,
+        path: Routes.main,
+        name: Routes.main,
         builder: (BuildContext context, GoRouterState state) {
-          return HomePage();
+          return MainScreen();
         },
       ),
       GoRoute(
         path: Routes.exams,
         name: Routes.exams,
         builder: (BuildContext context, GoRouterState state) {
-          return ExamsPage();
+          final Map<String, dynamic> extra =
+              state.extra as Map<String, dynamic>;
+          final SubjectEntity subject = extra['subject'];
+          return ExamsPage(subjectEntity: subject);
         },
       ),
       GoRoute(
@@ -50,9 +54,10 @@ abstract class AppRoutes {
         name: Routes.examDetails,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-          state.extra as Map<String, dynamic>;
+              state.extra as Map<String, dynamic>;
           final ExamEntity exam = extra['exam'];
-          return ExamDetailsPage(exam: exam);
+          final SubjectEntity subject = extra['subject'];
+          return ExamDetailsPage(exam: exam, subject: subject);
         },
       ),
       GoRoute(
@@ -60,7 +65,7 @@ abstract class AppRoutes {
         name: Routes.questions,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-          state.extra as Map<String, dynamic>;
+              state.extra as Map<String, dynamic>;
           final ExamEntity exam = extra['exam'];
           return QuestionPage(exam: exam);
         },
@@ -70,7 +75,7 @@ abstract class AppRoutes {
         name: Routes.answersView,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-          state.extra as Map<String, dynamic>;
+              state.extra as Map<String, dynamic>;
           final String examId = extra['examId'];
           return AnswersPage(examId: examId);
         },
@@ -80,7 +85,7 @@ abstract class AppRoutes {
         name: Routes.examScore,
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
-          state.extra as Map<String, dynamic>;
+              state.extra as Map<String, dynamic>;
           final String examId = extra['examId'];
           return ExamScorePage(examId: examId);
         },
@@ -100,24 +105,24 @@ abstract class AppRoutes {
           return const SignUpPage();
         },
       ),
-      GoRoute(
-        path: Routes.profile,
-        builder: (BuildContext context, GoRouterState state) {
-          return BlocProvider(
-            create: (context) => getIt<ProfileCubit>(),
-            child: const EditProfileScreen(),
-          );
-        },
-      ),
-      GoRoute(
-        path: Routes.changePassword,
-        builder: (BuildContext context, GoRouterState state) {
-          return BlocProvider(
-            create: (context) => getIt<ProfileCubit>(),
-            child: const ChangePasswordScreen(),
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: Routes.profile,
+      //   builder: (BuildContext context, GoRouterState state) {
+      //     return BlocProvider(
+      //       create: (context) => getIt<ProfileCubit>(),
+      //       child: const EditProfileScreen(),
+      //     );
+      //   },
+      // ),
+      // GoRoute(
+      //   path: Routes.changePassword,
+      //   builder: (BuildContext context, GoRouterState state) {
+      //     return BlocProvider(
+      //       create: (context) => getIt<ProfileCubit>(),
+      //       child: const ChangePasswordScreen(),
+      //     );
+      //   },
+      // ),
     ],
     errorBuilder: (context, state) => Scaffold(
       body: Center(child: Text('Page not found: ${state.matchedLocation}')),

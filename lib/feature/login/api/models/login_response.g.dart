@@ -2,6 +2,10 @@
 
 part of 'login_response.dart';
 
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
       message: json['message'] as String?,

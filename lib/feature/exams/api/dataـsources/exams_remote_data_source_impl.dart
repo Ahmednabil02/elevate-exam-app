@@ -1,4 +1,4 @@
-import 'package:exam_app/config/api/api_executer.dart';
+import 'package:exam_app/config/api/api_execute.dart';
 import 'package:exam_app/config/base_response/result.dart';
 import 'package:exam_app/feature/exams/api/api_client/exams_api_client.dart';
 import 'package:exam_app/feature/exams/data/dataـsources/exams_remote_data_source_contract.dart';

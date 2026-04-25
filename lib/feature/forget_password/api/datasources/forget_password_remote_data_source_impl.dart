@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:exam_app/config/api/api_executer.dart';
+import 'package:exam_app/config/api/api_execute.dart';
 import 'package:exam_app/config/base_response/result.dart';
 import 'package:exam_app/feature/forget_password/domain/entity/forget_password_params.dart';
 import 'package:injectable/injectable.dart';
