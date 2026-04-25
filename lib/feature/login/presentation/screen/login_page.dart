@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:exam_app/core/routes/routes.dart';
@@ -117,7 +119,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildForgetPassword() => Align(
     alignment: Alignment.centerRight,
     child: TextButton(
-      onPressed: () {},
+      onPressed: () {
+        context.push(Routes.forgetPassword);
+      },
       child: Text(
         "Forget password",
         style: AppFontStyle.regular16(context).copyWith(
@@ -145,7 +149,10 @@ class _LoginPageState extends State<LoginPage> {
           ).copyWith(color: AppColors.black),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            log("Navigating to registration page");
+            context.push(Routes.register);
+          },
           child: Text(
             "Sign up",
             style: AppFontStyle.medium16(context).copyWith(
@@ -163,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
       initial: () {},
       loading: () {},
       success: (data) {
-        context.go(Routes.home);
+        context.go(Routes.main);
       },
       error: (exception) {
         ScaffoldMessenger.of(

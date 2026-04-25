@@ -26,7 +26,7 @@ class SignUpRepositoryImpl implements SignUpRepositoryContract {
     final response = await remoteDataSource.signUpUser(dto);
     switch (response) {
       case Success<SignUpResponse>():
-        await localDataSource.saveUserToken(response.data?.token ?? "");
+        // await localDataSource.saveUserToken(response.data?.token ?? "");
         return Success<UserEntity>(data: response.data?.toUserEntity());
       case Error<SignUpResponse>():
         return Error<UserEntity>(exception: response.exception);

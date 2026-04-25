@@ -5,6 +5,8 @@ class AppStrings {
 
   // Auth
   static const String login = 'Login';
+  static const String logOut = 'logOut';
+  static const String logOutMessage = 'Are you sure you want to log out?';
   static const String signUp = 'Sign up';
   static const String email = 'Email';
   static const String password = 'Password';

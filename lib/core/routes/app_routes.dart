@@ -9,7 +9,7 @@ import 'package:exam_app/feature/exams/presentation/screen/exams_page.dart';
 import 'package:exam_app/feature/forget_password/presentation/screen/forget_password_page.dart';
 import 'package:exam_app/feature/login/presentation/cubit/login_cubit.dart';
 import 'package:exam_app/feature/login/presentation/screen/login_page.dart';
-import 'package:exam_app/feature/main_layout/main_screen.dart';
+import 'package:exam_app/feature/main_layout/presentation/pages/main_screen.dart';
 import 'package:exam_app/feature/profile/presentation/cubit/profile_cubit.dart';
 import 'package:exam_app/feature/profile/presentation/view/change_password_screen.dart';
 import 'package:exam_app/feature/profile/presentation/view/profile_screen.dart';
@@ -157,9 +157,24 @@ abstract class AppRoutes {
         key: APIkeys.accessToken,
       );
       final isLoggedIn = token != null && token.isNotEmpty;
-      
-      if (!isLoggedIn) return Routes.login;
-      if (state.matchedLocation == Routes.login) return Routes.home;
+
+      // Public routes that don't require authentication
+      final publicRoutes = [
+        Routes.login,
+        Routes.register,
+        Routes.forgetPassword,
+      ];
+
+      final isPublicRoute = publicRoutes.contains(state.matchedLocation);
+
+      // If not logged in and trying to access protected route, redirect to login
+      if (!isLoggedIn && !isPublicRoute) return Routes.login;
+
+      // If logged in and trying to access login page, redirect to home
+      if (isLoggedIn && state.matchedLocation == Routes.login) {
+        return Routes.main;
+      }
+
       return null;
     },
   );

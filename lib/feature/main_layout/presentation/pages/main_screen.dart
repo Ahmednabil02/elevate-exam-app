@@ -2,12 +2,13 @@ import 'package:exam_app/core/theme/app_theme.dart';
 import 'package:exam_app/core/values/app_assets.dart';
 import 'package:exam_app/core/values/app_font_style.dart';
 import 'package:exam_app/core/values/app_strings.dart';
+import 'package:exam_app/feature/main_layout/presentation/pages/logOut.dart';
 import 'package:exam_app/feature/profile/presentation/view/profile_screen.dart';
 import 'package:exam_app/feature/result/presentation/screen/result_screen.dart';
 import 'package:exam_app/feature/subject/presentation/screen/subject_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../core/values/app_colors.dart';
+import '../../../../core/values/app_colors.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,8 +22,8 @@ class _MainScreenState extends State<MainScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     SubjectScreen(),
-    ResultScreen(),
     ProfileScreen(),
+    Logout(),
   ];
 
   void _onItemTapped(int index) {
@@ -33,13 +34,13 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<String> _icons = [
     AppAssets.home,
-    AppAssets.carbonResultDraft,
     AppAssets.person,
+    AppAssets.logout,
   ];
   final List<String> _label = [
     AppStrings.explore,
-    AppStrings.results,
     AppStrings.profile,
+    AppStrings.logOut,
   ];
 
   @override
