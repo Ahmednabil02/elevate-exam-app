@@ -37,7 +37,9 @@ class PhoneField extends StatelessWidget {
       maxLength: 11,
       decoration: InputDecoration(
         labelText: AppStrings.phoneNumber,
+        hintText: AppStrings.enterPhoneNumber,
         prefixText: '+20 ',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
     );
   }
